@@ -14,8 +14,8 @@ public class Ingredient {
     @Column(name = "name", unique = true)
     private String name;
 
-    @Column(name = "availability")
-    private boolean availability;
+    @Column(name = "available")
+    private boolean available;
 
     public long getId() {
         return id;
@@ -33,11 +33,11 @@ public class Ingredient {
         this.name = name;
     }
 
-    public boolean isAvailability() {
-        return availability;
+    public boolean isAvailable() {
+        return available;
     }
 
-    public void setAvailability(boolean availability) {
-        this.availability = availability;
+    public void setAvailable(boolean available) {
+        this.available = available;
     }
 }
