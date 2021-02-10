@@ -9,7 +9,12 @@ import javax.persistence.Table;
 @Table(name = "fries")
 public class Fries extends MenuItem {
 
-    public Fries(){
-        super();
+    public Fries() {
     }
+
+    public Fries(String name, boolean available, String imageURL) {
+        super(name, available, imageURL);
+    }
+
+
 }

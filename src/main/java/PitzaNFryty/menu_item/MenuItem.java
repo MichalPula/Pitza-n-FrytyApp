@@ -19,6 +19,12 @@ public class MenuItem {
     @Column(name = "image_url", unique = true)
     private String imageURL ;
 
+    public MenuItem(String name, boolean available, String imageURL) {
+        this.name = name;
+        this.available = available;
+        this.imageURL = imageURL;
+    }
+
     public MenuItem() {
 
     }

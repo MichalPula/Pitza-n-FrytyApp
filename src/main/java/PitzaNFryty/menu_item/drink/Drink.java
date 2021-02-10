@@ -10,6 +10,9 @@ import javax.persistence.Table;
 public class Drink extends MenuItem {
 
     public Drink() {
-        super();
+    }
+
+    public Drink(String name, boolean available, String imageURL) {
+        super(name, available, imageURL);
     }
 }
