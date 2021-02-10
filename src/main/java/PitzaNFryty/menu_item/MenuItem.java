@@ -2,9 +2,8 @@ package PitzaNFryty.menu_item;
 
 import javax.persistence.*;
 
-@Entity
-@Table(name = "menu_items")
-public abstract class MenuItem {
+@MappedSuperclass
+public class MenuItem {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
