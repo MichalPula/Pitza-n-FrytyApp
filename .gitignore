@@ -5,6 +5,8 @@
 *.iml
 /target
 
+/src/main/resources/application.properties
+
 ### Maven template
 pom.xml.tag
 pom.xml.releaseBackup
