@@ -17,6 +17,15 @@ public class Sauce {
     @Column(name = "available")
     private boolean available;
 
+    public Sauce(String name, boolean available) {
+        this.name = name;
+        this.available = available;
+    }
+
+    public Sauce() {
+
+    }
+
     public long getId() {
         return id;
     }

@@ -17,6 +17,15 @@ public class Ingredient {
     @Column(name = "available")
     private boolean available;
 
+    public Ingredient(String name, boolean available) {
+        this.name = name;
+        this.available = available;
+    }
+
+    public Ingredient() {
+
+    }
+
     public long getId() {
         return id;
     }
