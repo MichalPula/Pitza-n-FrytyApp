@@ -1,4 +1,4 @@
-package PitzaNFryty.menu_item;
+package PitzaNFryty.menu_item.ingredient;
 
 import javax.persistence.*;
 
