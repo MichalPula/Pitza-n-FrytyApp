@@ -14,21 +14,25 @@ import java.util.List;
 public class Pizza extends MenuItem {
 
     @LazyCollection(LazyCollectionOption.FALSE)
-    @OneToMany
+    @OneToMany(targetEntity = Ingredient.class)
     @JoinTable(name = "pizza_ingredients")
     private List<Ingredient> ingredients;
 
     @LazyCollection(LazyCollectionOption.FALSE)
-    @OneToMany
+    @OneToMany(targetEntity = Sauce.class)
     @JoinTable(name = "pizza_sauces")
     private List<Sauce> sauces;
 
     public Pizza(String name, List<Ingredient> ingredients, List<Sauce> sauces, boolean isAvailable, String imageURL) {
         super(name, isAvailable, imageURL);
+        this.ingredients = ingredients;
+        this.sauces = sauces;
     }
 
     public Pizza(String name, List<Ingredient> ingredients, List<Sauce> sauces, String imageURL) {
         super(name, imageURL);
+        this.ingredients = ingredients;
+        this.sauces = sauces;
     }
 
     public Pizza() {
@@ -49,5 +53,20 @@ public class Pizza extends MenuItem {
 
     public void setSauces(List<Sauce> sauces) {
         this.sauces = sauces;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(this.getName());
+        sb.append(", [");
+        this.ingredients.forEach(ingredient ->
+                sb.append(ingredient.getName()).append(", "));
+        sb.append("], [");
+        this.sauces.forEach(sauce ->
+                sb.append(sauce.getName()).append(", "));
+        sb.append("], ");
+        sb.append(getImageURL());
+        return sb.toString();
     }
 }

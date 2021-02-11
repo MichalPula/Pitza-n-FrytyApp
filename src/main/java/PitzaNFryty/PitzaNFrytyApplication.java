@@ -3,6 +3,7 @@ package PitzaNFryty;
 import PitzaNFryty.menu_item.drink.DrinkRepository;
 
 import PitzaNFryty.menu_item.fries.FriesRepository;
+import PitzaNFryty.menu_item.pizza.PizzaRepository;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.CommandLineRunner;
@@ -22,22 +23,29 @@ public class PitzaNFrytyApplication {
     }
 
     @Bean
-    public CommandLineRunner clr(DrinkRepository drinkRepository, FriesRepository friesRepository){
+    public CommandLineRunner clr(DrinkRepository drinkRepository, FriesRepository friesRepository,
+                                 PizzaRepository pizzaRepository){
         return args -> {
-            log.info("----------------------------");
-            log.info("Drinks found with findAll():");
-            drinkRepository.findAll().forEach(
-                    drink -> log.info(drink.getId() + ", "
-                            + drink.getName() + ", "
-                            + Arrays.toString(drink.getDrinkTypes().toArray()) + ", "
-                            + drink.getImageURL() + ", "
-                            + drink.isIsAvailable()));
+//            log.info("----------------------------");
+//            log.info("Drinks found with findAll():");
+//            drinkRepository.findAll().forEach(
+//                    drink -> log.info(drink.getId() + ", "
+//                            + drink.getName() + ", "
+//                            + Arrays.toString(drink.getDrinkTypes().toArray()) + ", "
+//                            + drink.getImageURL() + ", "
+//                            + drink.isIsAvailable()));
+//
+//
+//            log.info("----------------------------");
+//            log.info("Fries found with findAll():");
+//            friesRepository.findAll().forEach(fries -> log.info(fries.getId() + ", " + fries.getName()
+//                    + ", " + fries.getPrice() + ", " + fries.getImageURL()));
 
-
             log.info("----------------------------");
-            log.info("Fries found with findAll():");
-            friesRepository.findAll().forEach(fries -> log.info(fries.getId() + ", " + fries.getName()
-                    + ", " + fries.getPrice() + ", " + fries.getImageURL()));
+            log.info("Pizzas found with findAll():");
+            pizzaRepository.findAll().forEach(
+                    pizza -> log.info(pizza.toString())
+            );
 
         };
     }

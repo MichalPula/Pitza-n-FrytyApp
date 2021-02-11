@@ -15,7 +15,7 @@ public class Sauce {
     private String name;
 
     @Column(name = "is_available")
-    private boolean isAvailable;
+    private boolean isAvailable = true;
 
     public Sauce(String name, boolean isAvailable) {
         this.name = name;
