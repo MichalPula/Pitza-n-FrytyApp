@@ -14,12 +14,12 @@ import java.util.List;
 public class Pizza extends MenuItem {
 
     @LazyCollection(LazyCollectionOption.FALSE)
-    @OneToMany(targetEntity = Ingredient.class)
+    @ManyToMany(targetEntity = Ingredient.class)
     @JoinTable(name = "pizza_ingredients")
     private List<Ingredient> ingredients;
 
     @LazyCollection(LazyCollectionOption.FALSE)
-    @OneToMany(targetEntity = Sauce.class)
+    @ManyToMany(targetEntity = Sauce.class)
     @JoinTable(name = "pizza_sauces")
     private List<Sauce> sauces;
 
