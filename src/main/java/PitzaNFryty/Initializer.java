@@ -21,28 +21,22 @@ public class Initializer {
         });
 
         drinkRepository.save(new Drink("Coca-Cola",
-                drinkTypeRepository.findDrinkTypesBySizePriceIn(new ArrayList<>(Arrays.asList(DrinkSizePrice.SMALL_COLA, DrinkSizePrice.MEDIUM_COLA, DrinkSizePrice.LARGE_COLA))),
-                true, "cocacolaurl"));
+                drinkTypeRepository.findDrinkTypesBySizePriceIn(new ArrayList<>(Arrays.asList(DrinkSizePrice.SMALL_COLA, DrinkSizePrice.MEDIUM_COLA, DrinkSizePrice.LARGE_COLA))), "cocacolaurl"));
         drinkRepository.save(new Drink("Pepsi",
-                drinkTypeRepository.findDrinkTypesBySizePriceIn(new ArrayList<>(Arrays.asList(DrinkSizePrice.SMALL_PEPSI, DrinkSizePrice.MEDIUM_PEPSI, DrinkSizePrice.LARGE_PEPSI))),
-                true, "pepsiurl"));
+                drinkTypeRepository.findDrinkTypesBySizePriceIn(new ArrayList<>(Arrays.asList(DrinkSizePrice.SMALL_PEPSI, DrinkSizePrice.MEDIUM_PEPSI, DrinkSizePrice.LARGE_PEPSI))), "pepsiurl"));
         drinkRepository.save(new Drink("Fanta",
-                drinkTypeRepository.findDrinkTypesBySizePriceIn(new ArrayList<>(Arrays.asList(DrinkSizePrice.SMALL_FANTA, DrinkSizePrice.MEDIUM_FANTA, DrinkSizePrice.LARGE_FANTA))),
-                true, "fantaurl"));
+                drinkTypeRepository.findDrinkTypesBySizePriceIn(new ArrayList<>(Arrays.asList(DrinkSizePrice.SMALL_FANTA, DrinkSizePrice.MEDIUM_FANTA, DrinkSizePrice.LARGE_FANTA))),  "fantaurl"));
         drinkRepository.save(new Drink("Sprite",
-                drinkTypeRepository.findDrinkTypesBySizePriceIn(new ArrayList<>(Arrays.asList(DrinkSizePrice.SMALL_SPRITE, DrinkSizePrice.MEDIUM_SPRITE ,DrinkSizePrice.LARGE_SPRITE))),
-                true, "spriteurl"));
+                drinkTypeRepository.findDrinkTypesBySizePriceIn(new ArrayList<>(Arrays.asList(DrinkSizePrice.SMALL_SPRITE, DrinkSizePrice.MEDIUM_SPRITE ,DrinkSizePrice.LARGE_SPRITE))), "spriteurl"));
         drinkRepository.save(new Drink("Orange juice",
-               drinkTypeRepository.findDrinkTypesBySizePriceIn(new ArrayList<>(Arrays.asList(DrinkSizePrice.SMALL_ORANGE_JUICE, DrinkSizePrice.MEDIUM_ORANGE_JUICE ,DrinkSizePrice.LARGE_ORANGE_JUICE))),
-               true, "orangejuiceurl"));
+               drinkTypeRepository.findDrinkTypesBySizePriceIn(new ArrayList<>(Arrays.asList(DrinkSizePrice.SMALL_ORANGE_JUICE, DrinkSizePrice.MEDIUM_ORANGE_JUICE ,DrinkSizePrice.LARGE_ORANGE_JUICE))), "orangejuiceurl"));
         drinkRepository.save(new Drink("Apple juice",
-                    drinkTypeRepository.findDrinkTypesBySizePriceIn(new ArrayList<>(Arrays.asList(DrinkSizePrice.SMALL_APPLE_JUICE, DrinkSizePrice.MEDIUM_APPLE_JUICE ,DrinkSizePrice.LARGE_APPLE_JUICE))),
-                true, "applejuiceurl"));
+                    drinkTypeRepository.findDrinkTypesBySizePriceIn(new ArrayList<>(Arrays.asList(DrinkSizePrice.SMALL_APPLE_JUICE, DrinkSizePrice.MEDIUM_APPLE_JUICE ,DrinkSizePrice.LARGE_APPLE_JUICE))), "applejuiceurl"));
 
-        friesRepository.save(new Fries("Small fries", 2,true, "smallfriesurl"));
-        friesRepository.save(new Fries("Medium fries", 3,true, "mediumfriesurl"));
-        friesRepository.save(new Fries("Large fries", 5,true, "largefriesurl"));
+        friesRepository.save(new Fries("Small fries", 2, "smallfriesurl"));
+        friesRepository.save(new Fries("Medium fries", 3, "mediumfriesurl"));
+        friesRepository.save(new Fries("Large fries", 5, "largefriesurl"));
 
-        ingredientRepository.save(new Ingredient("Mozzarella", true));
+        ingredientRepository.save(new Ingredient("Mozzarella"));
     }
 }

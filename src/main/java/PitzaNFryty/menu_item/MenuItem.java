@@ -13,20 +13,24 @@ public class MenuItem {
     @Column(name = "name", unique = true)
     private String name;
 
-    @Column(name = "available")
-    private boolean available;
+    @Column(name = "is_available")
+    private boolean isAvailable = true;
 
     @Column(name = "image_url", unique = true)
     private String imageURL ;
 
-    public MenuItem(String name, boolean available, String imageURL) {
+    public MenuItem(String name, boolean isAvailable, String imageURL) {
         this.name = name;
-        this.available = available;
+        this.isAvailable = isAvailable;
+        this.imageURL = imageURL;
+    }
+
+    public MenuItem(String name, String imageURL) {
+        this.name = name;
         this.imageURL = imageURL;
     }
 
     public MenuItem() {
-
     }
 
     public long getId() {
@@ -45,12 +49,12 @@ public class MenuItem {
         this.name = name;
     }
 
-    public boolean isAvailable() {
-        return available;
+    public boolean isIsAvailable() {
+        return isAvailable;
     }
 
-    public void setAvailable(boolean available) {
-        this.available = available;
+    public void setIsAvailable(boolean isAvailable) {
+        this.isAvailable = isAvailable;
     }
 
     public String getImageURL() {

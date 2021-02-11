@@ -17,12 +17,16 @@ public class Ingredient {
     @Column(name = "name", unique = true)
     private String name;
 
-    @Column(name = "available")
-    private boolean available;
+    @Column(name = "is_available")
+    private boolean isAvailable = true;
 
-    public Ingredient(String name, boolean available) {
+    public Ingredient(String name, boolean isAvailable) {
         this.name = name;
-        this.available = available;
+        this.isAvailable = isAvailable;
+    }
+
+    public Ingredient(String name) {
+        this.name = name;
     }
 
     public Ingredient() {
@@ -45,11 +49,11 @@ public class Ingredient {
         this.name = name;
     }
 
-    public boolean isAvailable() {
-        return available;
+    public boolean getIsAvailable() {
+        return isAvailable;
     }
 
-    public void setAvailable(boolean available) {
-        this.available = available;
+    public void setIsAvailable(boolean isAvailable) {
+        this.isAvailable = isAvailable;
     }
 }

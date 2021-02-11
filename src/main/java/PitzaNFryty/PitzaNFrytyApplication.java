@@ -31,7 +31,7 @@ public class PitzaNFrytyApplication {
                             + drink.getName() + ", "
                             + Arrays.toString(drink.getDrinkTypes().toArray()) + ", "
                             + drink.getImageURL() + ", "
-                            + drink.isAvailable()));
+                            + drink.isIsAvailable()));
 
 
             log.info("----------------------------");

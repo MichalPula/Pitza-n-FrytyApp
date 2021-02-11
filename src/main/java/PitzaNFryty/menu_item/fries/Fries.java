@@ -12,8 +12,13 @@ public class Fries extends MenuItem {
     public Fries() {
     }
 
-    public Fries(String name, int price, boolean available, String imageURL) {
-        super(name, available, imageURL);
+    public Fries(String name, int price, boolean isAvailable, String imageURL) {
+        super(name, isAvailable, imageURL);
+        this.price = price;
+    }
+
+    public Fries(String name, int price,  String imageURL) {
+        super(name, imageURL);
         this.price = price;
     }
 

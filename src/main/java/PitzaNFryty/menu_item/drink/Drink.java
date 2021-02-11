@@ -16,12 +16,17 @@ public class Drink extends MenuItem {
     @JoinTable(name = "drinks_types")
     private List<DrinkSize> drinkSize;
 
-    public Drink() {
+    public Drink(String name, List<DrinkSize> drinkSize, boolean isAvailable, String imageURL) {
+        super(name, isAvailable, imageURL);
+        this.drinkSize = drinkSize;
     }
 
-    public Drink(String name, List<DrinkSize> drinkSize, boolean available, String imageURL) {
-        super(name, available, imageURL);
+    public Drink(String name, List<DrinkSize> drinkSize, String imageURL) {
+        super(name, imageURL);
         this.drinkSize = drinkSize;
+    }
+
+    public Drink() {
     }
 
     public List<DrinkSize> getDrinkTypes() {
