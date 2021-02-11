@@ -12,23 +12,23 @@ import java.util.List;
 public class Drink extends MenuItem {
 
     @LazyCollection(LazyCollectionOption.FALSE)
-    @ManyToMany(targetEntity = DrinkType.class)
+    @ManyToMany(targetEntity = DrinkSize.class)
     @JoinTable(name = "drinks_types")
-    private List<DrinkType> drinkType;
+    private List<DrinkSize> drinkSize;
 
     public Drink() {
     }
 
-    public Drink(String name, List<DrinkType> drinkType, boolean available, String imageURL) {
+    public Drink(String name, List<DrinkSize> drinkSize, boolean available, String imageURL) {
         super(name, available, imageURL);
-        this.drinkType = drinkType;
+        this.drinkSize = drinkSize;
     }
 
-    public List<DrinkType> getDrinkTypes() {
-        return drinkType;
+    public List<DrinkSize> getDrinkTypes() {
+        return drinkSize;
     }
 
-    public void setDrinkTypes(List<DrinkType> drinkType) {
-        this.drinkType = drinkType;
+    public void setDrinkTypes(List<DrinkSize> drinkSize) {
+        this.drinkSize = drinkSize;
     }
 }
