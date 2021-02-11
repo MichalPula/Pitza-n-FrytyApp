@@ -5,6 +5,8 @@ import PitzaNFryty.menu_item.fries.Fries;
 import PitzaNFryty.menu_item.fries.FriesRepository;
 import PitzaNFryty.menu_item.ingredient.Ingredient;
 import PitzaNFryty.menu_item.ingredient.IngredientRepository;
+import PitzaNFryty.menu_item.sauce.Sauce;
+import PitzaNFryty.menu_item.sauce.SauceRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -13,7 +15,8 @@ import java.util.Arrays;
 @Service
 public class Initializer {
     public Initializer(DrinkRepository drinkRepository, FriesRepository friesRepository,
-                       DrinkTypeRepository drinkTypeRepository, IngredientRepository ingredientRepository){
+                       DrinkTypeRepository drinkTypeRepository, IngredientRepository ingredientRepository,
+                       SauceRepository sauceRepository){
 
         Arrays.stream(DrinkSizePrice.values()).forEach(drinkSizePrice -> {
             DrinkSize drinkSize = new DrinkSize(drinkSizePrice);
@@ -37,6 +40,15 @@ public class Initializer {
         friesRepository.save(new Fries("Medium fries", 3, "mediumfriesurl"));
         friesRepository.save(new Fries("Large fries", 5, "largefriesurl"));
 
-        ingredientRepository.save(new Ingredient("Mozzarella"));
+        ingredientRepository.save(new Ingredient("Mozzarella cheese"));
+        ingredientRepository.save(new Ingredient("Tomato sauce"));
+        ingredientRepository.save(new Ingredient("Oregano"));
+        ingredientRepository.save(new Ingredient("Ham"));
+        ingredientRepository.save(new Ingredient("Mushrooms"));
+
+        sauceRepository.save(new Sauce("Garlic sauce"));
+        sauceRepository.save(new Sauce("Tomato sauce"));
+        sauceRepository.save(new Sauce("BBQ sauce"));
+        sauceRepository.save(new Sauce("Jalapeno sauce"));
     }
 }
