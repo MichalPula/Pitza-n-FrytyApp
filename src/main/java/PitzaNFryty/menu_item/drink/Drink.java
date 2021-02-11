@@ -12,7 +12,7 @@ import java.util.List;
 public class Drink extends MenuItem {
 
     @LazyCollection(LazyCollectionOption.FALSE)
-    @ManyToMany(targetEntity = DrinkSize.class)
+    @OneToMany(targetEntity = DrinkSize.class)
     @JoinTable(name = "drinks_types")
     private List<DrinkSize> drinkSize;
 
