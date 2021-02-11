@@ -57,5 +57,11 @@ public class Initializer {
         List<Ingredient> basicIngredients = new ArrayList<>(ingredientRepository.findIngredientsByNameIn(new ArrayList<>(Arrays.asList("Mozzarella cheese", "Tomato sauce", "Oregano"))));
         List<Sauce> basicSauces = new ArrayList<>(sauceRepository.findSaucesByNameIn(new ArrayList<>(Arrays.asList("Ketchup" , "Garlic sauce"))));
 
+        pizzaRepository.save(new Pizza("Margherita", basicIngredients, basicSauces, "margheritaurl"));
+
+        List<Ingredient> capricciosaIngredients = new ArrayList<>();
+        capricciosaIngredients.addAll(basicIngredients);
+        capricciosaIngredients.addAll(new ArrayList<>(Arrays.asList(ingredientRepository.findIngredientByName("Ham"), ingredientRepository.findIngredientByName("Mushrooms"))));
+        pizzaRepository.save(new Pizza("Capricciosa", capricciosaIngredients, basicSauces, "capricciosaurl"));
     }
 }
