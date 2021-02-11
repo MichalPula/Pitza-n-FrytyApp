@@ -10,6 +10,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 
+import java.util.Arrays;
+
 @SpringBootApplication
 public class PitzaNFrytyApplication {
 
@@ -24,7 +26,12 @@ public class PitzaNFrytyApplication {
         return args -> {
             log.info("----------------------------");
             log.info("Drinks found with findAll():");
-            drinkRepository.findAll().forEach(drink -> log.info(drink.getId() + ", " + drink.getName() + ", " + drink.getImageURL()));
+            drinkRepository.findAll().forEach(
+                    drink -> log.info(drink.getId() + ", "
+                            + drink.getName() + ", "
+                            + Arrays.toString(drink.getDrinkTypes().toArray()) + ", "
+                            + drink.getImageURL() + ", "
+                            + drink.isAvailable()));
 
 
             log.info("----------------------------");

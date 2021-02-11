@@ -1,32 +1,34 @@
 package PitzaNFryty.menu_item.drink;
 
 import PitzaNFryty.menu_item.MenuItem;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import java.util.Set;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "drinks")
 public class Drink extends MenuItem {
 
-    @OneToMany
-    private Set<DrinkType> drinkTypes;
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @ManyToMany(targetEntity = DrinkType.class)
+    @JoinTable(name = "drinks_types")
+    private List<DrinkType> drinkType;
 
     public Drink() {
     }
 
-    public Drink(String name, Set<DrinkType> drinkTypes, boolean available, String imageURL) {
+    public Drink(String name, List<DrinkType> drinkType, boolean available, String imageURL) {
         super(name, available, imageURL);
-        this.drinkTypes = drinkTypes;
+        this.drinkType = drinkType;
     }
 
-    public Set<DrinkType> getDrinkTypes() {
-        return drinkTypes;
+    public List<DrinkType> getDrinkTypes() {
+        return drinkType;
     }
 
-    public void setDrinkTypes(Set<DrinkType> drinkTypes) {
-        this.drinkTypes = drinkTypes;
+    public void setDrinkTypes(List<DrinkType> drinkType) {
+        this.drinkType = drinkType;
     }
 }
