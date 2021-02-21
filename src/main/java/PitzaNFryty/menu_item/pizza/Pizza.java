@@ -14,6 +14,11 @@ import java.util.List;
 public class Pizza extends MenuItem {
 
     @LazyCollection(LazyCollectionOption.FALSE)
+    @OneToMany(targetEntity = PizzaType.class)
+    @JoinTable(name = "pizzas_types")
+    private List<PizzaType> pizzaTypes;
+
+    @LazyCollection(LazyCollectionOption.FALSE)
     @ManyToMany(targetEntity = Ingredient.class)
     @JoinTable(name = "pizza_ingredients")
     private List<Ingredient> ingredients;
@@ -29,14 +34,23 @@ public class Pizza extends MenuItem {
         this.sauces = sauces;
     }
 
-    public Pizza(String name, List<Ingredient> ingredients, List<Sauce> sauces, String imageURL) {
+    public Pizza(String name, List<PizzaType> pizzaTypes, List<Ingredient> ingredients, List<Sauce> sauces, String imageURL) {
         super(name, imageURL);
+        this.pizzaTypes = pizzaTypes;
         this.ingredients = ingredients;
         this.sauces = sauces;
     }
 
     public Pizza() {
 
+    }
+
+    public List<PizzaType> getPizzaTypes() {
+        return pizzaTypes;
+    }
+
+    public void setPizzaTypes(List<PizzaType> pizzaTypes) {
+        this.pizzaTypes = pizzaTypes;
     }
 
     public List<Ingredient> getIngredients() {
@@ -66,6 +80,10 @@ public class Pizza extends MenuItem {
         this.sauces.forEach(sauce ->
                 sb.append(sauce.getName()).append(", "));
         sb.append("], ");
+        this.pizzaTypes.forEach(pizzaType ->
+                sb.append(pizzaType.getSizePrice().name()).append(", ")
+                .append(pizzaType.getSizePrice().getPrice()).append("PLN, ")
+                .append(pizzaType.getSizePrice().getDiameter()).append("cm, "));
         sb.append(getImageURL());
         return sb.toString();
     }

@@ -5,8 +5,7 @@ import PitzaNFryty.menu_item.fries.Fries;
 import PitzaNFryty.menu_item.fries.FriesRepository;
 import PitzaNFryty.menu_item.ingredient.Ingredient;
 import PitzaNFryty.menu_item.ingredient.IngredientRepository;
-import PitzaNFryty.menu_item.pizza.Pizza;
-import PitzaNFryty.menu_item.pizza.PizzaRepository;
+import PitzaNFryty.menu_item.pizza.*;
 import PitzaNFryty.menu_item.sauce.Sauce;
 import PitzaNFryty.menu_item.sauce.SauceRepository;
 import org.springframework.stereotype.Service;
@@ -19,11 +18,17 @@ import java.util.List;
 public class Initializer {
     public Initializer(DrinkRepository drinkRepository, FriesRepository friesRepository,
                        DrinkTypeRepository drinkTypeRepository, IngredientRepository ingredientRepository,
-                       SauceRepository sauceRepository, PizzaRepository pizzaRepository){
+                       SauceRepository sauceRepository, PizzaRepository pizzaRepository,
+                       PizzaTypeRepository pizzaTypeRepository){
 
         Arrays.stream(DrinkSizePrice.values()).forEach(drinkSizePrice -> {
             DrinkType drinkType = new DrinkType(drinkSizePrice);
             drinkTypeRepository.save(drinkType);
+        });
+
+        Arrays.stream(PizzaSizePrice.values()).forEach(pizzaSizePrice -> {
+            PizzaType pizzaType = new PizzaType(pizzaSizePrice);
+            pizzaTypeRepository.save(pizzaType);
         });
 
         drinkRepository.save(new Drink("Coca-Cola",
@@ -57,11 +62,13 @@ public class Initializer {
         List<Ingredient> basicIngredients = new ArrayList<>(ingredientRepository.findIngredientsByNameIn(new ArrayList<>(Arrays.asList("Mozzarella cheese", "Tomato sauce", "Oregano"))));
         List<Sauce> basicSauces = new ArrayList<>(sauceRepository.findSaucesByNameIn(new ArrayList<>(Arrays.asList("Ketchup" , "Garlic sauce"))));
 
-        pizzaRepository.save(new Pizza("Margherita", basicIngredients, basicSauces, "margheritaurl"));
+        List<PizzaType> margheritaTypes = new ArrayList<>(pizzaTypeRepository.findPizzaTypesBySizePriceIn(Arrays.asList(PizzaSizePrice.SMALL_MARGHERITA, PizzaSizePrice.MEDIUM_MARGHERITA, PizzaSizePrice.LARGE_MARGHERITA)));
+        pizzaRepository.save(new Pizza("Margherita", margheritaTypes, basicIngredients, basicSauces, "margheritaurl"));
 
+        List<PizzaType> capricciosaTypes = new ArrayList<>(pizzaTypeRepository.findPizzaTypesBySizePriceIn(Arrays.asList(PizzaSizePrice.SMALL_CAPRICCIOSA, PizzaSizePrice.MEDIUM_CAPRICCIOSA, PizzaSizePrice.LARGE_CAPRICCIOSA)));
         List<Ingredient> capricciosaIngredients = new ArrayList<>();
         capricciosaIngredients.addAll(basicIngredients);
         capricciosaIngredients.addAll(new ArrayList<>(Arrays.asList(ingredientRepository.findIngredientByName("Ham"), ingredientRepository.findIngredientByName("Mushrooms"))));
-        pizzaRepository.save(new Pizza("Capricciosa", capricciosaIngredients, basicSauces, "capricciosaurl"));
+        pizzaRepository.save(new Pizza("Capricciosa", capricciosaTypes, capricciosaIngredients, basicSauces, "capricciosaurl"));
     }
 }
