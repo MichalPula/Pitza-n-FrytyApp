@@ -4,7 +4,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "drinks_sizes")
-public class DrinkSize {
+public class DrinkType {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -14,11 +14,11 @@ public class DrinkSize {
     @Column(name = "drink_size", unique = true)
     private DrinkSizePrice sizePrice;
 
-    public DrinkSize(DrinkSizePrice sizePrice) {
+    public DrinkType(DrinkSizePrice sizePrice) {
         this.sizePrice = sizePrice;
     }
 
-    public DrinkSize() {
+    public DrinkType() {
 
     }
 

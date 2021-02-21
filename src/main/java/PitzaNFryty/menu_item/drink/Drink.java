@@ -12,28 +12,28 @@ import java.util.List;
 public class Drink extends MenuItem {
 
     @LazyCollection(LazyCollectionOption.FALSE)
-    @OneToMany(targetEntity = DrinkSize.class)
+    @OneToMany(targetEntity = DrinkType.class)
     @JoinTable(name = "drinks_types")
-    private List<DrinkSize> drinkSize;
+    private List<DrinkType> drinkType;
 
-    public Drink(String name, List<DrinkSize> drinkSize, boolean isAvailable, String imageURL) {
+    public Drink(String name, List<DrinkType> drinkType, boolean isAvailable, String imageURL) {
         super(name, isAvailable, imageURL);
-        this.drinkSize = drinkSize;
+        this.drinkType = drinkType;
     }
 
-    public Drink(String name, List<DrinkSize> drinkSize, String imageURL) {
+    public Drink(String name, List<DrinkType> drinkType, String imageURL) {
         super(name, imageURL);
-        this.drinkSize = drinkSize;
+        this.drinkType = drinkType;
     }
 
     public Drink() {
     }
 
-    public List<DrinkSize> getDrinkTypes() {
-        return drinkSize;
+    public List<DrinkType> getDrinkTypes() {
+        return drinkType;
     }
 
-    public void setDrinkTypes(List<DrinkSize> drinkSize) {
-        this.drinkSize = drinkSize;
+    public void setDrinkTypes(List<DrinkType> drinkType) {
+        this.drinkType = drinkType;
     }
 }

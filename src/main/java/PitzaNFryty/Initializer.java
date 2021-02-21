@@ -22,8 +22,8 @@ public class Initializer {
                        SauceRepository sauceRepository, PizzaRepository pizzaRepository){
 
         Arrays.stream(DrinkSizePrice.values()).forEach(drinkSizePrice -> {
-            DrinkSize drinkSize = new DrinkSize(drinkSizePrice);
-            drinkTypeRepository.save(drinkSize);
+            DrinkType drinkType = new DrinkType(drinkSizePrice);
+            drinkTypeRepository.save(drinkType);
         });
 
         drinkRepository.save(new Drink("Coca-Cola",
