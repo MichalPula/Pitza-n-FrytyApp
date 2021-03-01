@@ -15,7 +15,7 @@ public class Payment {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @ManyToOne(targetEntity = Customer.class)
+    @ManyToOne
     private Customer customer;
 
     @NotNull
