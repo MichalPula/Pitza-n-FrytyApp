@@ -2,7 +2,9 @@ package PitzaNFryty.menu_item;
 
 import javax.persistence.*;
 
-@MappedSuperclass
+//@MappedSuperclass
+@Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public class MenuItem {
 
     @Id
