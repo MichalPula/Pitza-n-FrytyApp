@@ -5,7 +5,7 @@ import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "drinks")
@@ -14,14 +14,14 @@ public class Drink extends MenuItem {
     @LazyCollection(LazyCollectionOption.FALSE)
     @OneToMany(targetEntity = DrinkType.class)
     @JoinTable(name = "drinks_types")
-    private List<DrinkType> drinkType;
+    private Set<DrinkType> drinkType;
 
-    public Drink(String name, List<DrinkType> drinkType, boolean isAvailable, String imageURL) {
+    public Drink(String name, Set<DrinkType> drinkType, boolean isAvailable, String imageURL) {
         super(name, isAvailable, imageURL);
         this.drinkType = drinkType;
     }
 
-    public Drink(String name, List<DrinkType> drinkType, String imageURL) {
+    public Drink(String name, Set<DrinkType> drinkType, String imageURL) {
         super(name, imageURL);
         this.drinkType = drinkType;
     }
@@ -29,11 +29,11 @@ public class Drink extends MenuItem {
     public Drink() {
     }
 
-    public List<DrinkType> getDrinkTypes() {
+    public Set<DrinkType> getDrinkTypes() {
         return drinkType;
     }
 
-    public void setDrinkTypes(List<DrinkType> drinkType) {
+    public void setDrinkTypes(Set<DrinkType> drinkType) {
         this.drinkType = drinkType;
     }
 }

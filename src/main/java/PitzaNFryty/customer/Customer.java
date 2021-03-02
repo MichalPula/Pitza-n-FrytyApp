@@ -3,11 +3,9 @@ package PitzaNFryty.customer;
 import PitzaNFryty.address.Address;
 import PitzaNFryty.order.Order;
 import com.sun.istack.NotNull;
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "customers")
@@ -30,18 +28,16 @@ public class Customer {
     @Column(name = "phone_number")
     private int phoneNumber;
 
-    @LazyCollection(LazyCollectionOption.FALSE)
-    @OneToMany(targetEntity = Address.class, cascade = CascadeType.PERSIST)
+    @OneToMany(targetEntity = Address.class, cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     @JoinTable(name = "customers_addresses",
             joinColumns = {@JoinColumn(name = "customer_id")},
             inverseJoinColumns = {@JoinColumn(name = "address_id")})
-    private List<Address> addresses;
+    private Set<Address> addresses;
 
-    @LazyCollection(LazyCollectionOption.FALSE)
-    @OneToMany(targetEntity = Order.class, mappedBy = "customer", cascade = CascadeType.PERSIST)
-    private List<Order> orders;
+    @OneToMany(targetEntity = Order.class, mappedBy = "customer", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    private Set<Order> orders;
 
-    public Customer(String firstName, String lastName, int phoneNumber, List<Address> addresses, List<Order> orders) {
+    public Customer(String firstName, String lastName, int phoneNumber, Set<Address> addresses, Set<Order> orders) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.phoneNumber = phoneNumber;
@@ -84,19 +80,19 @@ public class Customer {
         this.phoneNumber = phoneNumber;
     }
 
-    public List<Address> getAddresses() {
+    public Set<Address> getAddresses() {
         return addresses;
     }
 
-    public void setAddresses(List<Address> addresses) {
+    public void setAddresses(Set<Address> addresses) {
         this.addresses = addresses;
     }
 
-    public List<Order> getOrders() {
+    public Set<Order> getOrders() {
         return orders;
     }
 
-    public void setOrders(List<Order> orders) {
+    public void setOrders(Set<Order> orders) {
         this.orders = orders;
     }
 

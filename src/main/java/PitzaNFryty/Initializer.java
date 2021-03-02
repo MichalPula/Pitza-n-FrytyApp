@@ -11,9 +11,9 @@ import PitzaNFryty.menu_item.sauce.SauceRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 public class Initializer {
@@ -63,10 +63,10 @@ public class Initializer {
         List<Ingredient> basicIngredients = new ArrayList<>(ingredientRepository.findIngredientsByNameIn(new ArrayList<>(Arrays.asList("Mozzarella cheese", "Tomato sauce", "Oregano"))));
         List<Sauce> basicSauces = new ArrayList<>(sauceRepository.findSaucesByNameIn(new ArrayList<>(Arrays.asList("Ketchup" , "Garlic sauce"))));
 
-        List<PizzaType> margheritaTypes = new ArrayList<>(pizzaTypeRepository.findPizzaTypesBySizePriceIn(Arrays.asList(PizzaSizePrice.SMALL_MARGHERITA, PizzaSizePrice.MEDIUM_MARGHERITA, PizzaSizePrice.LARGE_MARGHERITA)));
+        Set<PizzaType> margheritaTypes = new HashSet<>(pizzaTypeRepository.findPizzaTypesBySizePriceIn(Arrays.asList(PizzaSizePrice.SMALL_MARGHERITA, PizzaSizePrice.MEDIUM_MARGHERITA, PizzaSizePrice.LARGE_MARGHERITA)));
         pizzaRepository.save(new Pizza("Margherita", margheritaTypes, basicIngredients, basicSauces, "margheritaurl"));
 
-        List<PizzaType> capricciosaTypes = new ArrayList<>(pizzaTypeRepository.findPizzaTypesBySizePriceIn(Arrays.asList(PizzaSizePrice.SMALL_CAPRICCIOSA, PizzaSizePrice.MEDIUM_CAPRICCIOSA, PizzaSizePrice.LARGE_CAPRICCIOSA)));
+        Set<PizzaType> capricciosaTypes = new HashSet<>(pizzaTypeRepository.findPizzaTypesBySizePriceIn(Arrays.asList(PizzaSizePrice.SMALL_CAPRICCIOSA, PizzaSizePrice.MEDIUM_CAPRICCIOSA, PizzaSizePrice.LARGE_CAPRICCIOSA)));
         List<Ingredient> capricciosaIngredients = new ArrayList<>();
         capricciosaIngredients.addAll(basicIngredients);
         capricciosaIngredients.addAll(new ArrayList<>(Arrays.asList(ingredientRepository.findIngredientByName("Ham"), ingredientRepository.findIngredientByName("Mushrooms"))));

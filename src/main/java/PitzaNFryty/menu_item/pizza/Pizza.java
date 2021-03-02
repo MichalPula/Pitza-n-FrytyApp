@@ -8,6 +8,7 @@ import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "pizzas")
@@ -16,7 +17,7 @@ public class Pizza extends MenuItem {
     @LazyCollection(LazyCollectionOption.FALSE)
     @OneToMany(targetEntity = PizzaType.class)
     @JoinTable(name = "pizzas_types")
-    private List<PizzaType> pizzaTypes;
+    private Set<PizzaType> pizzaTypes;
 
     @LazyCollection(LazyCollectionOption.FALSE)
     @ManyToMany(targetEntity = Ingredient.class)
@@ -28,7 +29,7 @@ public class Pizza extends MenuItem {
     @JoinTable(name = "pizza_sauces")
     private List<Sauce> sauces;
 
-    public Pizza(String name, List<PizzaType> pizzaTypes, List<Ingredient> ingredients, List<Sauce> sauces, String imageURL) {
+    public Pizza(String name, Set<PizzaType> pizzaTypes, List<Ingredient> ingredients, List<Sauce> sauces, String imageURL) {
         super(name, imageURL);
         this.pizzaTypes = pizzaTypes;
         this.ingredients = ingredients;
@@ -39,11 +40,11 @@ public class Pizza extends MenuItem {
 
     }
 
-    public List<PizzaType> getPizzaTypes() {
+    public Set<PizzaType> getPizzaTypes() {
         return pizzaTypes;
     }
 
-    public void setPizzaTypes(List<PizzaType> pizzaTypes) {
+    public void setPizzaTypes(Set<PizzaType> pizzaTypes) {
         this.pizzaTypes = pizzaTypes;
     }
 
