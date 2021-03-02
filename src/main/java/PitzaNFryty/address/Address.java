@@ -1,5 +1,6 @@
 package PitzaNFryty.address;
 
+
 import com.sun.istack.NotNull;
 
 import javax.persistence.*;
@@ -9,10 +10,12 @@ import javax.persistence.*;
 public class Address {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", unique = true, updatable = false)
     private long id;
 
     @NotNull
+    @Column(name = "city")
     private String city;
 
     @NotNull
@@ -20,6 +23,7 @@ public class Address {
     private String zipCode;
 
     @NotNull
+    @Column(name = "street")
     private String street;
 
     @NotNull
