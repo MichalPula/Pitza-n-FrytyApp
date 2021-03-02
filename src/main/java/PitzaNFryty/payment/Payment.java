@@ -12,10 +12,12 @@ import java.time.LocalDateTime;
 public class Payment {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", unique = true, updatable = false)
     private long id;
 
     @ManyToOne
+    @JoinColumn(name = "customer_id")
     private Customer customer;
 
     @NotNull
@@ -23,6 +25,7 @@ public class Payment {
     private Money money;
 
     @NotNull
+    @Column(name = "time")
     private LocalDateTime time;
 
     public Payment(Customer customer, Money money, LocalDateTime time) {
