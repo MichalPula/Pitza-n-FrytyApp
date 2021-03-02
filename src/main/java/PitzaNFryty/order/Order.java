@@ -3,8 +3,11 @@ package PitzaNFryty.order;
 import PitzaNFryty.address.Address;
 import PitzaNFryty.customer.Customer;
 import PitzaNFryty.menu_item.MenuItem;
+import PitzaNFryty.menu_item.pizza.Pizza;
 import PitzaNFryty.payment.Payment;
 import com.sun.istack.NotNull;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -27,6 +30,7 @@ public class Order {
     @JoinColumn(name = "address_id")
     private Address address;
 
+    @LazyCollection(LazyCollectionOption.FALSE)
     @ManyToMany(targetEntity = MenuItem.class)
     @JoinTable(name = "orders_menu_items",
             joinColumns = {@JoinColumn(name = "order_id")},
@@ -112,5 +116,25 @@ public class Order {
 
     public void setDeliveryTime(LocalDateTime deliveryTime) {
         this.deliveryTime = deliveryTime;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("[")
+                .append(this.customer.getFirstName()).append(", ")
+                .append(this.address.getStreet()).append(this.address.getBuildingNumber()).append(", ");
+        menuItems.forEach(menuItem -> {
+            sb.append(menuItem.getName());
+            if(menuItem instanceof Pizza){
+                sb.append("{");
+                ((Pizza) menuItem).getIngredients().forEach(ingredient -> sb.append(ingredient.getName()).append(","));
+                sb.append("}");
+            }
+        });
+        sb.append(this.payment.getMoney().getAmount()).append(", ")
+        .append(this.creationTime).append(", ")
+        .append(this.deliveryTime).append("]");
+        return sb.toString();
     }
 }

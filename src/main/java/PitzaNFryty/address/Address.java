@@ -93,4 +93,16 @@ public class Address {
     public void setFlatNumber(String flatNumber) {
         this.flatNumber = flatNumber;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("[")
+                .append(this.city).append(", ")
+                .append(this.zipCode).append(", ")
+                .append(this.street).append(", ")
+                .append(this.buildingNumber).append(", ")
+                .append(this.flatNumber).append("]");
+        return sb.toString();
+    }
 }
