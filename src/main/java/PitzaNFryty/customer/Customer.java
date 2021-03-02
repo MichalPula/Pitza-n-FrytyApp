@@ -3,6 +3,8 @@ package PitzaNFryty.customer;
 import PitzaNFryty.address.Address;
 import PitzaNFryty.order.Order;
 import com.sun.istack.NotNull;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.util.List;
@@ -12,7 +14,8 @@ import java.util.List;
 public class Customer {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", unique = true, updatable = false)
     private long id;
 
     @NotNull
@@ -27,14 +30,15 @@ public class Customer {
     @Column(name = "phone_number")
     private int phoneNumber;
 
-    //@LazyCollection(LazyCollectionOption.TRUE)
-    @OneToMany(targetEntity = Address.class)
-    @JoinTable(name = "users_addresses")
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @OneToMany(targetEntity = Address.class, cascade = CascadeType.PERSIST)
+    @JoinTable(name = "customers_addresses",
+            joinColumns = {@JoinColumn(name = "customer_id")},
+            inverseJoinColumns = {@JoinColumn(name = "address_id")})
     private List<Address> addresses;
 
-    //@LazyCollection(LazyCollectionOption.TRUE)
-    @OneToMany(targetEntity = Order.class)
-    @JoinTable(name = "users_orders")
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @OneToMany(targetEntity = Order.class, mappedBy = "customer", cascade = CascadeType.PERSIST)
     private List<Order> orders;
 
     public Customer(String firstName, String lastName, int phoneNumber, List<Address> addresses, List<Order> orders) {
@@ -94,5 +98,16 @@ public class Customer {
 
     public void setOrders(List<Order> orders) {
         this.orders = orders;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(this.firstName).append(", ")
+                .append(this.lastName).append(", ")
+                .append(this.phoneNumber).append(", ");
+        this.addresses.forEach(address -> sb.append(address.toString()));
+        this.orders.forEach(order -> sb.append(order.toString()));
+        return sb.toString();
     }
 }
