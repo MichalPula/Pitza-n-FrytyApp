@@ -28,12 +28,6 @@ public class Pizza extends MenuItem {
     @JoinTable(name = "pizza_sauces")
     private List<Sauce> sauces;
 
-    public Pizza(String name, List<Ingredient> ingredients, List<Sauce> sauces, boolean isAvailable, String imageURL) {
-        super(name, isAvailable, imageURL);
-        this.ingredients = ingredients;
-        this.sauces = sauces;
-    }
-
     public Pizza(String name, List<PizzaType> pizzaTypes, List<Ingredient> ingredients, List<Sauce> sauces, String imageURL) {
         super(name, imageURL);
         this.pizzaTypes = pizzaTypes;
