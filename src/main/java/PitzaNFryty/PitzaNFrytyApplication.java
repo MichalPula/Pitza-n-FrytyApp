@@ -1,5 +1,6 @@
 package PitzaNFryty;
 
+import PitzaNFryty.customer.CustomerRepository;
 import PitzaNFryty.menu_item.drink.DrinkRepository;
 
 import PitzaNFryty.menu_item.fries.FriesRepository;
@@ -24,7 +25,7 @@ public class PitzaNFrytyApplication {
 
     @Bean
     public CommandLineRunner clr(DrinkRepository drinkRepository, FriesRepository friesRepository,
-                                 PizzaRepository pizzaRepository){
+                                 PizzaRepository pizzaRepository, CustomerRepository customerRepository){
         return args -> {
 //            log.info("----------------------------");
 //            log.info("Drinks found with findAll():");
@@ -40,11 +41,17 @@ public class PitzaNFrytyApplication {
 //            log.info("Fries found with findAll():");
 //            friesRepository.findAll().forEach(fries -> log.info(fries.getId() + ", " + fries.getName()
 //                    + ", " + fries.getPrice() + ", " + fries.getImageURL()));
+//
+//            log.info("----------------------------");
+//            log.info("Pizzas found with findAll():");
+//            pizzaRepository.findAll().forEach(
+//                    pizza -> log.info(pizza.toString())
+//            );
 
             log.info("----------------------------");
-            log.info("Pizzas found with findAll():");
-            pizzaRepository.findAll().forEach(
-                    pizza -> log.info(pizza.toString())
+            log.info("Customers found with findAll():");
+            customerRepository.findAll().forEach(
+                    customer -> log.info(customer.toString())
             );
 
         };

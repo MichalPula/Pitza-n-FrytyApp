@@ -15,21 +15,27 @@ import java.util.List;
 public class Order {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", unique = true, updatable = false)
     private long id;
 
     @ManyToOne
+    @JoinColumn(name = "customer_id")
     private Customer customer;
 
     @ManyToOne
+    @JoinColumn(name = "address_id")
     private Address address;
 
-    @OneToMany(targetEntity = MenuItem.class)
-    @JoinTable(name = "users_orders")
-    //private List<? extends MenuItem> products;
-    private List<MenuItem> products;
+    @ManyToMany(targetEntity = MenuItem.class)
+    @JoinTable(name = "orders_menu_items",
+            joinColumns = {@JoinColumn(name = "order_id")},
+            inverseJoinColumns = {@JoinColumn(name = "menu_item_id")})
+    private List<? extends MenuItem> menuItems;
 
-    @OneToOne
+    @NotNull
+    @OneToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "payment_id")
     private Payment payment;
 
     @NotNull
@@ -40,10 +46,10 @@ public class Order {
     @Column(name = "delivery_time")
     private LocalDateTime deliveryTime;
 
-    public Order(Customer customer, Address address, List<MenuItem> products, Payment payment, LocalDateTime creationTime, LocalDateTime deliveryTime) {
+    public Order(Customer customer, Address address, List<MenuItem> menuItems, Payment payment, LocalDateTime creationTime, LocalDateTime deliveryTime) {
         this.customer = customer;
         this.address = address;
-        this.products = products;
+        this.menuItems = menuItems;
         this.payment = payment;
         this.creationTime = creationTime;
         this.deliveryTime = deliveryTime;
@@ -76,12 +82,12 @@ public class Order {
         this.address = address;
     }
 
-    public List<MenuItem> getProducts() {
-        return products;
+    public List<? extends MenuItem> getMenuItems() {
+        return menuItems;
     }
 
-    public void setProducts(List<MenuItem> products) {
-        this.products = products;
+    public void setMenuItems(List<? extends MenuItem> menuItems) {
+        this.menuItems = menuItems;
     }
 
     public Payment getPayment() {
