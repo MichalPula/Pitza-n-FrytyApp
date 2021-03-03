@@ -12,28 +12,30 @@ import java.util.Set;
 public class Drink extends MenuItem {
 
     @LazyCollection(LazyCollectionOption.FALSE)
-    @OneToMany(targetEntity = DrinkType.class)
-    @JoinTable(name = "drinks_types")
-    private Set<DrinkType> drinkType;
+    @OneToMany(targetEntity = DrinkSize.class, cascade = CascadeType.PERSIST)
+    @JoinTable(name = "drinks_sizes",
+            joinColumns = {@JoinColumn(name = "drink_id")},
+            inverseJoinColumns = {@JoinColumn(name = "drink_size_id")})
+    private Set<DrinkSize> drinkSizes;
 
-    public Drink(String name, Set<DrinkType> drinkType, boolean isAvailable, String imageURL) {
+    public Drink(String name, Set<DrinkSize> drinkSizes, boolean isAvailable, String imageURL) {
         super(name, isAvailable, imageURL);
-        this.drinkType = drinkType;
+        this.drinkSizes = drinkSizes;
     }
 
-    public Drink(String name, Set<DrinkType> drinkType, String imageURL) {
+    public Drink(String name, Set<DrinkSize> drinkSizes, String imageURL) {
         super(name, imageURL);
-        this.drinkType = drinkType;
+        this.drinkSizes = drinkSizes;
     }
 
     public Drink() {
     }
 
-    public Set<DrinkType> getDrinkTypes() {
-        return drinkType;
+    public Set<DrinkSize> getDrinkTypes() {
+        return drinkSizes;
     }
 
-    public void setDrinkTypes(Set<DrinkType> drinkType) {
-        this.drinkType = drinkType;
+    public void setDrinkTypes(Set<DrinkSize> drinkSizes) {
+        this.drinkSizes = drinkSizes;
     }
 }

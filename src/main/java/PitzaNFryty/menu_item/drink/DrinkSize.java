@@ -3,22 +3,22 @@ package PitzaNFryty.menu_item.drink;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "drinks_sizes")
-public class DrinkType {
+@Table(name = "drinks_sizes_prices")
+public class DrinkSize {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "drink_size", unique = true)
+    @Column(name = "drink_size_price", unique = true)
     private DrinkSizePrice sizePrice;
 
-    public DrinkType(DrinkSizePrice sizePrice) {
+    public DrinkSize(DrinkSizePrice sizePrice) {
         this.sizePrice = sizePrice;
     }
 
-    public DrinkType() {
+    public DrinkSize() {
 
     }
 

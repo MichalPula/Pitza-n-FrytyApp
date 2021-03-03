@@ -7,6 +7,6 @@ import java.util.List;
 import java.util.Set;
 
 @Repository
-public interface DrinkTypeRepository extends JpaRepository<DrinkType, Long> {
-    Set<DrinkType> findDrinkTypesBySizePriceIn(List<DrinkSizePrice> sizePrices);
+public interface DrinkTypeRepository extends JpaRepository<DrinkSize, Long> {
+    Set<DrinkSize> findDrinkTypesBySizePriceIn(List<DrinkSizePrice> sizePrices);
 }

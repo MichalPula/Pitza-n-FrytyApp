@@ -27,15 +27,15 @@ public class PitzaNFrytyApplication {
     public CommandLineRunner clr(DrinkRepository drinkRepository, FriesRepository friesRepository,
                                  PizzaRepository pizzaRepository, CustomerRepository customerRepository){
         return args -> {
-//            log.info("----------------------------");
-//            log.info("Drinks found with findAll():");
-//            drinkRepository.findAll().forEach(
-//                    drink -> log.info(drink.getId() + ", "
-//                            + drink.getName() + ", "
-//                            + Arrays.toString(drink.getDrinkTypes().toArray()) + ", "
-//                            + drink.getImageURL() + ", "
-//                            + drink.isIsAvailable()));
-//
+            log.info("----------------------------");
+            log.info("Drinks found with findAll():");
+            drinkRepository.findAll().forEach(
+                    drink -> log.info(drink.getId() + ", "
+                            + drink.getName() + ", "
+                            + Arrays.toString(drink.getDrinkTypes().toArray()) + ", "
+                            + drink.getImageURL() + ", "
+                            + drink.isIsAvailable()));
+
 //
 //            log.info("----------------------------");
 //            log.info("Fries found with findAll():");
@@ -48,11 +48,11 @@ public class PitzaNFrytyApplication {
 //                    pizza -> log.info(pizza.toString())
 //            );
 
-            log.info("----------------------------");
-            log.info("Customers found with findAll():");
-            customerRepository.findAll().forEach(
-                    customer -> log.info(customer.toString())
-            );
+//            log.info("----------------------------");
+//            log.info("Customers found with findAll():");
+//            customerRepository.findAll().forEach(
+//                    customer -> log.info(customer.toString())
+//            );
 
         };
     }
