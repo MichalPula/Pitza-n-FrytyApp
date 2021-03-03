@@ -36,21 +36,19 @@ public class PitzaNFrytyApplication {
 //                            + drink.getImageURL() + ", "
 //                            + drink.isIsAvailable()));
 
+//            log.info("----------------------------");
+//            log.info("Fries found with findAll():");
+//            friesRepository.findAll().forEach(fries -> log.info(
+//                    fries.getId() + ", "
+//                    + fries.getName() + ", "
+//                    + Arrays.toString(fries.getFriesSizes().toArray()) + ", "
+//                    + fries.getImageURL()));
 
             log.info("----------------------------");
-            log.info("Fries found with findAll():");
-            friesRepository.findAll().forEach(fries -> log.info(fries.getId() + ", "
-                    + fries.getName() + ", "
-                    + Arrays.toString(fries.getFriesSizes().toArray()) + ", "
-                    + fries.getImageURL()));
-
-
-
-//            log.info("----------------------------");
-//            log.info("Pizzas found with findAll():");
-//            pizzaRepository.findAll().forEach(
-//                    pizza -> log.info(pizza.toString())
-//            );
+            log.info("Pizzas found with findAll():");
+            pizzaRepository.findAll().forEach(
+                    pizza -> log.info(pizza.toString())
+            );
 
 //            log.info("----------------------------");
 //            log.info("Customers found with findAll():");
