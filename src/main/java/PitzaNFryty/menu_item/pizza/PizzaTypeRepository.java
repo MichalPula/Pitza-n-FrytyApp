@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface PizzaTypeRepository extends JpaRepository<PizzaType, Long> {
-    List<PizzaType> findPizzaTypesBySizePriceIn(List<PizzaSizePrice> sizePrices);
+public interface PizzaTypeRepository extends JpaRepository<PizzaSize, Long> {
+    List<PizzaSize> findPizzaTypesBySizePriceIn(List<PizzaSizePrice> sizePrices);
 
 }

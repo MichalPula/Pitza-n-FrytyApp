@@ -15,23 +15,29 @@ import java.util.Set;
 public class Pizza extends MenuItem {
 
     @LazyCollection(LazyCollectionOption.FALSE)
-    @OneToMany(targetEntity = PizzaType.class)
-    @JoinTable(name = "pizzas_types")
-    private Set<PizzaType> pizzaTypes;
+    @OneToMany(targetEntity = PizzaSize.class, cascade = CascadeType.PERSIST)
+    @JoinTable(name = "pizzas_sizes",
+            joinColumns = {@JoinColumn(name = "pizza_id")},
+            inverseJoinColumns = {@JoinColumn(name = "pizza_size_id")})
+    private Set<PizzaSize> pizzaSizes;
 
     @LazyCollection(LazyCollectionOption.FALSE)
-    @ManyToMany(targetEntity = Ingredient.class)
-    @JoinTable(name = "pizza_ingredients")
+    @ManyToMany(targetEntity = Ingredient.class, cascade = CascadeType.MERGE)
+    @JoinTable(name = "pizza_ingredients",
+            joinColumns = {@JoinColumn(name = "pizza_id")},
+            inverseJoinColumns = {@JoinColumn(name = "ingredient_id")})
     private List<Ingredient> ingredients;
 
     @LazyCollection(LazyCollectionOption.FALSE)
-    @ManyToMany(targetEntity = Sauce.class)
-    @JoinTable(name = "pizza_sauces")
+    @ManyToMany(targetEntity = Sauce.class, cascade = CascadeType.MERGE)
+    @JoinTable(name = "pizza_sauces",
+            joinColumns = {@JoinColumn(name = "pizza_id")},
+            inverseJoinColumns = {@JoinColumn(name = "sauce_id")})
     private List<Sauce> sauces;
 
-    public Pizza(String name, Set<PizzaType> pizzaTypes, List<Ingredient> ingredients, List<Sauce> sauces, String imageURL) {
+    public Pizza(String name, Set<PizzaSize> pizzaSizes, List<Ingredient> ingredients, List<Sauce> sauces, String imageURL) {
         super(name, imageURL);
-        this.pizzaTypes = pizzaTypes;
+        this.pizzaSizes = pizzaSizes;
         this.ingredients = ingredients;
         this.sauces = sauces;
     }
@@ -40,12 +46,12 @@ public class Pizza extends MenuItem {
 
     }
 
-    public Set<PizzaType> getPizzaTypes() {
-        return pizzaTypes;
+    public Set<PizzaSize> getPizzaTypes() {
+        return pizzaSizes;
     }
 
-    public void setPizzaTypes(Set<PizzaType> pizzaTypes) {
-        this.pizzaTypes = pizzaTypes;
+    public void setPizzaTypes(Set<PizzaSize> pizzaSizes) {
+        this.pizzaSizes = pizzaSizes;
     }
 
     public List<Ingredient> getIngredients() {
@@ -75,10 +81,12 @@ public class Pizza extends MenuItem {
         this.sauces.forEach(sauce ->
                 sb.append(sauce.getName()).append(", "));
         sb.append("], ");
-        this.pizzaTypes.forEach(pizzaType ->
-                sb.append(pizzaType.getSizePrice().name()).append(", ")
-                .append(pizzaType.getSizePrice().getPrice()).append("PLN, ")
-                .append(pizzaType.getSizePrice().getDiameter()).append("cm, "));
+        this.pizzaSizes.forEach(pizzaSize ->
+            sb.append("[")
+                    .append(pizzaSize.getSizePrice().name()).append(", ")
+                    .append(pizzaSize.getSizePrice().getDiameter()).append("cm, ")
+                    .append(pizzaSize.getSizePrice().getPrice()).append("PLN")
+                    .append("] "));
         sb.append(getImageURL());
         return sb.toString();
     }
