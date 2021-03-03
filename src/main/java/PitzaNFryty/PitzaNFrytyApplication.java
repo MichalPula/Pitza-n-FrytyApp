@@ -27,21 +27,25 @@ public class PitzaNFrytyApplication {
     public CommandLineRunner clr(DrinkRepository drinkRepository, FriesRepository friesRepository,
                                  PizzaRepository pizzaRepository, CustomerRepository customerRepository){
         return args -> {
-            log.info("----------------------------");
-            log.info("Drinks found with findAll():");
-            drinkRepository.findAll().forEach(
-                    drink -> log.info(drink.getId() + ", "
-                            + drink.getName() + ", "
-                            + Arrays.toString(drink.getDrinkTypes().toArray()) + ", "
-                            + drink.getImageURL() + ", "
-                            + drink.isIsAvailable()));
-
-//
 //            log.info("----------------------------");
-//            log.info("Fries found with findAll():");
-//            friesRepository.findAll().forEach(fries -> log.info(fries.getId() + ", " + fries.getName()
-//                    + ", " + fries.getPrice() + ", " + fries.getImageURL()));
-//
+//            log.info("Drinks found with findAll():");
+//            drinkRepository.findAll().forEach(
+//                    drink -> log.info(drink.getId() + ", "
+//                            + drink.getName() + ", "
+//                            + Arrays.toString(drink.getDrinkSizes().toArray()) + ", "
+//                            + drink.getImageURL() + ", "
+//                            + drink.isIsAvailable()));
+
+
+            log.info("----------------------------");
+            log.info("Fries found with findAll():");
+            friesRepository.findAll().forEach(fries -> log.info(fries.getId() + ", "
+                    + fries.getName() + ", "
+                    + Arrays.toString(fries.getFriesSizes().toArray()) + ", "
+                    + fries.getImageURL()));
+
+
+
 //            log.info("----------------------------");
 //            log.info("Pizzas found with findAll():");
 //            pizzaRepository.findAll().forEach(

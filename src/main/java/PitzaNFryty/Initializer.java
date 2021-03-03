@@ -3,6 +3,8 @@ package PitzaNFryty;
 import PitzaNFryty.menu_item.drink.*;
 import PitzaNFryty.menu_item.fries.Fries;
 import PitzaNFryty.menu_item.fries.FriesRepository;
+import PitzaNFryty.menu_item.fries.FriesSize;
+import PitzaNFryty.menu_item.fries.FriesSizePrice;
 import PitzaNFryty.menu_item.ingredient.Ingredient;
 import PitzaNFryty.menu_item.ingredient.IngredientRepository;
 import PitzaNFryty.menu_item.pizza.*;
@@ -34,10 +36,9 @@ public class Initializer {
         drinkRepository.save(new Drink("Orange juice", Stream.of(new DrinkSize(DrinkSizePrice.SMALL_ORANGE_JUICE), new DrinkSize(DrinkSizePrice.MEDIUM_ORANGE_JUICE), new DrinkSize(DrinkSizePrice.LARGE_ORANGE_JUICE)).collect(Collectors.toSet()), "orangejuiceurl"));
         drinkRepository.save(new Drink("Apple juice", Stream.of(new DrinkSize(DrinkSizePrice.SMALL_APPLE_JUICE), new DrinkSize(DrinkSizePrice.MEDIUM_APPLE_JUICE), new DrinkSize(DrinkSizePrice.LARGE_APPLE_JUICE)).collect(Collectors.toSet()), "applejuiceurl"));
 
-//        friesRepository.save(new Fries("Small fries", 2, "smallfriesurl"));
-//        friesRepository.save(new Fries("Medium fries", 3, "mediumfriesurl"));
-//        friesRepository.save(new Fries("Large fries", 5, "largefriesurl"));
-//
+        friesRepository.save(new Fries("Fries", Stream.of(new FriesSize(FriesSizePrice.SMALL_FRIES), new FriesSize(FriesSizePrice.MEDIUM_FRIES), new FriesSize(FriesSizePrice.LARGE_FRIES)).collect(Collectors.toSet()), "friesurl"));
+
+
 //        Arrays.stream(PizzaSizePrice.values()).forEach(pizzaSizePrice -> {
 //            PizzaType pizzaType = new PizzaType(pizzaSizePrice);
 //            pizzaTypeRepository.save(pizzaType);

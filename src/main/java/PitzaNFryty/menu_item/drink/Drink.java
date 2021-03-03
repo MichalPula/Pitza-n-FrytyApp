@@ -31,11 +31,11 @@ public class Drink extends MenuItem {
     public Drink() {
     }
 
-    public Set<DrinkSize> getDrinkTypes() {
+    public Set<DrinkSize> getDrinkSizes() {
         return drinkSizes;
     }
 
-    public void setDrinkTypes(Set<DrinkSize> drinkSizes) {
+    public void setDrinkSizes(Set<DrinkSize> drinkSizes) {
         this.drinkSizes = drinkSizes;
     }
 }

@@ -1,32 +1,41 @@
 package PitzaNFryty.menu_item.fries;
 
 import PitzaNFryty.menu_item.MenuItem;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "fries")
 public class Fries extends MenuItem {
 
-    private int price;
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @OneToMany(targetEntity = FriesSize.class, cascade = CascadeType.PERSIST)
+    @JoinTable(name = "fries_sizes",
+            joinColumns = {@JoinColumn(name = "fries_id")},
+            inverseJoinColumns = {@JoinColumn(name = "fries_size_id")})
+    private Set<FriesSize> friesSizes;
 
     public Fries() {
     }
 
-    public Fries(String name, int price, boolean isAvailable, String imageURL) {
+    public Fries(String name, Set<FriesSize> friesSizes, boolean isAvailable, String imageURL) {
         super(name, isAvailable, imageURL);
-        this.price = price;
+        this.friesSizes = friesSizes;
     }
 
-    public Fries(String name, int price,  String imageURL) {
+    public Fries(String name, Set<FriesSize> friesSizes, String imageURL) {
         super(name, imageURL);
-        this.price = price;
+        this.friesSizes = friesSizes;
     }
 
-    public int getPrice() {
-        return price;
+    public Set<FriesSize> getFriesSizes() {
+        return friesSizes;
     }
 
-    public void setPrice(int price) {
-        this.price = price;
+    public void setFriesSizes(Set<FriesSize> friesSizes) {
+        this.friesSizes = friesSizes;
     }
 }
