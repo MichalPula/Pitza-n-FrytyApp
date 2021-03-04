@@ -11,9 +11,12 @@ import PitzaNFryty.menu_item.pizza.*;
 import PitzaNFryty.menu_item.sauce.Sauce;
 import PitzaNFryty.menu_item.sauce.SauceRepository;
 import PitzaNFryty.order.OrderRepository;
+import PitzaNFryty.payment.Payment;
 import PitzaNFryty.payment.PaymentRepository;
+import org.joda.money.Money;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -111,17 +114,19 @@ public class Initializer {
 
 
 
-//        Address address1 = new Address("Kraków", "22-222", "Zielona", "23", "1A");
-//        Address address2 = new Address("Kraków", "33-333", "Czerwona", "11", "5");
-//        Customer customerJoe = new Customer("Joe", "Mama", 12345689, Stream.of(address1, address2).collect(Collectors.toSet()),null);
-//
-//        Payment payment1 = new Payment(customerJoe, Money.parse("PLN 55.99"), LocalDateTime.now().minusHours(1));
-//        Payment payment2 = new Payment(customerJoe, Money.parse("PLN 28.99"), LocalDateTime.now());
-//        Order order1 = new Order(customerJoe, address1, Arrays.asList(margherita, capricciosa),  payment1, LocalDateTime.now(), LocalDateTime.now().plusMinutes(30));
-//        //Order order2 = new Order(customerJoe, address2, Arrays.asList(capricciosa), payment2, LocalDateTime.now(), LocalDateTime.now().plusMinutes(30));
-//        customerJoe.setOrders(Stream.of(order1).collect(Collectors.toSet()));
-//
-//
-//        customerRepository.save(customerJoe);
+        Address address1 = new Address("Kraków", "11-111", "Zielona", "1", "1A");
+        Address address2 = new Address("Kraków", "33-333", "Czerwona", "2", "2B");
+
+        //Customer customerJoe = new Customer("Joe", "Mama", 222222222, Stream.of(address1, address2).collect(Collectors.toSet()),null);
+
+        //Payment payment1 = new Payment(customerJoe, Money.parse("PLN 55.99"), LocalDateTime.now().minusHours(1));
+        //Payment payment2 = new Payment(customerJoe, Money.parse("PLN 28.99"), LocalDateTime.now());
+
+        //Order order2 = new Order(customerJoe, address2, Arrays.asList(capricciosa), payment2, LocalDateTime.now(), LocalDateTime.now().plusMinutes(30));
+        //customerJoe.setOrders(Stream.of(order1).collect(Collectors.toSet()));
+
+        //Customer customerJoe = new Customer("Joe", "Mama", 111111111, Stream.of(address1, address2).collect(Collectors.toSet()),null);
+        //Order order1 = new Order(customerJoe, address1, Arrays.asList(margherita, capricciosa),  payment1, LocalDateTime.now(), LocalDateTime.now().plusMinutes(30));
+        //customerRepository.save(customerJoe);
     }
 }

@@ -44,19 +44,17 @@ public class PitzaNFrytyApplication {
 //                    + Arrays.toString(fries.getFriesSizes().toArray()) + ", "
 //                    + fries.getImageURL()));
 
-            log.info("----------------------------");
-            log.info("Pizzas found with findAll():");
-            pizzaRepository.findAll().forEach(
-                    pizza -> log.info(pizza.toString())
-            );
-
 //            log.info("----------------------------");
-//            log.info("Customers found with findAll():");
-//            customerRepository.findAll().forEach(
-//                    customer -> log.info(customer.toString())
+//            log.info("Pizzas found with findAll():");
+//            pizzaRepository.findAll().forEach(
+//                    pizza -> log.info(pizza.toString())
 //            );
 
+            log.info("----------------------------");
+            log.info("Customers found with findAll():");
+            customerRepository.findAll().forEach(
+                    customer -> log.info(customer.toString())
+            );
         };
     }
-
 }

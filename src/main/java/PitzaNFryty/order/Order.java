@@ -22,11 +22,11 @@ public class Order {
     @Column(name = "id", unique = true, updatable = false)
     private long id;
 
-    @ManyToOne
+    @ManyToOne(targetEntity = Customer.class, cascade = CascadeType.MERGE)
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
-    @ManyToOne
+    @ManyToOne(targetEntity = Address.class, cascade = CascadeType.MERGE)
     @JoinColumn(name = "address_id")
     private Address address;
 
@@ -38,7 +38,7 @@ public class Order {
     private List<? extends MenuItem> menuItems;
 
     @NotNull
-    @OneToOne(cascade = CascadeType.PERSIST)
+    @OneToOne(targetEntity = Payment.class, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "payment_id")
     private Payment payment;
 
