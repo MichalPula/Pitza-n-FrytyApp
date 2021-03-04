@@ -3,7 +3,6 @@ package PitzaNFryty.order;
 import PitzaNFryty.address.Address;
 import PitzaNFryty.customer.Customer;
 import PitzaNFryty.menu_item.MenuItem;
-import PitzaNFryty.menu_item.pizza.Pizza;
 import PitzaNFryty.payment.Payment;
 import com.sun.istack.NotNull;
 import org.hibernate.annotations.LazyCollection;
@@ -31,7 +30,7 @@ public class Order {
     private Address address;
 
     @LazyCollection(LazyCollectionOption.FALSE)
-    @ManyToMany(targetEntity = MenuItem.class, cascade = CascadeType.PERSIST)
+    @ManyToMany(targetEntity = MenuItem.class, cascade = CascadeType.MERGE)
     @JoinTable(name = "orders_menu_items",
             joinColumns = {@JoinColumn(name = "order_id")},
             inverseJoinColumns = {@JoinColumn(name = "menu_item_id")})
@@ -76,6 +75,12 @@ public class Order {
 
     public void setCustomer(Customer customer) {
         this.customer = customer;
+    }
+    public void setCustomer(Customer customer, boolean add) {
+        this.customer = customer;
+        if(customer != null && add) {
+            customer.addOrder(this, false);
+        }
     }
 
     public Address getAddress() {
@@ -122,19 +127,15 @@ public class Order {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("[")
-                .append(this.customer.getFirstName()).append(", ")
+                .append(this.customer.getFirstName()).append(" ").append(this.customer.getLastName()).append(", ")
                 .append(this.address.getStreet()).append(this.address.getBuildingNumber()).append(", ");
+        sb.append("{");
         menuItems.forEach(menuItem -> {
-            sb.append(menuItem.getName());
-            if(menuItem instanceof Pizza){
-                sb.append("{");
-                ((Pizza) menuItem).getIngredients().forEach(ingredient -> sb.append(ingredient.getName()).append(","));
-                sb.append("}");
-            }
+            sb.append(menuItem.getName()).append(", ");
         });
+        sb.append("}");
         sb.append(this.payment.getMoney().getAmount()).append(", ")
-        .append(this.creationTime).append(", ")
-        .append(this.deliveryTime).append("]");
+        .append(this.creationTime).append("]");
         return sb.toString();
     }
 }

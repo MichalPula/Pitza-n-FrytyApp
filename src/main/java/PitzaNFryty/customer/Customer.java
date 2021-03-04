@@ -96,10 +96,28 @@ public class Customer {
         this.orders = orders;
     }
 
+    public void addOrder(Order order) {
+        this.addOrder(order, true);
+    }
+
+    public void addOrder(Order order, boolean set) {
+        if(order != null) {
+            this.getOrders().add(order);
+            if(set) {
+                order.setCustomer(this, false);
+            }
+        }
+    }
+
+    public void deleteOrder(Order order) {
+        this.getOrders().remove(order);
+        order.setCustomer(null);
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(this.firstName).append(", ")
+        sb.append(this.firstName).append(" ")
                 .append(this.lastName).append(", ")
                 .append(this.phoneNumber).append(", ");
         this.addresses.forEach(address -> sb.append(address.toString()));
