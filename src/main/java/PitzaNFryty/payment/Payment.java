@@ -16,7 +16,7 @@ public class Payment {
     @Column(name = "id", unique = true, updatable = false)
     private long id;
 
-    @ManyToOne
+    @ManyToOne(targetEntity = Customer.class, cascade = CascadeType.MERGE)
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
