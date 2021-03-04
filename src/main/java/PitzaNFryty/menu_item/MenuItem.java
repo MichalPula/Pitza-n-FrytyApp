@@ -51,7 +51,7 @@ public class MenuItem {
         this.name = name;
     }
 
-    public boolean isIsAvailable() {
+    public boolean isAvailable() {
         return isAvailable;
     }
 
