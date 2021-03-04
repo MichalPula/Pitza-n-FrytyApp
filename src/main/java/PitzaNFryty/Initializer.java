@@ -10,12 +10,19 @@ import PitzaNFryty.menu_item.ingredient.IngredientRepository;
 import PitzaNFryty.menu_item.pizza.*;
 import PitzaNFryty.menu_item.sauce.Sauce;
 import PitzaNFryty.menu_item.sauce.SauceRepository;
+import PitzaNFryty.order.Order;
 import PitzaNFryty.order.OrderRepository;
 import PitzaNFryty.payment.Payment;
 import PitzaNFryty.payment.PaymentRepository;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
+import org.apache.catalina.User;
 import org.joda.money.Money;
 import org.springframework.stereotype.Service;
 
+import java.lang.reflect.Type;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -24,23 +31,26 @@ import java.util.stream.Stream;
 @Service
 public class Initializer {
     public Initializer(DrinkRepository drinkRepository, FriesRepository friesRepository,
-                       DrinkTypeRepository drinkTypeRepository, IngredientRepository ingredientRepository,
+                       IngredientRepository ingredientRepository,
                        SauceRepository sauceRepository, PizzaRepository pizzaRepository,
-                       PizzaTypeRepository pizzaTypeRepository, AddressRepository addressRepository,
+                       PizzaSizeRepository pizzaSizeRepository, AddressRepository addressRepository,
                        PaymentRepository paymentRepository, OrderRepository orderRepository,
-                       CustomerRepository customerRepository, MenuItemRepository menuItemRepository){
+                       CustomerRepository customerRepository, MenuItemRepository menuItemRepository) {
 
 
-        drinkRepository.save(new Drink("Coca-Cola", Stream.of(new DrinkSize(DrinkSizePrice.SMALL_COLA), new DrinkSize(DrinkSizePrice.MEDIUM_COLA), new DrinkSize(DrinkSizePrice.LARGE_COLA)).collect(Collectors.toSet()), "cocacolaurl"));
-        drinkRepository.save(new Drink("Pepsi", Stream.of(new DrinkSize(DrinkSizePrice.SMALL_PEPSI), new DrinkSize(DrinkSizePrice.MEDIUM_PEPSI), new DrinkSize(DrinkSizePrice.LARGE_PEPSI)).collect(Collectors.toSet()), "pepsiurl"));
-        drinkRepository.save(new Drink("Fanta", Stream.of(new DrinkSize(DrinkSizePrice.SMALL_FANTA), new DrinkSize(DrinkSizePrice.MEDIUM_FANTA), new DrinkSize(DrinkSizePrice.LARGE_FANTA)).collect(Collectors.toSet()),  "fantaurl"));
-        drinkRepository.save(new Drink("Sprite", Stream.of(new DrinkSize(DrinkSizePrice.SMALL_SPRITE), new DrinkSize(DrinkSizePrice.MEDIUM_SPRITE), new DrinkSize(DrinkSizePrice.LARGE_SPRITE)).collect(Collectors.toSet()), "spriteurl"));
-        drinkRepository.save(new Drink("Mirinda", Stream.of(new DrinkSize(DrinkSizePrice.SMALL_MIRINDA), new DrinkSize(DrinkSizePrice.MEDIUM_MIRINDA), new DrinkSize(DrinkSizePrice.LARGE_MIRINDA)).collect(Collectors.toSet()), "mirindaurl"));
-        drinkRepository.save(new Drink("Orange juice", Stream.of(new DrinkSize(DrinkSizePrice.SMALL_ORANGE_JUICE), new DrinkSize(DrinkSizePrice.MEDIUM_ORANGE_JUICE), new DrinkSize(DrinkSizePrice.LARGE_ORANGE_JUICE)).collect(Collectors.toSet()), "orangejuiceurl"));
-        drinkRepository.save(new Drink("Apple juice", Stream.of(new DrinkSize(DrinkSizePrice.SMALL_APPLE_JUICE), new DrinkSize(DrinkSizePrice.MEDIUM_APPLE_JUICE), new DrinkSize(DrinkSizePrice.LARGE_APPLE_JUICE)).collect(Collectors.toSet()), "applejuiceurl"));
+        Drink cocaCola = new Drink("Coca-Cola", Stream.of(new DrinkSize(DrinkSizePrice.SMALL_COLA), new DrinkSize(DrinkSizePrice.MEDIUM_COLA), new DrinkSize(DrinkSizePrice.LARGE_COLA)).collect(Collectors.toSet()), "cocacolaurl");
+        Drink pepsi = new Drink("Pepsi", Stream.of(new DrinkSize(DrinkSizePrice.SMALL_PEPSI), new DrinkSize(DrinkSizePrice.MEDIUM_PEPSI), new DrinkSize(DrinkSizePrice.LARGE_PEPSI)).collect(Collectors.toSet()), "pepsiurl");
+        Drink fanta = new Drink("Fanta", Stream.of(new DrinkSize(DrinkSizePrice.SMALL_FANTA), new DrinkSize(DrinkSizePrice.MEDIUM_FANTA), new DrinkSize(DrinkSizePrice.LARGE_FANTA)).collect(Collectors.toSet()), "fantaurl");
+        Drink sprite = new Drink("Sprite", Stream.of(new DrinkSize(DrinkSizePrice.SMALL_SPRITE), new DrinkSize(DrinkSizePrice.MEDIUM_SPRITE), new DrinkSize(DrinkSizePrice.LARGE_SPRITE)).collect(Collectors.toSet()), "spriteurl");
+        Drink mirinda = new Drink("Mirinda", Stream.of(new DrinkSize(DrinkSizePrice.SMALL_MIRINDA), new DrinkSize(DrinkSizePrice.MEDIUM_MIRINDA), new DrinkSize(DrinkSizePrice.LARGE_MIRINDA)).collect(Collectors.toSet()), "mirindaurl");
+        Drink orangeJuice = new Drink("Orange juice", Stream.of(new DrinkSize(DrinkSizePrice.SMALL_ORANGE_JUICE), new DrinkSize(DrinkSizePrice.MEDIUM_ORANGE_JUICE), new DrinkSize(DrinkSizePrice.LARGE_ORANGE_JUICE)).collect(Collectors.toSet()), "orangejuiceurl");
+        Drink appleJuice = new Drink("Apple juice", Stream.of(new DrinkSize(DrinkSizePrice.SMALL_APPLE_JUICE), new DrinkSize(DrinkSizePrice.MEDIUM_APPLE_JUICE), new DrinkSize(DrinkSizePrice.LARGE_APPLE_JUICE)).collect(Collectors.toSet()), "applejuiceurl");
+        List<Drink> allDrinks = new ArrayList<>(Arrays.asList(cocaCola, pepsi, fanta, sprite, mirinda, orangeJuice, appleJuice));
+        drinkRepository.saveAll(allDrinks);
 
 
-        friesRepository.save(new Fries("Fries", Stream.of(new FriesSize(FriesSizePrice.SMALL_FRIES), new FriesSize(FriesSizePrice.MEDIUM_FRIES), new FriesSize(FriesSizePrice.LARGE_FRIES)).collect(Collectors.toSet()), "friesurl"));
+        Fries fries = new Fries("Fries", Stream.of(new FriesSize(FriesSizePrice.SMALL_FRIES), new FriesSize(FriesSizePrice.MEDIUM_FRIES), new FriesSize(FriesSizePrice.LARGE_FRIES)).collect(Collectors.toSet()), "friesurl");
+        friesRepository.save(fries);
 
 
         Ingredient mozzarella = new Ingredient("Mozzarella cheese");
@@ -75,58 +85,55 @@ public class Initializer {
 
 
         Set<PizzaSize> margheritaTypes = Stream.of(new PizzaSize(PizzaSizePrice.SMALL_MARGHERITA), new PizzaSize(PizzaSizePrice.MEDIUM_MARGHERITA), new PizzaSize(PizzaSizePrice.LARGE_MARGHERITA)).collect(Collectors.toSet());
-        pizzaRepository.save(new Pizza("Margherita", margheritaTypes, basicIngredients, basicSauces, "margheritaurl"));
+        Pizza margherita = new Pizza("Margherita", margheritaTypes, basicIngredients, basicSauces, "margheritaurl");
 
         Set<PizzaSize> capricciosaTypes = Stream.of(new PizzaSize(PizzaSizePrice.SMALL_CAPRICCIOSA), new PizzaSize(PizzaSizePrice.MEDIUM_CAPRICCIOSA), new PizzaSize(PizzaSizePrice.LARGE_CAPRICCIOSA)).collect(Collectors.toSet());
         List<Ingredient> capricciosaIngredients = new ArrayList<>(basicIngredients);
         capricciosaIngredients.addAll(Arrays.asList(ham, mushrooms));
-        pizzaRepository.save(new Pizza("Capricciosa", capricciosaTypes, capricciosaIngredients, basicSauces, "capricciosaurl"));
+        Pizza capricciosa = new Pizza("Capricciosa", capricciosaTypes, capricciosaIngredients, basicSauces, "capricciosaurl");
 
         Set<PizzaSize> pepperoniTypes = Stream.of(new PizzaSize(PizzaSizePrice.SMALL_PEPPERONI), new PizzaSize(PizzaSizePrice.MEDIUM_PEPPERONI), new PizzaSize(PizzaSizePrice.LARGE_PEPPERONI)).collect(Collectors.toSet());
         List<Ingredient> pepperoniIngredients = new ArrayList<>(basicIngredients);
         pepperoniIngredients.addAll(Arrays.asList(pepperoni));
-        pizzaRepository.save(new Pizza("Pepperoni", pepperoniTypes, pepperoniIngredients, basicSauces, "pepperoniurl"));
+        Pizza pepperoniPizza = new Pizza("Pepperoni", pepperoniTypes, pepperoniIngredients, basicSauces, "pepperoniurl");
 
         Set<PizzaSize> hawaiianTypes = Stream.of(new PizzaSize(PizzaSizePrice.SMALL_HAWAIIAN), new PizzaSize(PizzaSizePrice.MEDIUM_HAWAIIAN), new PizzaSize(PizzaSizePrice.LARGE_HAWAIIAN)).collect(Collectors.toSet());
         List<Ingredient> hawaiianIngredients = new ArrayList<>(basicIngredients);
         hawaiianIngredients.addAll(Arrays.asList(ham, pineapple));
-        pizzaRepository.save(new Pizza("Hawaiian", hawaiianTypes, hawaiianIngredients, basicSauces, "hawaiianurl"));
+        Pizza hawaiian = new Pizza("Hawaiian", hawaiianTypes, hawaiianIngredients, basicSauces, "hawaiianurl");
 
         Set<PizzaSize> farmerTypes = Stream.of(new PizzaSize(PizzaSizePrice.SMALL_FARMER), new PizzaSize(PizzaSizePrice.MEDIUM_FARMER), new PizzaSize(PizzaSizePrice.LARGE_FARMER)).collect(Collectors.toSet());
         List<Ingredient> farmerIngredients = new ArrayList<>(basicIngredients);
         farmerIngredients.addAll(Arrays.asList(chicken, bacon, greenPepper, redOnion));
-        pizzaRepository.save(new Pizza("Farmer", farmerTypes, farmerIngredients, basicSauces, "farmerurl"));
+        Pizza farmer = new Pizza("Farmer", farmerTypes, farmerIngredients, basicSauces, "farmerurl");
 
         Set<PizzaSize> meatTypes = Stream.of(new PizzaSize(PizzaSizePrice.SMALL_MEAT), new PizzaSize(PizzaSizePrice.MEDIUM_MEAT), new PizzaSize(PizzaSizePrice.LARGE_MEAT)).collect(Collectors.toSet());
         List<Ingredient> meatIngredients = new ArrayList<>(basicIngredients);
         meatIngredients.addAll(Arrays.asList(beef, bacon, pepperoni));
-        pizzaRepository.save(new Pizza("Meat", meatTypes, meatIngredients, basicSauces, "meaturl"));
+        Pizza meat = new Pizza("Meat", meatTypes, meatIngredients, basicSauces, "meaturl");
 
         Set<PizzaSize> parmaTypes = Stream.of(new PizzaSize(PizzaSizePrice.SMALL_PARMA), new PizzaSize(PizzaSizePrice.MEDIUM_PARMA), new PizzaSize(PizzaSizePrice.LARGE_PARMA)).collect(Collectors.toSet());
         List<Ingredient> parmaIngredients = new ArrayList<>(basicIngredients);
         parmaIngredients.addAll(Arrays.asList(parmaHam, arugula, cherryTomatoes, parmesanCheese));
-        pizzaRepository.save(new Pizza("Parma", parmaTypes, parmaIngredients, basicSauces, "parmanurl"));
+        Pizza parma = new Pizza("Parma", parmaTypes, parmaIngredients, basicSauces, "parmanurl");
 
-
-
-
-
-
+        List<Pizza> allPizzas = new ArrayList<>(Arrays.asList(margherita, capricciosa, pepperoniPizza, hawaiian, farmer, meat, parma));
+        pizzaRepository.saveAll(allPizzas);
 
 
         Address address1 = new Address("Kraków", "11-111", "Zielona", "1", "1A");
         Address address2 = new Address("Kraków", "33-333", "Czerwona", "2", "2B");
 
-        //Customer customerJoe = new Customer("Joe", "Mama", 222222222, Stream.of(address1, address2).collect(Collectors.toSet()),null);
+        Customer customerJoe = new Customer("Joe", "Mama", 111111111, Stream.of(address1, address2).collect(Collectors.toSet()), new HashSet<>());
+        Payment payment1 = new Payment(customerJoe, Money.parse("PLN 92.00"), LocalDateTime.now().minusHours(1));
+        Payment payment2 = new Payment(customerJoe, Money.parse("PLN 40.00"), LocalDateTime.now());
+        Order order1 = new Order(customerJoe, address1, Arrays.asList(parma, pepperoniPizza, pepsi), payment1, LocalDateTime.now(), LocalDateTime.now().plusMinutes(30));
+        Order order2 = new Order(customerJoe, address1, Arrays.asList(hawaiian), payment2, LocalDateTime.now(), LocalDateTime.now().plusMinutes(30));
+        customerJoe.setOrders(Stream.of(order1, order2).collect(Collectors.toSet()));
+        customerRepository.save(customerJoe);
 
-        //Payment payment1 = new Payment(customerJoe, Money.parse("PLN 55.99"), LocalDateTime.now().minusHours(1));
-        //Payment payment2 = new Payment(customerJoe, Money.parse("PLN 28.99"), LocalDateTime.now());
 
-        //Order order2 = new Order(customerJoe, address2, Arrays.asList(capricciosa), payment2, LocalDateTime.now(), LocalDateTime.now().plusMinutes(30));
-        //customerJoe.setOrders(Stream.of(order1).collect(Collectors.toSet()));
 
-        //Customer customerJoe = new Customer("Joe", "Mama", 111111111, Stream.of(address1, address2).collect(Collectors.toSet()),null);
-        //Order order1 = new Order(customerJoe, address1, Arrays.asList(margherita, capricciosa),  payment1, LocalDateTime.now(), LocalDateTime.now().plusMinutes(30));
-        //customerRepository.save(customerJoe);
+
     }
 }
