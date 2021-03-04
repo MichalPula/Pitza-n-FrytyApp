@@ -41,6 +41,6 @@ public class DrinkSize {
     @Override
     public String toString() {
         return this.getSizePrice().name() + "-" +
-                this.getSizePrice().getPrice();
+                this.getSizePrice().getPrice() +"PLN";
     }
 }

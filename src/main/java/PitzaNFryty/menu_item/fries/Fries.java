@@ -38,4 +38,14 @@ public class Fries extends MenuItem {
     public void setFriesSizes(Set<FriesSize> friesSizes) {
         this.friesSizes = friesSizes;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(getName())
+                .append("[");
+        this.friesSizes.forEach(friesSize -> sb.append(friesSize.toString()).append(", "));
+        sb.append("]");
+        return sb.toString();
+    }
 }

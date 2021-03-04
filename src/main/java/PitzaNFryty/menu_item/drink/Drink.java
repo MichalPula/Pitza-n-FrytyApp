@@ -38,4 +38,14 @@ public class Drink extends MenuItem {
     public void setDrinkSizes(Set<DrinkSize> drinkSizes) {
         this.drinkSizes = drinkSizes;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(getName())
+                .append("[");
+        this.drinkSizes.forEach(drinkSize -> sb.append(drinkSize.toString()).append(", "));
+        sb.append("]");
+        return sb.toString();
+    }
 }
