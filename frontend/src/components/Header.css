@@ -1,0 +1,12 @@
+
+.header__heroImg {
+  width: 100vw;
+  height: 25vh;
+  display: block;
+  object-fit: cover;
+}
+
+.header__container {
+  margin: 0;
+  padding: 0;
+}

@@ -1,18 +1,20 @@
 import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import { RecoilRoot } from 'recoil'
-import LandingPage from './views/LandingPage';
+import 'normalize.css';
+import './App.css'
+import routes from './routes';
 
 function App() {
   return (
     <BrowserRouter>
       <Switch>
         <RecoilRoot>
-          <Route path='/' exact component={LandingPage} />
+          {routes.map((route, i) => <Route path={route.path} component={route.component} key={i} /> ) }
         </RecoilRoot>
       </Switch>
     </BrowserRouter>
   );
 }
 
-export default App;
+export default App

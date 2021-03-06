@@ -1,0 +1,32 @@
+.btn {
+  cursor: pointer;
+  font-family: QuickSand, sans-serif;
+  text-decoration: none;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  letter-spacing: .15em;
+}
+
+
+
+.btn-nav {
+  padding: .7em;
+  background: #FFF;
+  color: #000;
+  border: .2rem solid;
+  border-image: linear-gradient(to right, var(--yellow), var(--red)) 20;
+  font-family: QuickSand, sans-serif;
+  transition: transform .5s;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.btn-nav:hover {
+  transform: translateY(.1em);
+}
+
+.btn-nav:active, .btn-nav:focus {
+  outline: none;
+  box-shadow: inset .1em -.2em .2em rgba(0, 0, 0, 0.25);
+}

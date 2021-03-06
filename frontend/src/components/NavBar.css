@@ -1,0 +1,17 @@
+
+.navbar__container {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 10vh;
+  justify-content: space-evenly;
+  background-image: linear-gradient(to left, var(--yellow), var(--red));
+}
+
+.navbar__logoImg {
+  position: relative;
+  top: -25%;
+  height: 200%;
+}
