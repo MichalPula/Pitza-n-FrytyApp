@@ -1,10 +1,10 @@
-import React from 'react'
+import React from "react"
 import Header from "../components/Header"
-export default function Contact() {
+export default function About() {
   return (
     <>
       <Header />
-      <div>Contact</div>
+      <div>About</div>
     </>
   )
 }
