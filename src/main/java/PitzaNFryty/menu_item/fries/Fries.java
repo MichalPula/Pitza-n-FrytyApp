@@ -1,51 +1,50 @@
 package PitzaNFryty.menu_item.fries;
 
 import PitzaNFryty.menu_item.MenuItem;
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
-
+import com.sun.istack.NotNull;
 import javax.persistence.*;
-import java.util.Set;
+import java.math.BigDecimal;
 
 @Entity
 @Table(name = "fries")
 public class Fries extends MenuItem {
 
-    @LazyCollection(LazyCollectionOption.FALSE)
-    @OneToMany(targetEntity = FriesSize.class, cascade = CascadeType.PERSIST)
-    @JoinTable(name = "fries_sizes",
-            joinColumns = {@JoinColumn(name = "fries_id")},
-            inverseJoinColumns = {@JoinColumn(name = "fries_size_id")})
-    private Set<FriesSize> friesSizes;
+    @NotNull
+    @ManyToOne(targetEntity = FriesSize.class, cascade = CascadeType.MERGE)
+    @JoinColumn(name = "fries_size_id")
+    private FriesSize friesSize;
+
+    @NotNull
+    @Column(name = "price")
+    private BigDecimal price;
+
+    public Fries(String name, FriesSize friesSize, BigDecimal price, String imageURL) {
+        super(name, imageURL);
+        this.friesSize = friesSize;
+        this.price = price;
+    }
 
     public Fries() {
     }
 
-    public Fries(String name, Set<FriesSize> friesSizes, boolean isAvailable, String imageURL) {
-        super(name, isAvailable, imageURL);
-        this.friesSizes = friesSizes;
+    public FriesSize getFriesSize() {
+        return friesSize;
     }
 
-    public Fries(String name, Set<FriesSize> friesSizes, String imageURL) {
-        super(name, imageURL);
-        this.friesSizes = friesSizes;
+    public void setFriesSize(FriesSize friesSize) {
+        this.friesSize = friesSize;
     }
 
-    public Set<FriesSize> getFriesSizes() {
-        return friesSizes;
+    public BigDecimal getPrice() {
+        return price;
     }
 
-    public void setFriesSizes(Set<FriesSize> friesSizes) {
-        this.friesSizes = friesSizes;
+    public void setPrice(BigDecimal price) {
+        this.price = price;
     }
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(getName())
-                .append("[");
-        this.friesSizes.forEach(friesSize -> sb.append(friesSize.toString()).append(", "));
-        sb.append("]");
-        return sb.toString();
+        return this.getName() + ", " + this.friesSize.toString() +", " + this.price + ", " + this.getImageURL();
     }
 }

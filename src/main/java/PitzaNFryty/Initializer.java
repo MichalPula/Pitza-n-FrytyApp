@@ -4,7 +4,7 @@ import PitzaNFryty.menu_item.drink.*;
 import PitzaNFryty.menu_item.fries.Fries;
 import PitzaNFryty.menu_item.fries.FriesRepository;
 import PitzaNFryty.menu_item.fries.FriesSize;
-import PitzaNFryty.menu_item.fries.FriesSizePrice;
+import PitzaNFryty.menu_item.fries.FriesSizeRepository;
 import PitzaNFryty.menu_item.ingredient.Ingredient;
 import PitzaNFryty.menu_item.ingredient.IngredientRepository;
 import PitzaNFryty.menu_item.pizza.*;
@@ -23,7 +23,7 @@ import java.util.*;
 @Service
 public class Initializer {
     public Initializer(DrinkRepository drinkRepository, FriesRepository friesRepository,
-                       IngredientRepository ingredientRepository,
+                       IngredientRepository ingredientRepository, FriesSizeRepository friesSizeRepository,
                        SauceRepository sauceRepository, PizzaRepository pizzaRepository,
                        PizzaSizeRepository pizzaSizeRepository, AddressRepository addressRepository,
                        PaymentRepository paymentRepository, OrderRepository orderRepository,
@@ -32,31 +32,40 @@ public class Initializer {
 
         DrinkSize smallDrinkSize = new DrinkSize("Small", new BigDecimal("0.5"));
         DrinkSize largeDrinkSize = new DrinkSize("Large", new BigDecimal(1));
-        drinkSizeRepository.save(smallDrinkSize);
-        drinkSizeRepository.save(largeDrinkSize);
+        drinkSizeRepository.saveAll(Arrays.asList(smallDrinkSize, largeDrinkSize));
 
-        Drink smallCocaCola = new Drink("Small Coca-Cola", smallDrinkSize, new BigDecimal(5),"cocacolaurl");
-        Drink largeCocaCola = new Drink("Large Coca-Cola", largeDrinkSize, new BigDecimal(8),"cocacolaurl");
-        Drink smallPepsi = new Drink("Small Pepsi", smallDrinkSize, new BigDecimal(5),"pepsiurl");
-        Drink largePepsi = new Drink("Large Pepsi", largeDrinkSize, new BigDecimal(8),"pepsiurl");
-        Drink smallFanta = new Drink("Small Fanta", smallDrinkSize, new BigDecimal(5),"fantaurl");
-        Drink largeFanta = new Drink("Large Fanta", largeDrinkSize, new BigDecimal(8),"fantaurl");
-        Drink smallSprite = new Drink("Small Sprite", smallDrinkSize, new BigDecimal(5),"spriteurl");
-        Drink largeSprite = new Drink("Large Sprite", largeDrinkSize, new BigDecimal(8),"spriteurl");
-        Drink smallMirinda = new Drink("Small Mirinda", smallDrinkSize, new BigDecimal(5),"mirindaurl");
-        Drink largeMirinda = new Drink("Large Mirinda", largeDrinkSize, new BigDecimal(8),"mirindaurl");
-        Drink smallOrangeJuice = new Drink("Small Orange juice", smallDrinkSize, new BigDecimal(5),"orangejuiceurl");
-        Drink largeOrangeJuice = new Drink("Large Orange juice", largeDrinkSize, new BigDecimal(8),"orangejuiceurl");
-        Drink smallAppleJuice = new Drink("Small Apple juice", smallDrinkSize, new BigDecimal(5),"applejuiceurl");
-        Drink largeAppleJuice = new Drink("Large Apple juice", largeDrinkSize, new BigDecimal(8),"applejuiceurl");
+
+        Drink smallCocaCola = new Drink("Coca-Cola", smallDrinkSize, new BigDecimal(5),"cocacolaurl");
+        Drink largeCocaCola = new Drink("Coca-Cola", largeDrinkSize, new BigDecimal(8),"cocacolaurl");
+        Drink smallPepsi = new Drink("Pepsi", smallDrinkSize, new BigDecimal(5),"pepsiurl");
+        Drink largePepsi = new Drink("Pepsi", largeDrinkSize, new BigDecimal(8),"pepsiurl");
+        Drink smallFanta = new Drink("Fanta", smallDrinkSize, new BigDecimal(5),"fantaurl");
+        Drink largeFanta = new Drink("Fanta", largeDrinkSize, new BigDecimal(8),"fantaurl");
+        Drink smallSprite = new Drink("Sprite", smallDrinkSize, new BigDecimal(5),"spriteurl");
+        Drink largeSprite = new Drink("Sprite", largeDrinkSize, new BigDecimal(8),"spriteurl");
+        Drink smallMirinda = new Drink("Mirinda", smallDrinkSize, new BigDecimal(5),"mirindaurl");
+        Drink largeMirinda = new Drink("Mirinda", largeDrinkSize, new BigDecimal(8),"mirindaurl");
+        Drink smallOrangeJuice = new Drink("Orange juice", smallDrinkSize, new BigDecimal(5),"orangejuiceurl");
+        Drink largeOrangeJuice = new Drink("Orange juice", largeDrinkSize, new BigDecimal(8),"orangejuiceurl");
+        Drink smallAppleJuice = new Drink("Apple juice", smallDrinkSize, new BigDecimal(5),"applejuiceurl");
+        Drink largeAppleJuice = new Drink("Apple juice", largeDrinkSize, new BigDecimal(8),"applejuiceurl");
         drinkRepository.saveAll(Arrays.asList(smallCocaCola, largeCocaCola, smallPepsi, largePepsi, smallFanta, largeFanta,
                smallSprite, largeSprite, smallMirinda, largeMirinda, smallOrangeJuice, largeOrangeJuice, smallAppleJuice, largeAppleJuice));
 
+        FriesSize smallFriesSize = new FriesSize("Small");
+        FriesSize mediumFriesSize = new FriesSize("Medium");
+        FriesSize largeFriesSize = new FriesSize("Large");
+        friesSizeRepository.saveAll(Arrays.asList(smallFriesSize, mediumFriesSize, largeFriesSize));
+
+        Fries smallFries = new Fries("Fries", smallFriesSize, new BigDecimal(3), "friesurl");
+        Fries mediumFries = new Fries("Fries", mediumFriesSize, new BigDecimal(4), "friesurl");
+        Fries largeFries =new Fries("Fries", largeFriesSize, new BigDecimal(5), "friesurl");
+        Fries cheeseFries =new Fries("Cheese Fries", largeFriesSize, new BigDecimal(8), "cheesefriesurl");
+        friesRepository.saveAll(Arrays.asList(smallFries, mediumFries, largeFries, cheeseFries));
 
 
 
-//        Fries fries = new Fries("Fries", Stream.of(new FriesSize(FriesSizePrice.SMALL_FRIES), new FriesSize(FriesSizePrice.MEDIUM_FRIES), new FriesSize(FriesSizePrice.LARGE_FRIES)).collect(Collectors.toSet()), "friesurl");
-//        friesRepository.save(fries);
+
 //
 //
 //        Ingredient mozzarella = new Ingredient("Mozzarella cheese");

@@ -3,18 +3,17 @@ package PitzaNFryty.menu_item.fries;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "fries_sizes_prices")
+@Table(name = "fries_sizes")
 public class FriesSize {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "fries_size_price", unique = true)
-    private FriesSizePrice sizePrice;
+    @Column(name = "size")
+    private String size;
 
-    public FriesSize(FriesSizePrice sizePrice) {
-        this.sizePrice = sizePrice;
+    public FriesSize(String size) {
+        this.size = size;
     }
 
     public FriesSize(){
@@ -29,17 +28,16 @@ public class FriesSize {
         this.id = id;
     }
 
-    public FriesSizePrice getSizePrice() {
-        return sizePrice;
+    public String getSize() {
+        return size;
     }
 
-    public void setSizePrice(FriesSizePrice sizePrice) {
-        this.sizePrice = sizePrice;
+    public void setSize(String size) {
+        this.size = size;
     }
 
     @Override
     public String toString() {
-        return this.getSizePrice().name() + "-" +
-                this.getSizePrice().getPrice();
+        return this.size;
     }
 }

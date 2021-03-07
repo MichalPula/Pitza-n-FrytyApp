@@ -31,18 +31,15 @@ public class PitzaNFrytyApplication {
                 log.info(drink.toString());
             });
 
+            log.info("----------------------------");
+            log.info("Fries found with findAll():");
+            friesRepository.findAll().forEach(fries -> {
+                log.info(fries.toString());
+            });
 
 
 
 
-
-//            log.info("----------------------------");
-//            log.info("Fries found with findAll():");
-//            friesRepository.findAll().forEach(fries -> log.info(
-//                    fries.getId() + ", "
-//                    + fries.getName() + ", "
-//                    + Arrays.toString(fries.getFriesSizes().toArray()) + ", "
-//                    + fries.getImageURL()));
 
 //            log.info("----------------------------");
 //            log.info("Pizzas found with findAll():");
