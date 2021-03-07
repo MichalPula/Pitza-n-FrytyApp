@@ -3,23 +3,26 @@ package PitzaNFryty.menu_item.pizza;
 import PitzaNFryty.menu_item.MenuItem;
 import PitzaNFryty.menu_item.ingredient.Ingredient;
 import PitzaNFryty.menu_item.sauce.Sauce;
+import com.sun.istack.NotNull;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table(name = "pizzas")
 public class Pizza extends MenuItem {
 
-    @LazyCollection(LazyCollectionOption.FALSE)
-    @OneToMany(targetEntity = PizzaSize.class, cascade = CascadeType.PERSIST)
-    @JoinTable(name = "pizzas_sizes",
-            joinColumns = {@JoinColumn(name = "pizza_id")},
-            inverseJoinColumns = {@JoinColumn(name = "pizza_size_id")})
-    private Set<PizzaSize> pizzaSizes;
+    @NotNull
+    @ManyToOne(targetEntity = PizzaSize.class, cascade = CascadeType.MERGE)
+    @JoinColumn(name = "pizza_size_id")
+    private PizzaSize pizzaSize;
+
+    @NotNull
+    @Column(name = "price")
+    private BigDecimal price;
 
     @LazyCollection(LazyCollectionOption.FALSE)
     @ManyToMany(targetEntity = Ingredient.class, cascade = CascadeType.MERGE)
@@ -35,22 +38,31 @@ public class Pizza extends MenuItem {
             inverseJoinColumns = {@JoinColumn(name = "sauce_id")})
     private List<Sauce> sauces;
 
-    public Pizza(String name, Set<PizzaSize> pizzaSizes, List<Ingredient> ingredients, List<Sauce> sauces, String imageURL) {
+    public Pizza(String name, PizzaSize pizzaSize, BigDecimal price, List<Ingredient> ingredients, List<Sauce> sauces, String imageURL) {
         super(name, imageURL);
-        this.pizzaSizes = pizzaSizes;
+        this.pizzaSize = pizzaSize;
         this.ingredients = ingredients;
         this.sauces = sauces;
+        this.price = price;
     }
 
     public Pizza() {
     }
 
-    public Set<PizzaSize> getPizzaTypes() {
-        return pizzaSizes;
+    public PizzaSize getPizzaSize() {
+        return pizzaSize;
     }
 
-    public void setPizzaTypes(Set<PizzaSize> pizzaSizes) {
-        this.pizzaSizes = pizzaSizes;
+    public void setPizzaSize(PizzaSize pizzaSize) {
+        this.pizzaSize = pizzaSize;
+    }
+
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
     }
 
     public List<Ingredient> getIngredients() {
@@ -72,21 +84,18 @@ public class Pizza extends MenuItem {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(this.getName());
-        sb.append(", [");
+        sb.append(this.getId()).append(" {");
+        sb.append(this.getName()).append(", ");
+        sb.append(this.pizzaSize.toString()).append(" - ");
+        sb.append(this.price).append(", [");
         this.ingredients.forEach(ingredient ->
                 sb.append(ingredient.getName()).append(", "));
         sb.append("], [");
         this.sauces.forEach(sauce ->
                 sb.append(sauce.getName()).append(", "));
         sb.append("], ");
-        this.pizzaSizes.forEach(pizzaSize ->
-            sb.append("[")
-                    .append(pizzaSize.getSizePrice().name()).append(", ")
-                    .append(pizzaSize.getSizePrice().getDiameter()).append("cm, ")
-                    .append(pizzaSize.getSizePrice().getPrice()).append("PLN")
-                    .append("] "));
         sb.append(getImageURL());
+        sb.append("}");
         return sb.toString();
     }
 }

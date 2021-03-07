@@ -3,19 +3,23 @@ package PitzaNFryty.menu_item.pizza;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "pizzas_sizes_prices")
+@Table(name = "pizzas_sizes")
 public class PizzaSize {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", unique = true, updatable = false)
     private long id;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "pizza_size_price", unique = true)
-    private PizzaSizePrice sizePrice;
+    @Column(name = "size")
+    private String size;
 
-    public PizzaSize(PizzaSizePrice sizePrice) {
-        this.sizePrice = sizePrice;
+    @Column(name = "diameter_in_cm")
+    private Integer diameter;
+
+    public PizzaSize(String size, Integer diameter) {
+        this.size = size;
+        this.diameter = diameter;
     }
 
     public PizzaSize() {
@@ -30,18 +34,26 @@ public class PizzaSize {
         this.id = id;
     }
 
-    public PizzaSizePrice getSizePrice() {
-        return sizePrice;
+    public String getSize() {
+        return size;
     }
 
-    public void setSizePrice(PizzaSizePrice sizePrice) {
-        this.sizePrice = sizePrice;
+    public void setSize(String size) {
+        this.size = size;
+    }
+
+    public Integer getDiameter() {
+        return diameter;
+    }
+
+    public void setDiameter(Integer diameter) {
+        this.diameter = diameter;
     }
 
     @Override
     public String toString() {
-        return this.getSizePrice().name() + "-" +
-                this.getSizePrice().getPrice() + "-" +
-                this.getSizePrice().getDiameter()+"cm";
+
+        return this.size + " - " + this.diameter + "cm";
+
     }
 }

@@ -19,6 +19,8 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 public class Initializer {
@@ -34,22 +36,22 @@ public class Initializer {
         DrinkSize largeDrinkSize = new DrinkSize("Large", new BigDecimal(1));
         drinkSizeRepository.saveAll(Arrays.asList(smallDrinkSize, largeDrinkSize));
 
-        Drink smallCocaCola = new Drink("Coca-Cola", smallDrinkSize, new BigDecimal(5),"cocacolaurl");
-        Drink largeCocaCola = new Drink("Coca-Cola", largeDrinkSize, new BigDecimal(8),"cocacolaurl");
-        Drink smallPepsi = new Drink("Pepsi", smallDrinkSize, new BigDecimal(5),"pepsiurl");
-        Drink largePepsi = new Drink("Pepsi", largeDrinkSize, new BigDecimal(8),"pepsiurl");
-        Drink smallFanta = new Drink("Fanta", smallDrinkSize, new BigDecimal(5),"fantaurl");
-        Drink largeFanta = new Drink("Fanta", largeDrinkSize, new BigDecimal(8),"fantaurl");
-        Drink smallSprite = new Drink("Sprite", smallDrinkSize, new BigDecimal(5),"spriteurl");
-        Drink largeSprite = new Drink("Sprite", largeDrinkSize, new BigDecimal(8),"spriteurl");
-        Drink smallMirinda = new Drink("Mirinda", smallDrinkSize, new BigDecimal(5),"mirindaurl");
-        Drink largeMirinda = new Drink("Mirinda", largeDrinkSize, new BigDecimal(8),"mirindaurl");
-        Drink smallOrangeJuice = new Drink("Orange juice", smallDrinkSize, new BigDecimal(5),"orangejuiceurl");
-        Drink largeOrangeJuice = new Drink("Orange juice", largeDrinkSize, new BigDecimal(8),"orangejuiceurl");
-        Drink smallAppleJuice = new Drink("Apple juice", smallDrinkSize, new BigDecimal(5),"applejuiceurl");
-        Drink largeAppleJuice = new Drink("Apple juice", largeDrinkSize, new BigDecimal(8),"applejuiceurl");
-        drinkRepository.saveAll(Arrays.asList(smallCocaCola, largeCocaCola, smallPepsi, largePepsi, smallFanta, largeFanta,
-               smallSprite, largeSprite, smallMirinda, largeMirinda, smallOrangeJuice, largeOrangeJuice, smallAppleJuice, largeAppleJuice));
+        Drink cocaColaS = new Drink("Coca-Cola", smallDrinkSize, new BigDecimal(5),"cocacolaurl");
+        Drink cocaColaL = new Drink("Coca-Cola", largeDrinkSize, new BigDecimal(8),"cocacolaurl");
+        Drink pepsiS = new Drink("Pepsi", smallDrinkSize, new BigDecimal(5),"pepsiurl");
+        Drink pepsiL = new Drink("Pepsi", largeDrinkSize, new BigDecimal(8),"pepsiurl");
+        Drink fantaS = new Drink("Fanta", smallDrinkSize, new BigDecimal(5),"fantaurl");
+        Drink fantaL = new Drink("Fanta", largeDrinkSize, new BigDecimal(8),"fantaurl");
+        Drink spriteS = new Drink("Sprite", smallDrinkSize, new BigDecimal(5),"spriteurl");
+        Drink spriteL = new Drink("Sprite", largeDrinkSize, new BigDecimal(8),"spriteurl");
+        Drink mirindaS = new Drink("Mirinda", smallDrinkSize, new BigDecimal(5),"mirindaurl");
+        Drink mirindaL = new Drink("Mirinda", largeDrinkSize, new BigDecimal(8),"mirindaurl");
+        Drink orangeJuiceS = new Drink("Orange juice", smallDrinkSize, new BigDecimal(5),"orangejuiceurl");
+        Drink orangeJuiceL = new Drink("Orange juice", largeDrinkSize, new BigDecimal(8),"orangejuiceurl");
+        Drink appleJuiceS = new Drink("Apple juice", smallDrinkSize, new BigDecimal(5),"applejuiceurl");
+        Drink appleJuiceL = new Drink("Apple juice", largeDrinkSize, new BigDecimal(8),"applejuiceurl");
+        drinkRepository.saveAll(Arrays.asList(cocaColaS, cocaColaL, pepsiS, pepsiL, fantaS, fantaL,
+                spriteS, spriteL, mirindaS, mirindaL, orangeJuiceS, orangeJuiceL, appleJuiceS, appleJuiceL));
 
 
         FriesSize smallFriesSize = new FriesSize("Small");
@@ -95,42 +97,55 @@ public class Initializer {
         List<Sauce> basicSauces = Arrays.asList(ketchup, garlicSauce);
 
 
+        PizzaSize smallPizzaSize = new PizzaSize("Small", 30);
+        PizzaSize mediumPizzaSize = new PizzaSize("Medium", 40);
+        PizzaSize largePizzaSize = new PizzaSize("Large", 50);
+        pizzaSizeRepository.saveAll(Arrays.asList(smallPizzaSize, mediumPizzaSize, largePizzaSize));
 
-//        Set<PizzaSize> margheritaTypes = Stream.of(new PizzaSize(PizzaSizePrice.SMALL_MARGHERITA), new PizzaSize(PizzaSizePrice.MEDIUM_MARGHERITA), new PizzaSize(PizzaSizePrice.LARGE_MARGHERITA)).collect(Collectors.toSet());
-//        Pizza margherita = new Pizza("Margherita", margheritaTypes, basicIngredients, basicSauces, "margheritaurl");
-//
-//        Set<PizzaSize> capricciosaTypes = Stream.of(new PizzaSize(PizzaSizePrice.SMALL_CAPRICCIOSA), new PizzaSize(PizzaSizePrice.MEDIUM_CAPRICCIOSA), new PizzaSize(PizzaSizePrice.LARGE_CAPRICCIOSA)).collect(Collectors.toSet());
-//        List<Ingredient> capricciosaIngredients = new ArrayList<>(basicIngredients);
-//        capricciosaIngredients.addAll(Arrays.asList(ham, mushrooms));
-//        Pizza capricciosa = new Pizza("Capricciosa", capricciosaTypes, capricciosaIngredients, basicSauces, "capricciosaurl");
-//
-//        Set<PizzaSize> pepperoniTypes = Stream.of(new PizzaSize(PizzaSizePrice.SMALL_PEPPERONI), new PizzaSize(PizzaSizePrice.MEDIUM_PEPPERONI), new PizzaSize(PizzaSizePrice.LARGE_PEPPERONI)).collect(Collectors.toSet());
-//        List<Ingredient> pepperoniIngredients = new ArrayList<>(basicIngredients);
-//        pepperoniIngredients.addAll(Arrays.asList(pepperoni));
-//        Pizza pepperoniPizza = new Pizza("Pepperoni", pepperoniTypes, pepperoniIngredients, basicSauces, "pepperoniurl");
-//
-//        Set<PizzaSize> hawaiianTypes = Stream.of(new PizzaSize(PizzaSizePrice.SMALL_HAWAIIAN), new PizzaSize(PizzaSizePrice.MEDIUM_HAWAIIAN), new PizzaSize(PizzaSizePrice.LARGE_HAWAIIAN)).collect(Collectors.toSet());
-//        List<Ingredient> hawaiianIngredients = new ArrayList<>(basicIngredients);
-//        hawaiianIngredients.addAll(Arrays.asList(ham, pineapple));
-//        Pizza hawaiian = new Pizza("Hawaiian", hawaiianTypes, hawaiianIngredients, basicSauces, "hawaiianurl");
-//
-//        Set<PizzaSize> farmerTypes = Stream.of(new PizzaSize(PizzaSizePrice.SMALL_FARMER), new PizzaSize(PizzaSizePrice.MEDIUM_FARMER), new PizzaSize(PizzaSizePrice.LARGE_FARMER)).collect(Collectors.toSet());
-//        List<Ingredient> farmerIngredients = new ArrayList<>(basicIngredients);
-//        farmerIngredients.addAll(Arrays.asList(chicken, bacon, greenPepper, redOnion));
-//        Pizza farmer = new Pizza("Farmer", farmerTypes, farmerIngredients, basicSauces, "farmerurl");
-//
-//        Set<PizzaSize> meatTypes = Stream.of(new PizzaSize(PizzaSizePrice.SMALL_MEAT), new PizzaSize(PizzaSizePrice.MEDIUM_MEAT), new PizzaSize(PizzaSizePrice.LARGE_MEAT)).collect(Collectors.toSet());
-//        List<Ingredient> meatIngredients = new ArrayList<>(basicIngredients);
-//        meatIngredients.addAll(Arrays.asList(beef, bacon, pepperoni));
-//        Pizza meat = new Pizza("Meat", meatTypes, meatIngredients, basicSauces, "meaturl");
-//
-//        Set<PizzaSize> parmaTypes = Stream.of(new PizzaSize(PizzaSizePrice.SMALL_PARMA), new PizzaSize(PizzaSizePrice.MEDIUM_PARMA), new PizzaSize(PizzaSizePrice.LARGE_PARMA)).collect(Collectors.toSet());
-//        List<Ingredient> parmaIngredients = new ArrayList<>(basicIngredients);
-//        parmaIngredients.addAll(Arrays.asList(parmaHam, arugula, cherryTomatoes, parmesanCheese));
-//        Pizza parma = new Pizza("Parma", parmaTypes, parmaIngredients, basicSauces, "parmanurl");
-//
-//        List<Pizza> allPizzas = new ArrayList<>(Arrays.asList(margherita, capricciosa, pepperoniPizza, hawaiian, farmer, meat, parma));
-//        pizzaRepository.saveAll(allPizzas);
+        Pizza margheritaS = new Pizza("Margherita", smallPizzaSize, new BigDecimal(21), basicIngredients, basicSauces, "margheritaurl");
+        Pizza margheritaM = new Pizza("Margherita", mediumPizzaSize, new BigDecimal(28), basicIngredients, basicSauces, "margheritaurl");
+        Pizza margheritaL = new Pizza("Margherita", largePizzaSize, new BigDecimal(32), basicIngredients, basicSauces, "margheritaurl");
+
+        List<Ingredient> capricciosaIngredients = new ArrayList<>(basicIngredients);
+        capricciosaIngredients.addAll(Arrays.asList(ham, mushrooms));
+        Pizza capricciosaS = new Pizza("Capricciosa", smallPizzaSize, new BigDecimal(25), capricciosaIngredients, basicSauces, "capricciosaurl");
+        Pizza capricciosaM = new Pizza("Capricciosa", mediumPizzaSize, new BigDecimal(31), capricciosaIngredients, basicSauces, "capricciosaurl");
+        Pizza capricciosaL = new Pizza("Capricciosa", largePizzaSize, new BigDecimal(39), capricciosaIngredients, basicSauces, "capricciosaurl");
+
+        List<Ingredient> pepperoniIngredients = new ArrayList<>(basicIngredients);
+        pepperoniIngredients.addAll(Arrays.asList(pepperoni));
+        Pizza pepperoniPizzaS = new Pizza("Pepperoni", smallPizzaSize, new BigDecimal(23), pepperoniIngredients, basicSauces, "pepperoniurl");
+        Pizza pepperoniPizzaM = new Pizza("Pepperoni", mediumPizzaSize, new BigDecimal(30), pepperoniIngredients, basicSauces, "pepperoniurl");
+        Pizza pepperoniPizzaL = new Pizza("Pepperoni", largePizzaSize, new BigDecimal(37), pepperoniIngredients, basicSauces, "pepperoniurl");
+
+        List<Ingredient> hawaiianIngredients = new ArrayList<>(basicIngredients);
+        hawaiianIngredients.addAll(Arrays.asList(ham, pineapple));
+        Pizza hawaiianS = new Pizza("Hawaiian", smallPizzaSize, new BigDecimal(24), hawaiianIngredients, basicSauces, "hawaiianurl");
+        Pizza hawaiianM = new Pizza("Hawaiian", mediumPizzaSize, new BigDecimal(32), hawaiianIngredients, basicSauces, "hawaiianurl");
+        Pizza hawaiianL = new Pizza("Hawaiian", largePizzaSize, new BigDecimal(40), hawaiianIngredients, basicSauces, "hawaiianurl");
+
+        List<Ingredient> farmerIngredients = new ArrayList<>(basicIngredients);
+        farmerIngredients.addAll(Arrays.asList(chicken, bacon, greenPepper, redOnion));
+        Pizza farmerS = new Pizza("Farmer", smallPizzaSize, new BigDecimal(27), farmerIngredients, basicSauces, "farmerurl");
+        Pizza farmerM = new Pizza("Farmer", mediumPizzaSize, new BigDecimal(34), farmerIngredients, basicSauces, "farmerurl");
+        Pizza farmerL = new Pizza("Farmer", largePizzaSize, new BigDecimal(42), farmerIngredients, basicSauces, "farmerurl");
+
+        List<Ingredient> meatIngredients = new ArrayList<>(basicIngredients);
+        meatIngredients.addAll(Arrays.asList(beef, bacon, pepperoni));
+        Pizza meatS = new Pizza("Meat", smallPizzaSize, new BigDecimal(28), meatIngredients, basicSauces, "meaturl");
+        Pizza meatM = new Pizza("Meat", mediumPizzaSize, new BigDecimal(37), meatIngredients, basicSauces, "meaturl");
+        Pizza meatL = new Pizza("Meat", largePizzaSize, new BigDecimal(45), meatIngredients, basicSauces, "meaturl");
+
+        List<Ingredient> parmaIngredients = new ArrayList<>(basicIngredients);
+        parmaIngredients.addAll(Arrays.asList(parmaHam, arugula, cherryTomatoes, parmesanCheese));
+        Pizza parmaS = new Pizza("Parma", smallPizzaSize, new BigDecimal(32), parmaIngredients, basicSauces, "parmanurl");
+        Pizza parmaM = new Pizza("Parma", mediumPizzaSize, new BigDecimal(39), parmaIngredients, basicSauces, "parmanurl");
+        Pizza parmaL = new Pizza("Parma", largePizzaSize, new BigDecimal(49), parmaIngredients, basicSauces, "parmanurl");
+
+        List<Pizza> allPizzas = new ArrayList<>(Arrays.asList(margheritaS, margheritaM, margheritaL, capricciosaS, capricciosaM, capricciosaL,
+                pepperoniPizzaS, pepperoniPizzaM, pepperoniPizzaL, hawaiianS, hawaiianM,  hawaiianL, farmerS, farmerM, farmerL,
+                meatS, meatM, meatL, parmaS, parmaM, parmaL));
+        pizzaRepository.saveAll(allPizzas);
 
 
 //        Address address1 = new Address("Kraków", "11-111", "Zielona", "1", "1A");

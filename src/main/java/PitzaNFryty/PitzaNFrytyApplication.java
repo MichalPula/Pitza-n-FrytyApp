@@ -52,16 +52,11 @@ public class PitzaNFrytyApplication {
                 log.info(sauce.toString());
             });
 
-
-
-
-
-
-//            log.info("----------------------------");
-//            log.info("Pizzas found with findAll():");
-//            pizzaRepository.findAll().forEach(
-//                    pizza -> log.info(pizza.toString())
-//            );
+            log.info("----------------------------");
+            log.info("Pizzas found with findAll():");
+            pizzaRepository.findAll().forEach(
+                    pizza -> log.info(pizza.toString())
+            );
 
 //            log.info("----------------------------");
 //            log.info("Customers found with findAll():");
