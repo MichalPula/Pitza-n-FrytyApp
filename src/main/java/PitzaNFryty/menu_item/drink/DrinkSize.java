@@ -1,21 +1,26 @@
 package PitzaNFryty.menu_item.drink;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 
 @Entity
-@Table(name = "drinks_sizes_prices")
+@Table(name = "drinks_sizes")
 public class DrinkSize {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", unique = true, updatable = false)
     private long id;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "drink_size_price", unique = true)
-    private DrinkSizePrice sizePrice;
+    @Column(name = "size")
+    private String size;
 
-    public DrinkSize(DrinkSizePrice sizePrice) {
-        this.sizePrice = sizePrice;
+    @Column(name = "volume_in_liters")
+    private BigDecimal volume;
+
+    public DrinkSize(String size, BigDecimal volume) {
+        this.size = size;
+        this.volume = volume;
     }
 
     public DrinkSize() {
@@ -30,17 +35,24 @@ public class DrinkSize {
         this.id = id;
     }
 
-    public DrinkSizePrice getSizePrice() {
-        return sizePrice;
+    public String getSize() {
+        return size;
     }
 
-    public void setSizePrice(DrinkSizePrice sizePrice) {
-        this.sizePrice = sizePrice;
+    public void setSize(String size) {
+        this.size = size;
+    }
+
+    public BigDecimal getVolume() {
+        return volume;
+    }
+
+    public void setVolume(BigDecimal volume) {
+        this.volume = volume;
     }
 
     @Override
     public String toString() {
-        return this.getSizePrice().name() + "-" +
-                this.getSizePrice().getPrice() +"PLN";
+        return this.size + " - " + this.volume + "l";
     }
 }
