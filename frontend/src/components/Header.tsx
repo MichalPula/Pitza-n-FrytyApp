@@ -6,7 +6,11 @@ export default function Header () {
 
   return (
     <header className="header__container">
-      <img alt="pizza" src={pizzaPhoto} className="header__heroImg" />
+      <object
+        aria-label="pizza photo header hero"
+        data={pizzaPhoto}
+        className="header__heroImg"
+      ></object>
       <NavBar />
     </header>
   )

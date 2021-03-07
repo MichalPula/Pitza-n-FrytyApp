@@ -2,7 +2,7 @@ import React from 'react'
 import './Button.css'
 type ButtonProps = {
   children: React.ReactChild
-  variant: 'nav' | 'primary'
+  variant: "nav" | "primary" | "control"
 }
 
 export default function Button(props: ButtonProps) {

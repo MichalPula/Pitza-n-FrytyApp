@@ -3,4 +3,12 @@
 :root {
   --yellow: #F2C94C;
   --red: #EB5757;
+  --black: #232323;
+  --violet: #8338EC;
+  --white: #FFF;
+  --lightGray: #AAA;
+}
+
+object{
+  pointer-events: none;
 }

@@ -1,0 +1,74 @@
+.menuItem__container {
+  background-image: linear-gradient(to right, var(--black), var(--violet));
+  border: 2px solid var(--violet);
+  display: grid;
+  font-family: QuickSand;
+  text-align: center;
+  grid-template-columns: 62.5% 37.5%;
+  grid-template-rows: max-content;
+  grid-template-areas:
+    "heading img"
+    "pricesTable img"
+    "ingredients img";
+}
+.menuItem__controls > button {
+  position: relative;
+  opacity: 0;
+  top: -50%;
+  transform: translate(0, -50%);
+  left: 50%;
+  transition: all .2s ease-in;
+}
+
+.menuItem__container:hover > .menuItem__controls > button,
+.menuItem__controls > button:hover {
+  transform: translate(-50%, -50%);
+  opacity: 1;
+}
+
+
+
+.menuItem__heading {
+  color: var(--white);
+  display: block;
+  grid-area: heading;
+}
+
+.menuItem__controls {
+  grid-area: img;
+}
+
+.menuItem__btnIcon {
+  width: .7em;
+  padding: .3em;
+}
+
+.menuItem__image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.menuItem__pricesTable {
+  display: table;
+  margin: 0 auto;
+  color: var(--lightGray);
+  width: 100%;
+  height: min-content;
+  border: 1px solid var(--violet);
+  border-left: none;
+  border-right: none;
+  grid-area: pricesTable;
+}
+
+.menuItem__ingredientsList {
+  display: block;
+  padding: 0;
+  color: var(--white);
+  list-style-type: none;
+  grid-area: ingredients;
+}
+
+.menuItem__ingredientsList > li {
+  padding: 0.3em;
+}

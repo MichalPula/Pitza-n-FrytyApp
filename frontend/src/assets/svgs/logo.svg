@@ -27,6 +27,12 @@
        inkscape:persp3d-origin="26.458333 : 17.638889 : 1"
        id="perspective21" />
   </defs>
+  <defs
+     id="defs14">
+    <style
+       type="text/css"
+       id="style12">@import url('http://fonts.googleapis.com/css?family=Quicksand');</style>
+  </defs>
   <sodipodi:namedview
      id="base"
      pagecolor="#ffffff"
@@ -35,7 +41,7 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="2.2159134"
-     inkscape:cx="86.754381"
+     inkscape:cx="8.9083785"
      inkscape:cy="78.068188"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
@@ -535,15 +541,15 @@
        y="37.041668" />
     <text
        xml:space="preserve"
-       style="font-weight:300;font-size:8.46292305px;line-height:1.25;font-family:'Segoe UI';-inkscape-font-specification:'Segoe UI, Light';stroke-width:0.793396"
-       x="21.483648"
-       y="52.900299"
+       style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-size:6.63668251px;line-height:1.25;font-family:QuickSand;-inkscape-font-specification:'QuickSand, Light';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;stroke-width:0.46702373"
+       x="24.884571"
+       y="46.345619"
        id="text426"
-       transform="scale(1.1982946,0.83451933)"><tspan
+       transform="scale(1.0661589,0.93794651)"><tspan
          sodipodi:role="line"
          id="tspan424"
-         x="21.483648"
-         y="52.900299"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:9.1675415px;font-family:'Jenna Sue';-inkscape-font-specification:'Jenna Sue, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;stroke-width:0.793396">Pitza'n'Fryty</tspan></text>
+         x="24.884571"
+         y="46.345619"
+         style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-size:6.63668251px;font-family:QuickSand;-inkscape-font-specification:'QuickSand, Light';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;stroke-width:0.46702373">Pitza'n'Fryty</tspan></text>
   </g>
 </svg>

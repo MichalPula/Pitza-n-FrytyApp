@@ -17,11 +17,11 @@ export default function NavBar() {
         zamów!
       </Link>
       <Link to="/" className="">
-        <img
-          src={pitzaLogo}
-          alt="pitza n fryty logo"
-          className="navbar_logoImg"
-        />
+        <object
+          data={pitzaLogo}
+          aria-label="pitza n fryty logo"
+          className="navbar__logoImg"
+        ></object>
       </Link>
       <Link to="/account" className="btn-nav btn">
         konto

@@ -11,7 +11,8 @@
 }
 
 .navbar__logoImg {
+  display: block;
   position: relative;
-  top: -25%;
+  top: -20%;
   height: 200%;
 }
