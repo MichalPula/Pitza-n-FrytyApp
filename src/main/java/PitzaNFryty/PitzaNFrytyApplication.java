@@ -4,7 +4,9 @@ import PitzaNFryty.customer.CustomerRepository;
 import PitzaNFryty.menu_item.drink.DrinkRepository;
 
 import PitzaNFryty.menu_item.fries.FriesRepository;
+import PitzaNFryty.menu_item.ingredient.IngredientRepository;
 import PitzaNFryty.menu_item.pizza.PizzaRepository;
+import PitzaNFryty.menu_item.sauce.SauceRepository;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.CommandLineRunner;
@@ -23,7 +25,8 @@ public class PitzaNFrytyApplication {
 
     @Bean
     public CommandLineRunner clr(DrinkRepository drinkRepository, FriesRepository friesRepository,
-                                 PizzaRepository pizzaRepository, CustomerRepository customerRepository){
+                                 PizzaRepository pizzaRepository, CustomerRepository customerRepository,
+                                 IngredientRepository ingredientRepository, SauceRepository sauceRepository){
         return args -> {
             log.info("----------------------------");
             log.info("Drinks found with findAll():");
@@ -36,6 +39,19 @@ public class PitzaNFrytyApplication {
             friesRepository.findAll().forEach(fries -> {
                 log.info(fries.toString());
             });
+
+            log.info("----------------------------");
+            log.info("Ingredients found with findAll():");
+            ingredientRepository.findAll().forEach(ingredient -> {
+                log.info(ingredient.toString());
+            });
+
+            log.info("----------------------------");
+            log.info("Sauces found with findAll():");
+            sauceRepository.findAll().forEach(sauce -> {
+                log.info(sauce.toString());
+            });
+
 
 
 

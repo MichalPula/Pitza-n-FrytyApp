@@ -17,17 +17,11 @@ public class Sauce {
     @Column(name = "is_available")
     private boolean isAvailable = true;
 
-    public Sauce(String name, boolean isAvailable) {
-        this.name = name;
-        this.isAvailable = isAvailable;
-    }
-
     public Sauce(String name) {
         this.name = name;
     }
 
     public Sauce() {
-
     }
 
     public long getId() {
@@ -52,5 +46,10 @@ public class Sauce {
 
     public void setIsAvailable(boolean isAvailable) {
         this.isAvailable = isAvailable;
+    }
+
+    @Override
+    public String toString() {
+        return this.id + " {" + this.name + ", " + this.isAvailable + "}";
     }
 }

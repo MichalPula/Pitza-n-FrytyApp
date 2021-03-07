@@ -34,7 +34,6 @@ public class Initializer {
         DrinkSize largeDrinkSize = new DrinkSize("Large", new BigDecimal(1));
         drinkSizeRepository.saveAll(Arrays.asList(smallDrinkSize, largeDrinkSize));
 
-
         Drink smallCocaCola = new Drink("Coca-Cola", smallDrinkSize, new BigDecimal(5),"cocacolaurl");
         Drink largeCocaCola = new Drink("Coca-Cola", largeDrinkSize, new BigDecimal(8),"cocacolaurl");
         Drink smallPepsi = new Drink("Pepsi", smallDrinkSize, new BigDecimal(5),"pepsiurl");
@@ -52,6 +51,7 @@ public class Initializer {
         drinkRepository.saveAll(Arrays.asList(smallCocaCola, largeCocaCola, smallPepsi, largePepsi, smallFanta, largeFanta,
                smallSprite, largeSprite, smallMirinda, largeMirinda, smallOrangeJuice, largeOrangeJuice, smallAppleJuice, largeAppleJuice));
 
+
         FriesSize smallFriesSize = new FriesSize("Small");
         FriesSize mediumFriesSize = new FriesSize("Medium");
         FriesSize largeFriesSize = new FriesSize("Large");
@@ -64,41 +64,38 @@ public class Initializer {
         friesRepository.saveAll(Arrays.asList(smallFries, mediumFries, largeFries, cheeseFries));
 
 
+        Ingredient mozzarella = new Ingredient("Mozzarella cheese");
+        Ingredient tomatoSauce = new Ingredient("Tomato sauce");
+        Ingredient oregano = new Ingredient("Oregano");
+        Ingredient ham = new Ingredient("Ham");
+        Ingredient mushrooms = new Ingredient("Mushrooms");
+        Ingredient pineapple = new Ingredient("Pineapple");
+        Ingredient chicken = new Ingredient("Chicken");
+        Ingredient greenPepper = new Ingredient("Green pepper");
+        Ingredient redOnion = new Ingredient("Red onion");
+        Ingredient bacon = new Ingredient("Bacon");
+        Ingredient beef = new Ingredient("Beef");
+        Ingredient pepperoni = new Ingredient("Pepperoni");
+        Ingredient parmaHam = new Ingredient("Parma ham");
+        Ingredient cherryTomatoes = new Ingredient("Cherry tomatoes");
+        Ingredient arugula = new Ingredient("Arugula");
+        Ingredient parmesanCheese = new Ingredient("Parmesan cheese");
+        List<Ingredient> allIngredients = new ArrayList<>(Arrays.asList(mozzarella, tomatoSauce, oregano, ham, mushrooms, pineapple,
+                chicken, greenPepper, redOnion, bacon, beef, pepperoni, parmaHam, cherryTomatoes, arugula, parmesanCheese));
+        ingredientRepository.saveAll(allIngredients);
+        List<Ingredient> basicIngredients = Arrays.asList(mozzarella, tomatoSauce, oregano);
 
 
-//
-//
-//        Ingredient mozzarella = new Ingredient("Mozzarella cheese");
-//        Ingredient tomatoSauce = new Ingredient("Tomato sauce");
-//        Ingredient oregano = new Ingredient("Oregano");
-//        Ingredient ham = new Ingredient("Ham");
-//        Ingredient mushrooms = new Ingredient("Mushrooms");
-//        Ingredient pineapple = new Ingredient("Pineapple");
-//        Ingredient chicken = new Ingredient("Chicken");
-//        Ingredient greenPepper = new Ingredient("Green pepper");
-//        Ingredient redOnion = new Ingredient("Red onion");
-//        Ingredient bacon = new Ingredient("Bacon");
-//        Ingredient beef = new Ingredient("Beef");
-//        Ingredient pepperoni = new Ingredient("Pepperoni");
-//        Ingredient parmaHam = new Ingredient("Parma ham");
-//        Ingredient cherryTomatoes = new Ingredient("Cherry tomatoes");
-//        Ingredient arugula = new Ingredient("Arugula");
-//        Ingredient parmesanCheese = new Ingredient("Parmesan cheese");
-//        List<Ingredient> allIngredients = new ArrayList<>(Arrays.asList(mozzarella, tomatoSauce, oregano, ham, mushrooms, pineapple,
-//                chicken, greenPepper, redOnion, bacon, beef, pepperoni, parmaHam, cherryTomatoes, arugula, parmesanCheese));
-//        ingredientRepository.saveAll(allIngredients);
-//        List<Ingredient> basicIngredients = Arrays.asList(mozzarella, tomatoSauce, oregano);
-//
-//
-//        Sauce ketchup = new Sauce("Ketchup");
-//        Sauce garlicSauce = new Sauce("Garlic sauce");
-//        Sauce bbqSauce = new Sauce("BBQ sauce");
-//        Sauce jalapenoSauce = new Sauce("Jalapeno sauce");
-//        List<Sauce> allSauces = new ArrayList<>(Arrays.asList(ketchup, garlicSauce, bbqSauce, jalapenoSauce));
-//        sauceRepository.saveAll(allSauces);
-//        List<Sauce> basicSauces = Arrays.asList(ketchup, garlicSauce);
-//
-//
+        Sauce ketchup = new Sauce("Ketchup");
+        Sauce garlicSauce = new Sauce("Garlic sauce");
+        Sauce bbqSauce = new Sauce("BBQ sauce");
+        Sauce jalapenoSauce = new Sauce("Jalapeno sauce");
+        List<Sauce> allSauces = new ArrayList<>(Arrays.asList(ketchup, garlicSauce, bbqSauce, jalapenoSauce));
+        sauceRepository.saveAll(allSauces);
+        List<Sauce> basicSauces = Arrays.asList(ketchup, garlicSauce);
+
+
+
 //        Set<PizzaSize> margheritaTypes = Stream.of(new PizzaSize(PizzaSizePrice.SMALL_MARGHERITA), new PizzaSize(PizzaSizePrice.MEDIUM_MARGHERITA), new PizzaSize(PizzaSizePrice.LARGE_MARGHERITA)).collect(Collectors.toSet());
 //        Pizza margherita = new Pizza("Margherita", margheritaTypes, basicIngredients, basicSauces, "margheritaurl");
 //

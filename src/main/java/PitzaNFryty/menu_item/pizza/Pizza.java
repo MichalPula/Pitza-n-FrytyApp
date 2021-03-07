@@ -43,7 +43,6 @@ public class Pizza extends MenuItem {
     }
 
     public Pizza() {
-
     }
 
     public Set<PizzaSize> getPizzaTypes() {

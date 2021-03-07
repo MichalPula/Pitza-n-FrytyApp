@@ -45,6 +45,6 @@ public class Fries extends MenuItem {
 
     @Override
     public String toString() {
-        return this.getName() + ", " + this.friesSize.toString() +", " + this.price + ", " + this.getImageURL();
+        return this.getId() + " {" + this.getName() + ", " + this.friesSize.toString() +", " + this.price + ", " + this.getImageURL() + "}";
     }
 }

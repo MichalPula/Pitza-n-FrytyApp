@@ -12,13 +12,13 @@ public class MenuItem {
     @Column(name = "id", unique = true, updatable = false)
     private long id;
 
-    @Column(name = "name", unique = true)
+    @Column(name = "name")
     private String name;
 
     @Column(name = "is_available")
     private boolean isAvailable = true;
 
-    @Column(name = "image_url", unique = true)
+    @Column(name = "image_url")
     private String imageURL ;
 
     public MenuItem(String name, boolean isAvailable, String imageURL) {

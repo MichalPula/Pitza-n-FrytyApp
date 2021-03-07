@@ -3,6 +3,7 @@ package PitzaNFryty.order;
 import PitzaNFryty.address.Address;
 import PitzaNFryty.customer.Customer;
 import PitzaNFryty.menu_item.MenuItem;
+import PitzaNFryty.menu_item.drink.Drink;
 import PitzaNFryty.payment.Payment;
 import com.sun.istack.NotNull;
 import org.hibernate.annotations.LazyCollection;
@@ -131,7 +132,7 @@ public class Order {
                 .append(this.address.getStreet()).append(this.address.getBuildingNumber()).append(", ");
         sb.append("{");
         menuItems.forEach(menuItem -> {
-            sb.append(menuItem.getName()).append(", ");
+            sb.append(menuItem.toString()).append(", ");
         });
         sb.append("}");
         sb.append(this.payment.getMoney().getAmount()).append(", ")

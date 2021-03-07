@@ -46,6 +46,6 @@ public class Drink extends MenuItem {
 
     @Override
     public String toString() {
-        return this.getName() + ", " + this.drinkSize.toString() +", " + this.price + ", " + this.getImageURL();
+        return this.getId() + " {" + this.getName() + ", " + this.drinkSize.toString() +", " + this.price + ", " + this.getImageURL() + "}";
     }
 }
