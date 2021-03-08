@@ -58,11 +58,11 @@ public class PitzaNFrytyApplication {
                     pizza -> log.info(pizza.toString())
             );
 
-//            log.info("----------------------------");
-//            log.info("Customers found with findAll():");
-//            customerRepository.findAll().forEach(
-//                    customer -> log.info(customer.toString())
-//            );
+            log.info("----------------------------");
+            log.info("Customers found with findAll():");
+            customerRepository.findAll().forEach(
+                    customer -> log.info(customer.toString())
+            );
         };
     }
 }

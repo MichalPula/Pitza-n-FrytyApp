@@ -88,11 +88,11 @@ public class Pizza extends MenuItem {
         sb.append(this.getName()).append(", ");
         sb.append(this.pizzaSize.toString()).append(" - ");
         sb.append(this.price).append(", [");
-        this.ingredients.forEach(ingredient ->
-                sb.append(ingredient.getName()).append(", "));
-        sb.append("], [");
-        this.sauces.forEach(sauce ->
-                sb.append(sauce.getName()).append(", "));
+//        this.ingredients.forEach(ingredient ->
+//                sb.append(ingredient.getName()).append(", "));
+//        sb.append("], [");
+//        this.sauces.forEach(sauce ->
+//                sb.append(sauce.getName()).append(", "));
         sb.append("], ");
         sb.append(getImageURL());
         sb.append("}");

@@ -3,7 +3,6 @@ package PitzaNFryty.order;
 import PitzaNFryty.address.Address;
 import PitzaNFryty.customer.Customer;
 import PitzaNFryty.menu_item.MenuItem;
-import PitzaNFryty.menu_item.drink.Drink;
 import PitzaNFryty.payment.Payment;
 import com.sun.istack.NotNull;
 import org.hibernate.annotations.LazyCollection;
@@ -135,7 +134,7 @@ public class Order {
             sb.append(menuItem.toString()).append(", ");
         });
         sb.append("}");
-        sb.append(this.payment.getMoney().getAmount()).append(", ")
+        sb.append(this.payment.toString())
         .append(this.creationTime).append("]");
         return sb.toString();
     }

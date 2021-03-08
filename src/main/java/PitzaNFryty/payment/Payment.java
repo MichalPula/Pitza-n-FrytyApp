@@ -2,9 +2,9 @@ package PitzaNFryty.payment;
 
 import PitzaNFryty.customer.Customer;
 import com.sun.istack.NotNull;
-import org.joda.money.Money;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
@@ -21,16 +21,16 @@ public class Payment {
     private Customer customer;
 
     @NotNull
-    @Column(name = "money")
-    private Money money;
+    @Column(name = "price")
+    private BigDecimal moneyAmount;
 
     @NotNull
     @Column(name = "time")
     private LocalDateTime time;
 
-    public Payment(Customer customer, Money money, LocalDateTime time) {
+    public Payment(Customer customer, BigDecimal moneyAmount, LocalDateTime time) {
         this.customer = customer;
-        this.money = money;
+        this.moneyAmount = moneyAmount;
         this.time = time;
     }
 
@@ -54,12 +54,12 @@ public class Payment {
         this.customer = customer;
     }
 
-    public Money getMoney() {
-        return money;
+    public BigDecimal getMoneyAmount() {
+        return moneyAmount;
     }
 
-    public void setMoney(Money money) {
-        this.money = money;
+    public void setMoneyAmount(BigDecimal moneyAmount) {
+        this.moneyAmount = moneyAmount;
     }
 
     public LocalDateTime getTime() {
@@ -68,5 +68,11 @@ public class Payment {
 
     public void setTime(LocalDateTime time) {
         this.time = time;
+    }
+
+    @Override
+    public String toString() {
+        return this.id + " {" +this.customer.getFirstName() + " " + this.customer.getLastName()
+                + this.moneyAmount + "}";
     }
 }

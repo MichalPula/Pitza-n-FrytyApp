@@ -18,6 +18,7 @@ import org.joda.money.Money;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -148,25 +149,15 @@ public class Initializer {
         pizzaRepository.saveAll(allPizzas);
 
 
-//        Address address1 = new Address("Kraków", "11-111", "Zielona", "1", "1A");
-//        Address address2 = new Address("Kraków", "33-333", "Czerwona", "2", "2B");
-//
-//        Customer customerJoe = new Customer("Joe", "Mama", 111111111, Stream.of(address1, address2).collect(Collectors.toSet()), new HashSet<>());
-//        Payment payment1 = new Payment(customerJoe, Money.parse("PLN 92.00"), LocalDateTime.now().minusHours(1));
-//        Payment payment2 = new Payment(customerJoe, Money.parse("PLN 40.00"), LocalDateTime.now());
-//        Order order1 = new Order(customerJoe, address1, (menuItemRepository.findAllByNameInIgnoreCase(Arrays.asList("small pepsi"))), payment1, LocalDateTime.now(), LocalDateTime.now().plusMinutes(30));
-        //Order order3 = new Order(customerJoe, address1, Arrays.asList(menuItemRepository.findByNameContainingIgnoreCase("small pepsi")), payment1, LocalDateTime.now(), LocalDateTime.now().plusMinutes(30));
+        Address address1 = new Address("Kraków", "11-111", "Zielona", "1", "1A");
+        Address address2 = new Address("Kraków", "33-333", "Czerwona", "2", "2B");
 
-        //Order order2 = new Order(customerJoe, address1, Arrays.asList(drinkRepository.findDrinkByDrinkSize(drinkSizeRepository.findDrinkSizeBySizePriceIsLike(DrinkSizePrice.LARGE_PEPSI))), payment2, LocalDateTime.now(), LocalDateTime.now().plusMinutes(30));
+        Customer customerJoe = new Customer("Joe", "Mama", 111111111, Stream.of(address1, address2).collect(Collectors.toSet()), new HashSet<>());
 
+        Order order1 = new Order(customerJoe, address1, Arrays.asList(parmaS, meatS, pepsiL), new Payment(customerJoe, new BigDecimal(60), LocalDateTime.now()), LocalDateTime.now(), LocalDateTime.now().plusMinutes(30));
+        Order order2 = new Order(customerJoe, address2, Arrays.asList(hawaiianL, cheeseFries, fantaS), new Payment(customerJoe, new BigDecimal(40), LocalDateTime.now()), LocalDateTime.now(), LocalDateTime.now().plusMinutes(30));
 
-       //System.out.println(drinkRepository.findDrinkByDrinkSize(drinkSizeRepository.findDrinkSizeBySizePriceIsLike(DrinkSizePrice.LARGE_PEPSI)));
-//        System.out.println(drinkRepository.findDrinkByDrinkSize(drinkSizeRepository.findDrinkSizeBySizePriceIsLike(DrinkSizePrice.LARGE_PEPSI)));
-//        System.out.println(drinkRepository.findDrinkByDrinkSize(drinkSizeRepository.findDrinkSizeBySizePriceIsLike(DrinkSizePrice.LARGE_PEPSI)));
-//        System.out.println(drinkRepository.findDrinkByDrinkSize(drinkSizeRepository.findDrinkSizeBySizePriceIsLike(DrinkSizePrice.LARGE_PEPSI)));
-//
-//        customerJoe.setOrders(Stream.of(order1).collect(Collectors.toSet()));
-//        customerRepository.save(customerJoe);
-
+        customerJoe.setOrders(Stream.of(order1, order2).collect(Collectors.toSet()));
+        customerRepository.save(customerJoe);
     }
 }
