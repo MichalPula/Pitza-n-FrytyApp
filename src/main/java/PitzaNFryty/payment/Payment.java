@@ -14,7 +14,7 @@ public class Payment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", unique = true, updatable = false)
-    private long id;
+    private Long id;
 
     @ManyToOne(targetEntity = Customer.class, cascade = CascadeType.MERGE)
     @JoinColumn(name = "customer_id")

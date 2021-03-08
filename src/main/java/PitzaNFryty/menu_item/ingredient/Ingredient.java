@@ -12,7 +12,7 @@ public class Ingredient {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", unique = true, updatable = false)
-    private long id;
+    private Long id;
 
     @Column(name = "name", unique = true)
     private String name;
