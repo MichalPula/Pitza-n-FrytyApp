@@ -34,7 +34,7 @@ public class PizzaServiceImpl implements PizzaService {
             if(i > amountOfPizzas - amountOfSamePizzas) {
                 break;
             }
-            List<Pizza> samePizzas = pizzas.subList(i, i + pizzaSizes.size());
+            List<Pizza> samePizzas = pizzas.subList(i, i + amountOfSamePizzas);
             PizzaReadDTO pizzaReadDTO = new PizzaReadDTO();
             Map<Long, PizzaSize> pizzaIdToSize = new LinkedHashMap<>();
             Map<Long, BigDecimal> pizzaIdToPrice = new LinkedHashMap<>();
