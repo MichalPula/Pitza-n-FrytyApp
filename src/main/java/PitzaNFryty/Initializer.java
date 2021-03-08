@@ -14,7 +14,7 @@ import PitzaNFryty.order.Order;
 import PitzaNFryty.order.OrderRepository;
 import PitzaNFryty.payment.Payment;
 import PitzaNFryty.payment.PaymentRepository;
-import org.joda.money.Money;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -159,5 +159,9 @@ public class Initializer {
 
         customerJoe.setOrders(Stream.of(order1, order2).collect(Collectors.toSet()));
         customerRepository.save(customerJoe);
+
+        ModelMapper modelMapper = new ModelMapper();
+        PizzaDTOTest pizzaDTOTest = modelMapper.map(margheritaL, PizzaDTOTest.class);
+        System.out.println(pizzaDTOTest);
     }
 }

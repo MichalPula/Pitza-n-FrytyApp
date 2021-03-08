@@ -10,7 +10,7 @@ public class MenuItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", unique = true, updatable = false)
-    private Long id;
+    private long id;
 
     @Column(name = "name")
     private String name;
@@ -35,11 +35,11 @@ public class MenuItem {
     public MenuItem() {
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
