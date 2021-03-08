@@ -63,8 +63,10 @@ public class Initializer {
         Fries smallFries = new Fries("Fries", smallFriesSize, new BigDecimal(3), "friesurl");
         Fries mediumFries = new Fries("Fries", mediumFriesSize, new BigDecimal(4), "friesurl");
         Fries largeFries =new Fries("Fries", largeFriesSize, new BigDecimal(5), "friesurl");
-        Fries cheeseFries =new Fries("Cheese Fries", largeFriesSize, new BigDecimal(8), "cheesefriesurl");
-        friesRepository.saveAll(Arrays.asList(smallFries, mediumFries, largeFries, cheeseFries));
+        Fries smallCheeseFries = new Fries("Cheese Fries", smallFriesSize, new BigDecimal(4), "cheesefriesurl");
+        Fries mediumCheeseFries = new Fries("Cheese Fries", mediumFriesSize, new BigDecimal(5), "cheesefriesurl");
+        Fries largeCheeseFries = new Fries("Cheese Fries", largeFriesSize, new BigDecimal(6), "cheesefriesurl");
+        friesRepository.saveAll(Arrays.asList(smallFries, mediumFries, largeFries, smallCheeseFries, mediumCheeseFries, largeCheeseFries));
 
 
         Ingredient mozzarella = new Ingredient("Mozzarella cheese");
@@ -155,7 +157,7 @@ public class Initializer {
         Customer customerJoe = new Customer("Joe", "Mama", 111111111, Stream.of(address1, address2).collect(Collectors.toSet()), new HashSet<>());
 
         Order order1 = new Order(customerJoe, address1, Arrays.asList(parmaS, meatS, pepsiL), new Payment(customerJoe, new BigDecimal(60), LocalDateTime.now()), LocalDateTime.now(), LocalDateTime.now().plusMinutes(30));
-        Order order2 = new Order(customerJoe, address2, Arrays.asList(hawaiianL, cheeseFries, fantaS), new Payment(customerJoe, new BigDecimal(40), LocalDateTime.now()), LocalDateTime.now(), LocalDateTime.now().plusMinutes(30));
+        Order order2 = new Order(customerJoe, address2, Arrays.asList(hawaiianL, largeCheeseFries, fantaS), new Payment(customerJoe, new BigDecimal(40), LocalDateTime.now()), LocalDateTime.now(), LocalDateTime.now().plusMinutes(30));
 
         customerJoe.setOrders(Stream.of(order1, order2).collect(Collectors.toSet()));
         customerRepository.save(customerJoe);

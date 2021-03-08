@@ -6,5 +6,5 @@ import java.util.List;
 
 @Service
 public interface FriesService {
-    List<Fries> getAll();
+    List<FriesReadDTO> getAll();
 }

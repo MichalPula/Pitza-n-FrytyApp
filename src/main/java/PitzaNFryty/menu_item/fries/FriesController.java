@@ -21,7 +21,7 @@ public class FriesController {
     }
 
     @GetMapping(value = "/all", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<Fries>> getAll(){
+    public ResponseEntity<List<FriesReadDTO>> getAll(){
         return ResponseEntity.ok().body(this.friesService.getAll());
     }
 
