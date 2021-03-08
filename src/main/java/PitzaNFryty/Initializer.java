@@ -103,45 +103,45 @@ public class Initializer {
         PizzaSize largePizzaSize = new PizzaSize("Large", 50);
         pizzaSizeRepository.saveAll(Arrays.asList(smallPizzaSize, mediumPizzaSize, largePizzaSize));
 
-        Pizza margheritaS = new Pizza("Margherita", smallPizzaSize, new BigDecimal(21), basicIngredients, basicSauces, "margheritaurl");
-        Pizza margheritaM = new Pizza("Margherita", mediumPizzaSize, new BigDecimal(28), basicIngredients, basicSauces, "margheritaurl");
-        Pizza margheritaL = new Pizza("Margherita", largePizzaSize, new BigDecimal(32), basicIngredients, basicSauces, "margheritaurl");
+        Pizza margheritaS = new Pizza("Margherita", smallPizzaSize, new BigDecimal(21), basicIngredients, basicSauces, "https://images.pexels.com/photos/1260968/pexels-photo-1260968.jpeg");
+        Pizza margheritaM = new Pizza("Margherita", mediumPizzaSize, new BigDecimal(28), basicIngredients, basicSauces, "https://images.pexels.com/photos/1260968/pexels-photo-1260968.jpeg");
+        Pizza margheritaL = new Pizza("Margherita", largePizzaSize, new BigDecimal(32), basicIngredients, basicSauces, "https://images.pexels.com/photos/1260968/pexels-photo-1260968.jpeg");
 
         List<Ingredient> capricciosaIngredients = new ArrayList<>(basicIngredients);
         capricciosaIngredients.addAll(Arrays.asList(ham, mushrooms));
-        Pizza capricciosaS = new Pizza("Capricciosa", smallPizzaSize, new BigDecimal(25), capricciosaIngredients, basicSauces, "capricciosaurl");
-        Pizza capricciosaM = new Pizza("Capricciosa", mediumPizzaSize, new BigDecimal(31), capricciosaIngredients, basicSauces, "capricciosaurl");
-        Pizza capricciosaL = new Pizza("Capricciosa", largePizzaSize, new BigDecimal(39), capricciosaIngredients, basicSauces, "capricciosaurl");
+        Pizza capricciosaS = new Pizza("Capricciosa", smallPizzaSize, new BigDecimal(25), capricciosaIngredients, basicSauces, "https://images.pexels.com/photos/1260968/pexels-photo-1260968.jpeg");
+        Pizza capricciosaM = new Pizza("Capricciosa", mediumPizzaSize, new BigDecimal(31), capricciosaIngredients, basicSauces, "https://images.pexels.com/photos/1260968/pexels-photo-1260968.jpeg");
+        Pizza capricciosaL = new Pizza("Capricciosa", largePizzaSize, new BigDecimal(39), capricciosaIngredients, basicSauces, "https://images.pexels.com/photos/1260968/pexels-photo-1260968.jpeg");
 
         List<Ingredient> pepperoniIngredients = new ArrayList<>(basicIngredients);
         pepperoniIngredients.addAll(Arrays.asList(pepperoni));
-        Pizza pepperoniPizzaS = new Pizza("Pepperoni", smallPizzaSize, new BigDecimal(23), pepperoniIngredients, basicSauces, "pepperoniurl");
-        Pizza pepperoniPizzaM = new Pizza("Pepperoni", mediumPizzaSize, new BigDecimal(30), pepperoniIngredients, basicSauces, "pepperoniurl");
-        Pizza pepperoniPizzaL = new Pizza("Pepperoni", largePizzaSize, new BigDecimal(37), pepperoniIngredients, basicSauces, "pepperoniurl");
+        Pizza pepperoniPizzaS = new Pizza("Pepperoni", smallPizzaSize, new BigDecimal(23), pepperoniIngredients, basicSauces, "https://images.pexels.com/photos/1260968/pexels-photo-1260968.jpeg");
+        Pizza pepperoniPizzaM = new Pizza("Pepperoni", mediumPizzaSize, new BigDecimal(30), pepperoniIngredients, basicSauces, "https://images.pexels.com/photos/1260968/pexels-photo-1260968.jpeg");
+        Pizza pepperoniPizzaL = new Pizza("Pepperoni", largePizzaSize, new BigDecimal(37), pepperoniIngredients, basicSauces, "https://images.pexels.com/photos/1260968/pexels-photo-1260968.jpeg");
 
         List<Ingredient> hawaiianIngredients = new ArrayList<>(basicIngredients);
         hawaiianIngredients.addAll(Arrays.asList(ham, pineapple));
-        Pizza hawaiianS = new Pizza("Hawaiian", smallPizzaSize, new BigDecimal(24), hawaiianIngredients, basicSauces, "hawaiianurl");
-        Pizza hawaiianM = new Pizza("Hawaiian", mediumPizzaSize, new BigDecimal(32), hawaiianIngredients, basicSauces, "hawaiianurl");
-        Pizza hawaiianL = new Pizza("Hawaiian", largePizzaSize, new BigDecimal(40), hawaiianIngredients, basicSauces, "hawaiianurl");
+        Pizza hawaiianS = new Pizza("Hawaiian", smallPizzaSize, new BigDecimal(24), hawaiianIngredients, basicSauces, "https://images.pexels.com/photos/1260968/pexels-photo-1260968.jpeg");
+        Pizza hawaiianM = new Pizza("Hawaiian", mediumPizzaSize, new BigDecimal(32), hawaiianIngredients, basicSauces, "https://images.pexels.com/photos/1260968/pexels-photo-1260968.jpeg");
+        Pizza hawaiianL = new Pizza("Hawaiian", largePizzaSize, new BigDecimal(40), hawaiianIngredients, basicSauces, "https://images.pexels.com/photos/1260968/pexels-photo-1260968.jpeg");
 
         List<Ingredient> farmerIngredients = new ArrayList<>(basicIngredients);
         farmerIngredients.addAll(Arrays.asList(chicken, bacon, greenPepper, redOnion));
-        Pizza farmerS = new Pizza("Farmer", smallPizzaSize, new BigDecimal(27), farmerIngredients, basicSauces, "farmerurl");
-        Pizza farmerM = new Pizza("Farmer", mediumPizzaSize, new BigDecimal(34), farmerIngredients, basicSauces, "farmerurl");
-        Pizza farmerL = new Pizza("Farmer", largePizzaSize, new BigDecimal(42), farmerIngredients, basicSauces, "farmerurl");
+        Pizza farmerS = new Pizza("Farmer", smallPizzaSize, new BigDecimal(27), farmerIngredients, basicSauces, "https://images.pexels.com/photos/1260968/pexels-photo-1260968.jpeg");
+        Pizza farmerM = new Pizza("Farmer", mediumPizzaSize, new BigDecimal(34), farmerIngredients, basicSauces, "https://images.pexels.com/photos/1260968/pexels-photo-1260968.jpeg");
+        Pizza farmerL = new Pizza("Farmer", largePizzaSize, new BigDecimal(42), farmerIngredients, basicSauces, "https://images.pexels.com/photos/1260968/pexels-photo-1260968.jpeg");
 
         List<Ingredient> meatIngredients = new ArrayList<>(basicIngredients);
         meatIngredients.addAll(Arrays.asList(beef, bacon, pepperoni));
-        Pizza meatS = new Pizza("Meat", smallPizzaSize, new BigDecimal(28), meatIngredients, basicSauces, "meaturl");
-        Pizza meatM = new Pizza("Meat", mediumPizzaSize, new BigDecimal(37), meatIngredients, basicSauces, "meaturl");
-        Pizza meatL = new Pizza("Meat", largePizzaSize, new BigDecimal(45), meatIngredients, basicSauces, "meaturl");
+        Pizza meatS = new Pizza("Meat", smallPizzaSize, new BigDecimal(28), meatIngredients, basicSauces, "https://images.pexels.com/photos/1260968/pexels-photo-1260968.jpeg");
+        Pizza meatM = new Pizza("Meat", mediumPizzaSize, new BigDecimal(37), meatIngredients, basicSauces, "https://images.pexels.com/photos/1260968/pexels-photo-1260968.jpeg");
+        Pizza meatL = new Pizza("Meat", largePizzaSize, new BigDecimal(45), meatIngredients, basicSauces, "https://images.pexels.com/photos/1260968/pexels-photo-1260968.jpeg");
 
         List<Ingredient> parmaIngredients = new ArrayList<>(basicIngredients);
         parmaIngredients.addAll(Arrays.asList(parmaHam, arugula, cherryTomatoes, parmesanCheese));
-        Pizza parmaS = new Pizza("Parma", smallPizzaSize, new BigDecimal(32), parmaIngredients, basicSauces, "parmanurl");
-        Pizza parmaM = new Pizza("Parma", mediumPizzaSize, new BigDecimal(39), parmaIngredients, basicSauces, "parmanurl");
-        Pizza parmaL = new Pizza("Parma", largePizzaSize, new BigDecimal(49), parmaIngredients, basicSauces, "parmanurl");
+        Pizza parmaS = new Pizza("Parma", smallPizzaSize, new BigDecimal(32), parmaIngredients, basicSauces, "https://images.pexels.com/photos/1260968/pexels-photo-1260968.jpeg");
+        Pizza parmaM = new Pizza("Parma", mediumPizzaSize, new BigDecimal(39), parmaIngredients, basicSauces, "https://images.pexels.com/photos/1260968/pexels-photo-1260968.jpeg");
+        Pizza parmaL = new Pizza("Parma", largePizzaSize, new BigDecimal(49), parmaIngredients, basicSauces, "https://images.pexels.com/photos/1260968/pexels-photo-1260968.jpeg");
 
         List<Pizza> allPizzas = new ArrayList<>(Arrays.asList(margheritaS, margheritaM, margheritaL, capricciosaS, capricciosaM, capricciosaL,
                 pepperoniPizzaS, pepperoniPizzaM, pepperoniPizzaL, hawaiianS, hawaiianM,  hawaiianL, farmerS, farmerM, farmerL,
@@ -159,9 +159,5 @@ public class Initializer {
 
         customerJoe.setOrders(Stream.of(order1, order2).collect(Collectors.toSet()));
         customerRepository.save(customerJoe);
-
-        ModelMapper modelMapper = new ModelMapper();
-        PizzaDTOTest pizzaDTOTest = modelMapper.map(margheritaL, PizzaDTOTest.class);
-        System.out.println(pizzaDTOTest);
     }
 }

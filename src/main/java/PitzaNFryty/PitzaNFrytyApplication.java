@@ -28,41 +28,41 @@ public class PitzaNFrytyApplication {
                                  PizzaRepository pizzaRepository, CustomerRepository customerRepository,
                                  IngredientRepository ingredientRepository, SauceRepository sauceRepository){
         return args -> {
-            log.info("----------------------------");
-            log.info("Drinks found with findAll():");
-            drinkRepository.findAll().forEach(drink -> {
-                log.info(drink.toString());
-            });
-
-            log.info("----------------------------");
-            log.info("Fries found with findAll():");
-            friesRepository.findAll().forEach(fries -> {
-                log.info(fries.toString());
-            });
-
-            log.info("----------------------------");
-            log.info("Ingredients found with findAll():");
-            ingredientRepository.findAll().forEach(ingredient -> {
-                log.info(ingredient.toString());
-            });
-
-            log.info("----------------------------");
-            log.info("Sauces found with findAll():");
-            sauceRepository.findAll().forEach(sauce -> {
-                log.info(sauce.toString());
-            });
-
-            log.info("----------------------------");
-            log.info("Pizzas found with findAll():");
-            pizzaRepository.findAll().forEach(
-                    pizza -> log.info(pizza.toString())
-            );
-
-            log.info("----------------------------");
-            log.info("Customers found with findAll():");
-            customerRepository.findAll().forEach(
-                    customer -> log.info(customer.toString())
-            );
+//            log.info("----------------------------");
+//            log.info("Drinks found with findAll():");
+//            drinkRepository.findAll().forEach(drink -> {
+//                log.info(drink.toString());
+//            });
+//
+//            log.info("----------------------------");
+//            log.info("Fries found with findAll():");
+//            friesRepository.findAll().forEach(fries -> {
+//                log.info(fries.toString());
+//            });
+//
+//            log.info("----------------------------");
+//            log.info("Ingredients found with findAll():");
+//            ingredientRepository.findAll().forEach(ingredient -> {
+//                log.info(ingredient.toString());
+//            });
+//
+//            log.info("----------------------------");
+//            log.info("Sauces found with findAll():");
+//            sauceRepository.findAll().forEach(sauce -> {
+//                log.info(sauce.toString());
+//            });
+//
+//            log.info("----------------------------");
+//            log.info("Pizzas found with findAll():");
+//            pizzaRepository.findAll().forEach(
+//                    pizza -> log.info(pizza.toString())
+//            );
+//
+//            log.info("----------------------------");
+//            log.info("Customers found with findAll():");
+//            customerRepository.findAll().forEach(
+//                    customer -> log.info(customer.toString())
+//            );
         };
     }
 }

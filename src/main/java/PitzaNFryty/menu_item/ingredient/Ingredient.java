@@ -17,9 +17,6 @@ public class Ingredient {
     @Column(name = "name", unique = true)
     private String name;
 
-    @Column(name = "is_available")
-    private boolean isAvailable = true;
-
     public Ingredient(String name) {
         this.name = name;
     }
@@ -44,16 +41,8 @@ public class Ingredient {
         this.name = name;
     }
 
-    public boolean getIsAvailable() {
-        return isAvailable;
-    }
-
-    public void setIsAvailable(boolean isAvailable) {
-        this.isAvailable = isAvailable;
-    }
-
     @Override
     public String toString() {
-        return this.id + " {" +this.name + ", " + this.isAvailable + "}";
+        return this.id + " {" +this.name + "}";
     }
 }
