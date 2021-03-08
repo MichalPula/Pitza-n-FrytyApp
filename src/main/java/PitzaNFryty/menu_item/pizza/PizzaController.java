@@ -21,7 +21,7 @@ public class PizzaController {
     }
 
     @GetMapping(value = "/all", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<Pizza>> getAll() {
+    public ResponseEntity<List<PizzaReadDTO>> getAllCustom() {
         return ResponseEntity.ok().body(pizzaService.getAll());
     }
 }
