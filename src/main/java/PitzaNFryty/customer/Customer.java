@@ -28,13 +28,10 @@ public class Customer {
     @Column(name = "phone_number")
     private int phoneNumber;
 
-    @OneToMany(targetEntity = Address.class, cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
-    @JoinTable(name = "customers_addresses",
-            joinColumns = {@JoinColumn(name = "customer_id")},
-            inverseJoinColumns = {@JoinColumn(name = "address_id")})
+    @OneToMany(targetEntity = Address.class, mappedBy = "customer", cascade = CascadeType.PERSIST)
     private Set<Address> addresses;
 
-    @OneToMany(targetEntity = Order.class, mappedBy = "customer", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    @OneToMany(targetEntity = Order.class, mappedBy = "customer", cascade = CascadeType.PERSIST)
     private Set<Order> orders;
 
     public Customer(String firstName, String lastName, int phoneNumber, Set<Address> addresses, Set<Order> orders) {
