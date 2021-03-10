@@ -7,6 +7,8 @@ import PitzaNFryty.payment.Payment;
 import com.sun.istack.NotNull;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
+import org.hibernate.annotations.LazyToOne;
+import org.hibernate.annotations.LazyToOneOption;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -22,10 +24,12 @@ public class Order {
     private Long id;
 
     @ManyToOne(targetEntity = Customer.class, cascade = CascadeType.MERGE)
+    @LazyToOne(LazyToOneOption.NO_PROXY)
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
     @ManyToOne(targetEntity = Address.class, cascade = CascadeType.MERGE)
+    @LazyToOne(LazyToOneOption.NO_PROXY)
     @JoinColumn(name = "address_id")
     private Address address;
 
@@ -38,6 +42,7 @@ public class Order {
 
     @NotNull
     @OneToOne(targetEntity = Payment.class, cascade = CascadeType.PERSIST)
+    @LazyToOne(LazyToOneOption.NO_PROXY)
     @JoinColumn(name = "payment_id")
     private Payment payment;
 
@@ -45,17 +50,12 @@ public class Order {
     @Column(name = "creation_time")
     private LocalDateTime creationTime;
 
-    @NotNull
-    @Column(name = "delivery_time")
-    private LocalDateTime deliveryTime;
-
-    public Order(Customer customer, Address address, List<MenuItem> menuItems, Payment payment, LocalDateTime creationTime, LocalDateTime deliveryTime) {
+    public Order(Customer customer, Address address, List<MenuItem> menuItems, Payment payment, LocalDateTime creationTime) {
         this.customer = customer;
         this.address = address;
         this.menuItems = menuItems;
         this.payment = payment;
         this.creationTime = creationTime;
-        this.deliveryTime = deliveryTime;
     }
 
     public Order() {
@@ -113,14 +113,6 @@ public class Order {
 
     public void setCreationTime(LocalDateTime creationTime) {
         this.creationTime = creationTime;
-    }
-
-    public LocalDateTime getDeliveryTime() {
-        return deliveryTime;
-    }
-
-    public void setDeliveryTime(LocalDateTime deliveryTime) {
-        this.deliveryTime = deliveryTime;
     }
 
     @Override

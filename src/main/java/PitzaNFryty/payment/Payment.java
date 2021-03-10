@@ -2,6 +2,8 @@ package PitzaNFryty.payment;
 
 import PitzaNFryty.customer.Customer;
 import com.sun.istack.NotNull;
+import org.hibernate.annotations.LazyToOne;
+import org.hibernate.annotations.LazyToOneOption;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -17,6 +19,7 @@ public class Payment {
     private Long id;
 
     @ManyToOne(targetEntity = Customer.class, cascade = CascadeType.MERGE)
+    @LazyToOne(LazyToOneOption.NO_PROXY)
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
