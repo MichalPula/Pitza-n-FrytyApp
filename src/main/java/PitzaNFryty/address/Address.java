@@ -1,7 +1,10 @@
 package PitzaNFryty.address;
 
 
+import PitzaNFryty.customer.Customer;
 import com.sun.istack.NotNull;
+import org.hibernate.annotations.LazyToOne;
+import org.hibernate.annotations.LazyToOneOption;
 
 import javax.persistence.*;
 
@@ -13,6 +16,11 @@ public class Address {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", unique = true, updatable = false)
     private long id;
+
+    @ManyToOne(targetEntity = Customer.class)
+    @LazyToOne(LazyToOneOption.NO_PROXY)
+    @JoinColumn(name = "customer_id")
+    private Customer customer;
 
     @NotNull
     @Column(name = "city")
@@ -34,6 +42,15 @@ public class Address {
     @Column(name = "flat_number")
     private String flatNumber;
 
+    public Address(Customer customer, String city, String zipCode, String street, String buildingNumber, String flatNumber) {
+        this.customer = customer;
+        this.city = city;
+        this.zipCode = zipCode;
+        this.street = street;
+        this.buildingNumber = buildingNumber;
+        this.flatNumber = flatNumber;
+    }
+
     public Address(String city, String zipCode, String street, String buildingNumber, String flatNumber) {
         this.city = city;
         this.zipCode = zipCode;
@@ -52,6 +69,14 @@ public class Address {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 
     public String getCity() {

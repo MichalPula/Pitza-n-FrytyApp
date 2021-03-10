@@ -151,14 +151,14 @@ public class Initializer {
         pizzaRepository.saveAll(allPizzas);
 
 
-        Address address1 = new Address("Kraków", "11-111", "Zielona", "1", "1A");
-        Address address2 = new Address("Kraków", "33-333", "Czerwona", "2", "2B");
+        Customer customerJoe = new Customer("Joe", "Mama", 111111111, new HashSet<>(), new HashSet<>());
+        Address address1 = new Address(customerJoe ,"Kraków", "11-111", "Zielona", "1", "1A");
+        Address address2 = new Address(customerJoe ,"Kraków", "33-333", "Czerwona", "2", "2B");
 
-        Customer customerJoe = new Customer("Joe", "Mama", 111111111, Stream.of(address1, address2).collect(Collectors.toSet()), new HashSet<>());
+        Order order1 = new Order(customerJoe, address1, Arrays.asList(parmaS, meatS, pepsiL), new Payment(customerJoe, new BigDecimal(60), LocalDateTime.now()), LocalDateTime.now());
+        Order order2 = new Order(customerJoe, address2, Arrays.asList(hawaiianL, largeCheeseFries, fantaS), new Payment(customerJoe, new BigDecimal(40), LocalDateTime.now()), LocalDateTime.now());
 
-        Order order1 = new Order(customerJoe, address1, Arrays.asList(parmaS, meatS, pepsiL), new Payment(customerJoe, new BigDecimal(60), LocalDateTime.now()), LocalDateTime.now(), LocalDateTime.now().plusMinutes(30));
-        Order order2 = new Order(customerJoe, address2, Arrays.asList(hawaiianL, largeCheeseFries, fantaS), new Payment(customerJoe, new BigDecimal(40), LocalDateTime.now()), LocalDateTime.now(), LocalDateTime.now().plusMinutes(30));
-
+        customerJoe.setAddresses(Stream.of(address1, address2).collect(Collectors.toSet()));
         customerJoe.setOrders(Stream.of(order1, order2).collect(Collectors.toSet()));
         customerRepository.save(customerJoe);
     }
