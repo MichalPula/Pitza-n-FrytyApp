@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/addresses")
+@RequestMapping("/customers")
 public class AddressController {
 
     private final AddressService addressService;
@@ -21,8 +21,8 @@ public class AddressController {
         this.addressService = addressService;
     }
 
-    @GetMapping(value = "/customer/{customerId}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<AddressReadDTO>> getUserAddresses(@PathVariable Long customerId) {
-        return ResponseEntity.ok().body(addressService.getUserAddresses(customerId));
+    @GetMapping(value = "/{customerId}/addresses", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<AddressReadDTO>> getCustomerAddresses(@PathVariable Long customerId) {
+        return ResponseEntity.ok().body(addressService.getCustomerAddresses(customerId));
     }
 }
