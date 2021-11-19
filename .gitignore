@@ -6,6 +6,7 @@
 /target
 
 /src/main/resources/application.properties
+/src/main/resources/log4j.properties
 
 ### Maven template
 pom.xml.tag
