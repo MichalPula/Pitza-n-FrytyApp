@@ -1,51 +1,39 @@
 package PitzaNFryty.menu_item.drink;
 
 import PitzaNFryty.menu_item.MenuItem;
-import com.sun.istack.NotNull;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import javax.persistence.*;
+import javax.persistence.Convert;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.math.BigDecimal;
 
+@Getter
+@Setter
+@NoArgsConstructor
 @Entity
 @Table(name = "drinks")
 public class Drink extends MenuItem {
 
-    @NotNull
-    @ManyToOne(targetEntity = DrinkSize.class, cascade = CascadeType.MERGE)
-    @JoinColumn(name = "drink_size_id")
+    @Convert(converter = DrinkSizeConverter.class)
     private DrinkSize drinkSize;
 
-    @NotNull
-    @Column(name = "price")
-    private BigDecimal price;
-
     public Drink(String name, DrinkSize drinkSize, BigDecimal price, String imageURL) {
-        super(name, imageURL);
+        super(name, imageURL, price);
         this.drinkSize = drinkSize;
-        this.price = price;
-    }
-
-    public Drink() {
-    }
-
-    public DrinkSize getDrinkSize() {
-        return drinkSize;
-    }
-
-    public void setDrinkSize(DrinkSize drinkSize) {
-        this.drinkSize = drinkSize;
-    }
-
-    public BigDecimal getPrice() {
-        return price;
-    }
-
-    public void setPrice(BigDecimal price) {
-        this.price = price;
     }
 
     @Override
     public String toString() {
-        return this.getId() + " {" + this.getName() + ", " + this.drinkSize.toString() +", " + this.price + ", " + this.getImageURL() + "}";
+        final StringBuilder sb = new StringBuilder("Drink{");
+        sb.append("name='").append(name).append('\'');
+        sb.append(", isAvailable=").append(isAvailable);
+        sb.append(", price=").append(price);
+        sb.append(", imageURL='").append(imageURL).append('\'');
+        sb.append(", drinkSize=").append(drinkSize);
+        sb.append('}');
+        return sb.toString();
     }
 }
