@@ -1,69 +1,46 @@
 package PitzaNFryty.menu_item;
 
-import javax.persistence.*;
+import com.sun.istack.NotNull;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
+import javax.persistence.*;
+import java.math.BigDecimal;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@ToString
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "menu_items")
 public class MenuItem {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @SequenceGenerator(name = "menu_item_id_generator", sequenceName = "menu_item_id_sequence")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "menu_item_id_generator")
     @Column(name = "id", unique = true, updatable = false)
     private long id;
 
+    @NotNull
     @Column(name = "name")
-    private String name;
+    protected String name;
 
     @Column(name = "is_available")
-    private boolean isAvailable = true;
+    protected boolean isAvailable = true;
 
+    @Column(name = "price")
+    protected BigDecimal price;
+
+    @NotNull
     @Column(name = "image_url")
-    private String imageURL ;
+    protected String imageURL;
 
-    public MenuItem(String name, boolean isAvailable, String imageURL) {
-        this.name = name;
-        this.isAvailable = isAvailable;
-        this.imageURL = imageURL;
-    }
-
-    public MenuItem(String name, String imageURL) {
+    public MenuItem(String name, String imageURL, BigDecimal price) {
         this.name = name;
         this.imageURL = imageURL;
-    }
-
-    public MenuItem() {
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public boolean isAvailable() {
-        return isAvailable;
-    }
-
-    public void setIsAvailable(boolean isAvailable) {
-        this.isAvailable = isAvailable;
-    }
-
-    public String getImageURL() {
-        return imageURL;
-    }
-
-    public void setImageURL(String imageURL) {
-        this.imageURL = imageURL;
+        this.price = price;
     }
 }
