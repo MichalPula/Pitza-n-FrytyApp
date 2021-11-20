@@ -1,71 +1,109 @@
 package PitzaNFryty;
 
-import PitzaNFryty.menu_item.drink.*;
+import PitzaNFryty.address.Address;
+import PitzaNFryty.address.AddressRepository;
+import PitzaNFryty.address.AddressService;
+import PitzaNFryty.customer.CustomerRepository;
+import PitzaNFryty.customer.RegisteredCustomer.RegisteredCustomer;
+import PitzaNFryty.customer.RegisteredCustomer.RegisteredCustomerRepository;
+import PitzaNFryty.customer.UnregisteredCustomer.UnregisteredCustomer;
+import PitzaNFryty.customer.UnregisteredCustomer.UnregisteredCustomerRepository;
+import PitzaNFryty.menu_item.MenuItemRepository;
+import PitzaNFryty.menu_item.drink.Drink;
+import PitzaNFryty.menu_item.drink.DrinkRepository;
+import PitzaNFryty.menu_item.drink.DrinkSize;
 import PitzaNFryty.menu_item.fries.Fries;
 import PitzaNFryty.menu_item.fries.FriesRepository;
 import PitzaNFryty.menu_item.fries.FriesSize;
-import PitzaNFryty.menu_item.fries.FriesSizeRepository;
 import PitzaNFryty.menu_item.ingredient.Ingredient;
 import PitzaNFryty.menu_item.ingredient.IngredientRepository;
-import PitzaNFryty.menu_item.pizza.*;
+import PitzaNFryty.menu_item.pizza.Pizza;
+import PitzaNFryty.menu_item.pizza.PizzaRepository;
+import PitzaNFryty.menu_item.pizza.PizzaSize;
 import PitzaNFryty.menu_item.sauce.Sauce;
 import PitzaNFryty.menu_item.sauce.SauceRepository;
-import PitzaNFryty.order.Order;
+import PitzaNFryty.order.OrderCreateDTORegistered;
 import PitzaNFryty.order.OrderRepository;
-import PitzaNFryty.payment.Payment;
+import PitzaNFryty.order.OrderService;
 import PitzaNFryty.payment.PaymentRepository;
-import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 @Service
 public class Initializer {
-    public Initializer(DrinkRepository drinkRepository, FriesRepository friesRepository,
-                       IngredientRepository ingredientRepository, FriesSizeRepository friesSizeRepository,
-                       SauceRepository sauceRepository, PizzaRepository pizzaRepository,
-                       PizzaSizeRepository pizzaSizeRepository, AddressRepository addressRepository,
-                       PaymentRepository paymentRepository, OrderRepository orderRepository,
-                       CustomerRepository customerRepository, MenuItemRepository menuItemRepository,
-                       DrinkSizeRepository drinkSizeRepository) {
 
-        DrinkSize smallDrinkSize = new DrinkSize("Small", new BigDecimal("0.5"));
-        DrinkSize largeDrinkSize = new DrinkSize("Large", new BigDecimal(1));
-        drinkSizeRepository.saveAll(Arrays.asList(smallDrinkSize, largeDrinkSize));
+    private final DrinkRepository drinkRepository;
+    private final FriesRepository friesRepository;
+    private final IngredientRepository ingredientRepository;
+    private final SauceRepository sauceRepository;
+    private final PizzaRepository pizzaRepository;
+    private final AddressRepository addressRepository;
+    private final PaymentRepository paymentRepository;
+    private final OrderRepository orderRepository;
+    private final CustomerRepository customerRepository;
+    private final MenuItemRepository menuItemRepository;
+    private final RegisteredCustomerRepository registeredCustomerRepository;
+    private final UnregisteredCustomerRepository unregisteredCustomerRepository;
+    private final AddressService addressService;
+    private final OrderService orderService;
 
-        Drink cocaColaS = new Drink("Coca-Cola", smallDrinkSize, new BigDecimal(5),"cocacolaurl");
-        Drink cocaColaL = new Drink("Coca-Cola", largeDrinkSize, new BigDecimal(8),"cocacolaurl");
-        Drink pepsiS = new Drink("Pepsi", smallDrinkSize, new BigDecimal(5),"pepsiurl");
-        Drink pepsiL = new Drink("Pepsi", largeDrinkSize, new BigDecimal(8),"pepsiurl");
-        Drink fantaS = new Drink("Fanta", smallDrinkSize, new BigDecimal(5),"fantaurl");
-        Drink fantaL = new Drink("Fanta", largeDrinkSize, new BigDecimal(8),"fantaurl");
-        Drink spriteS = new Drink("Sprite", smallDrinkSize, new BigDecimal(5),"spriteurl");
-        Drink spriteL = new Drink("Sprite", largeDrinkSize, new BigDecimal(8),"spriteurl");
-        Drink mirindaS = new Drink("Mirinda", smallDrinkSize, new BigDecimal(5),"mirindaurl");
-        Drink mirindaL = new Drink("Mirinda", largeDrinkSize, new BigDecimal(8),"mirindaurl");
-        Drink orangeJuiceS = new Drink("Orange juice", smallDrinkSize, new BigDecimal(5),"orangejuiceurl");
-        Drink orangeJuiceL = new Drink("Orange juice", largeDrinkSize, new BigDecimal(8),"orangejuiceurl");
-        Drink appleJuiceS = new Drink("Apple juice", smallDrinkSize, new BigDecimal(5),"applejuiceurl");
-        Drink appleJuiceL = new Drink("Apple juice", largeDrinkSize, new BigDecimal(8),"applejuiceurl");
+
+    @Autowired
+    public Initializer(DrinkRepository drinkRepository, FriesRepository friesRepository, IngredientRepository ingredientRepository,
+                       SauceRepository sauceRepository, PizzaRepository pizzaRepository, AddressRepository addressRepository,
+                       PaymentRepository paymentRepository, OrderRepository orderRepository, CustomerRepository customerRepository,
+                       MenuItemRepository menuItemRepository, RegisteredCustomerRepository registeredCustomerRepository,
+                       UnregisteredCustomerRepository unregisteredCustomerRepository,
+                       AddressService addressService, OrderService orderService) {
+        this.drinkRepository = drinkRepository;
+        this.friesRepository = friesRepository;
+        this.ingredientRepository = ingredientRepository;
+        this.sauceRepository = sauceRepository;
+        this.pizzaRepository = pizzaRepository;
+        this.addressRepository = addressRepository;
+        this.paymentRepository = paymentRepository;
+        this.orderRepository = orderRepository;
+        this.customerRepository = customerRepository;
+        this.menuItemRepository = menuItemRepository;
+        this.registeredCustomerRepository = registeredCustomerRepository;
+        this.unregisteredCustomerRepository = unregisteredCustomerRepository;
+        this.addressService = addressService;
+        this.orderService = orderService;
+
+        initializeData();
+    }
+
+
+    private void initializeData(){
+        Drink cocaColaS = new Drink("Coca-Cola", DrinkSize.SMALL, new BigDecimal(5),"cocacolaurl");
+        Drink cocaColaL = new Drink("Coca-Cola", DrinkSize.LARGE, new BigDecimal(8),"cocacolaurl");
+        Drink pepsiS = new Drink("Pepsi", DrinkSize.SMALL, new BigDecimal(5),"pepsiurl");
+        Drink pepsiL = new Drink("Pepsi", DrinkSize.LARGE, new BigDecimal(8),"pepsiurl");
+        Drink fantaS = new Drink("Fanta", DrinkSize.SMALL, new BigDecimal(5),"fantaurl");
+        Drink fantaL = new Drink("Fanta", DrinkSize.LARGE, new BigDecimal(8),"fantaurl");
+        Drink spriteS = new Drink("Sprite", DrinkSize.SMALL, new BigDecimal(5),"spriteurl");
+        Drink spriteL = new Drink("Sprite", DrinkSize.LARGE, new BigDecimal(8),"spriteurl");
+        Drink mirindaS = new Drink("Mirinda", DrinkSize.SMALL, new BigDecimal(5),"mirindaurl");
+        Drink mirindaL = new Drink("Mirinda", DrinkSize.LARGE, new BigDecimal(8),"mirindaurl");
+        Drink orangeJuiceS = new Drink("Orange juice", DrinkSize.SMALL, new BigDecimal(5),"orangejuiceurl");
+        Drink orangeJuiceL = new Drink("Orange juice", DrinkSize.LARGE, new BigDecimal(8),"orangejuiceurl");
+        Drink appleJuiceS = new Drink("Apple juice", DrinkSize.SMALL, new BigDecimal(5),"applejuiceurl");
+        Drink appleJuiceL = new Drink("Apple juice", DrinkSize.LARGE, new BigDecimal(8),"applejuiceurl");
         drinkRepository.saveAll(Arrays.asList(cocaColaS, cocaColaL, pepsiS, pepsiL, fantaS, fantaL,
                 spriteS, spriteL, mirindaS, mirindaL, orangeJuiceS, orangeJuiceL, appleJuiceS, appleJuiceL));
 
 
-        FriesSize smallFriesSize = new FriesSize("Small");
-        FriesSize mediumFriesSize = new FriesSize("Medium");
-        FriesSize largeFriesSize = new FriesSize("Large");
-        friesSizeRepository.saveAll(Arrays.asList(smallFriesSize, mediumFriesSize, largeFriesSize));
-
-        Fries smallFries = new Fries("Fries", smallFriesSize, new BigDecimal(3), "friesurl");
-        Fries mediumFries = new Fries("Fries", mediumFriesSize, new BigDecimal(4), "friesurl");
-        Fries largeFries =new Fries("Fries", largeFriesSize, new BigDecimal(5), "friesurl");
-        Fries smallCheeseFries = new Fries("Cheese Fries", smallFriesSize, new BigDecimal(4), "cheesefriesurl");
-        Fries mediumCheeseFries = new Fries("Cheese Fries", mediumFriesSize, new BigDecimal(5), "cheesefriesurl");
-        Fries largeCheeseFries = new Fries("Cheese Fries", largeFriesSize, new BigDecimal(6), "cheesefriesurl");
+        Fries smallFries = new Fries("Fries", FriesSize.SMALL, new BigDecimal(3), "friesurl");
+        Fries mediumFries = new Fries("Fries", FriesSize.MEDIUM, new BigDecimal(4), "friesurl");
+        Fries largeFries =new Fries("Fries", FriesSize.LARGE, new BigDecimal(5), "friesurl");
+        Fries smallCheeseFries = new Fries("Cheese Fries", FriesSize.SMALL, new BigDecimal(4), "cheesefriesurl");
+        Fries mediumCheeseFries = new Fries("Cheese Fries", FriesSize.MEDIUM, new BigDecimal(5), "cheesefriesurl");
+        Fries largeCheeseFries = new Fries("Cheese Fries", FriesSize.LARGE, new BigDecimal(6), "cheesefriesurl");
         friesRepository.saveAll(Arrays.asList(smallFries, mediumFries, largeFries, smallCheeseFries, mediumCheeseFries, largeCheeseFries));
 
 
@@ -90,7 +128,6 @@ public class Initializer {
         ingredientRepository.saveAll(allIngredients);
         List<Ingredient> basicIngredients = Arrays.asList(mozzarella, tomatoSauce, oregano);
 
-
         Sauce ketchup = new Sauce("Ketchup");
         Sauce garlicSauce = new Sauce("Garlic sauce");
         Sauce bbqSauce = new Sauce("BBQ sauce");
@@ -100,50 +137,47 @@ public class Initializer {
         List<Sauce> basicSauces = Arrays.asList(ketchup, garlicSauce);
 
 
-        PizzaSize smallPizzaSize = new PizzaSize("Small", 30);
-        PizzaSize mediumPizzaSize = new PizzaSize("Medium", 40);
-        PizzaSize largePizzaSize = new PizzaSize("Large", 50);
-        pizzaSizeRepository.saveAll(Arrays.asList(smallPizzaSize, mediumPizzaSize, largePizzaSize));
 
-        Pizza margheritaS = new Pizza("Margherita", smallPizzaSize, new BigDecimal(21), basicIngredients, basicSauces, "https://images.pexels.com/photos/1260968/pexels-photo-1260968.jpeg");
-        Pizza margheritaM = new Pizza("Margherita", mediumPizzaSize, new BigDecimal(28), basicIngredients, basicSauces, "https://images.pexels.com/photos/1260968/pexels-photo-1260968.jpeg");
-        Pizza margheritaL = new Pizza("Margherita", largePizzaSize, new BigDecimal(32), basicIngredients, basicSauces, "https://images.pexels.com/photos/1260968/pexels-photo-1260968.jpeg");
+
+        Pizza margheritaS = new Pizza("Margherita", PizzaSize.SMALL, new BigDecimal(21), basicIngredients, basicSauces, "https://images.pexels.com/photos/1260968/pexels-photo-1260968.jpeg");
+        Pizza margheritaM = new Pizza("Margherita", PizzaSize.MEDIUM, new BigDecimal(28), basicIngredients, basicSauces, "https://images.pexels.com/photos/1260968/pexels-photo-1260968.jpeg");
+        Pizza margheritaL = new Pizza("Margherita", PizzaSize.LARGE, new BigDecimal(32), basicIngredients, basicSauces, "https://images.pexels.com/photos/1260968/pexels-photo-1260968.jpeg");
 
         List<Ingredient> capricciosaIngredients = new ArrayList<>(basicIngredients);
         capricciosaIngredients.addAll(Arrays.asList(ham, mushrooms));
-        Pizza capricciosaS = new Pizza("Capricciosa", smallPizzaSize, new BigDecimal(25), capricciosaIngredients, basicSauces, "https://images.pexels.com/photos/1260968/pexels-photo-1260968.jpeg");
-        Pizza capricciosaM = new Pizza("Capricciosa", mediumPizzaSize, new BigDecimal(31), capricciosaIngredients, basicSauces, "https://images.pexels.com/photos/1260968/pexels-photo-1260968.jpeg");
-        Pizza capricciosaL = new Pizza("Capricciosa", largePizzaSize, new BigDecimal(39), capricciosaIngredients, basicSauces, "https://images.pexels.com/photos/1260968/pexels-photo-1260968.jpeg");
+        Pizza capricciosaS = new Pizza("Capricciosa", PizzaSize.SMALL, new BigDecimal(25), capricciosaIngredients, basicSauces, "https://images.pexels.com/photos/1260968/pexels-photo-1260968.jpeg");
+        Pizza capricciosaM = new Pizza("Capricciosa", PizzaSize.MEDIUM, new BigDecimal(31), capricciosaIngredients, basicSauces, "https://images.pexels.com/photos/1260968/pexels-photo-1260968.jpeg");
+        Pizza capricciosaL = new Pizza("Capricciosa", PizzaSize.LARGE, new BigDecimal(39), capricciosaIngredients, basicSauces, "https://images.pexels.com/photos/1260968/pexels-photo-1260968.jpeg");
 
         List<Ingredient> pepperoniIngredients = new ArrayList<>(basicIngredients);
         pepperoniIngredients.addAll(Arrays.asList(pepperoni));
-        Pizza pepperoniPizzaS = new Pizza("Pepperoni", smallPizzaSize, new BigDecimal(23), pepperoniIngredients, basicSauces, "https://images.pexels.com/photos/1260968/pexels-photo-1260968.jpeg");
-        Pizza pepperoniPizzaM = new Pizza("Pepperoni", mediumPizzaSize, new BigDecimal(30), pepperoniIngredients, basicSauces, "https://images.pexels.com/photos/1260968/pexels-photo-1260968.jpeg");
-        Pizza pepperoniPizzaL = new Pizza("Pepperoni", largePizzaSize, new BigDecimal(37), pepperoniIngredients, basicSauces, "https://images.pexels.com/photos/1260968/pexels-photo-1260968.jpeg");
+        Pizza pepperoniPizzaS = new Pizza("Pepperoni", PizzaSize.SMALL, new BigDecimal(23), pepperoniIngredients, basicSauces, "https://images.pexels.com/photos/1260968/pexels-photo-1260968.jpeg");
+        Pizza pepperoniPizzaM = new Pizza("Pepperoni", PizzaSize.MEDIUM, new BigDecimal(30), pepperoniIngredients, basicSauces, "https://images.pexels.com/photos/1260968/pexels-photo-1260968.jpeg");
+        Pizza pepperoniPizzaL = new Pizza("Pepperoni", PizzaSize.LARGE, new BigDecimal(37), pepperoniIngredients, basicSauces, "https://images.pexels.com/photos/1260968/pexels-photo-1260968.jpeg");
 
         List<Ingredient> hawaiianIngredients = new ArrayList<>(basicIngredients);
         hawaiianIngredients.addAll(Arrays.asList(ham, pineapple));
-        Pizza hawaiianS = new Pizza("Hawaiian", smallPizzaSize, new BigDecimal(24), hawaiianIngredients, basicSauces, "https://images.pexels.com/photos/1260968/pexels-photo-1260968.jpeg");
-        Pizza hawaiianM = new Pizza("Hawaiian", mediumPizzaSize, new BigDecimal(32), hawaiianIngredients, basicSauces, "https://images.pexels.com/photos/1260968/pexels-photo-1260968.jpeg");
-        Pizza hawaiianL = new Pizza("Hawaiian", largePizzaSize, new BigDecimal(40), hawaiianIngredients, basicSauces, "https://images.pexels.com/photos/1260968/pexels-photo-1260968.jpeg");
+        Pizza hawaiianS = new Pizza("Hawaiian", PizzaSize.SMALL, new BigDecimal(24), hawaiianIngredients, basicSauces, "https://images.pexels.com/photos/1260968/pexels-photo-1260968.jpeg");
+        Pizza hawaiianM = new Pizza("Hawaiian", PizzaSize.MEDIUM, new BigDecimal(32), hawaiianIngredients, basicSauces, "https://images.pexels.com/photos/1260968/pexels-photo-1260968.jpeg");
+        Pizza hawaiianL = new Pizza("Hawaiian", PizzaSize.LARGE, new BigDecimal(40), hawaiianIngredients, basicSauces, "https://images.pexels.com/photos/1260968/pexels-photo-1260968.jpeg");
 
         List<Ingredient> farmerIngredients = new ArrayList<>(basicIngredients);
         farmerIngredients.addAll(Arrays.asList(chicken, bacon, greenPepper, redOnion));
-        Pizza farmerS = new Pizza("Farmer", smallPizzaSize, new BigDecimal(27), farmerIngredients, basicSauces, "https://images.pexels.com/photos/1260968/pexels-photo-1260968.jpeg");
-        Pizza farmerM = new Pizza("Farmer", mediumPizzaSize, new BigDecimal(34), farmerIngredients, basicSauces, "https://images.pexels.com/photos/1260968/pexels-photo-1260968.jpeg");
-        Pizza farmerL = new Pizza("Farmer", largePizzaSize, new BigDecimal(42), farmerIngredients, basicSauces, "https://images.pexels.com/photos/1260968/pexels-photo-1260968.jpeg");
+        Pizza farmerS = new Pizza("Farmer", PizzaSize.SMALL, new BigDecimal(27), farmerIngredients, basicSauces, "https://images.pexels.com/photos/1260968/pexels-photo-1260968.jpeg");
+        Pizza farmerM = new Pizza("Farmer", PizzaSize.MEDIUM, new BigDecimal(34), farmerIngredients, basicSauces, "https://images.pexels.com/photos/1260968/pexels-photo-1260968.jpeg");
+        Pizza farmerL = new Pizza("Farmer", PizzaSize.LARGE, new BigDecimal(42), farmerIngredients, basicSauces, "https://images.pexels.com/photos/1260968/pexels-photo-1260968.jpeg");
 
         List<Ingredient> meatIngredients = new ArrayList<>(basicIngredients);
         meatIngredients.addAll(Arrays.asList(beef, bacon, pepperoni));
-        Pizza meatS = new Pizza("Meat", smallPizzaSize, new BigDecimal(28), meatIngredients, basicSauces, "https://images.pexels.com/photos/1260968/pexels-photo-1260968.jpeg");
-        Pizza meatM = new Pizza("Meat", mediumPizzaSize, new BigDecimal(37), meatIngredients, basicSauces, "https://images.pexels.com/photos/1260968/pexels-photo-1260968.jpeg");
-        Pizza meatL = new Pizza("Meat", largePizzaSize, new BigDecimal(45), meatIngredients, basicSauces, "https://images.pexels.com/photos/1260968/pexels-photo-1260968.jpeg");
+        Pizza meatS = new Pizza("Meat", PizzaSize.SMALL, new BigDecimal(28), meatIngredients, basicSauces, "https://images.pexels.com/photos/1260968/pexels-photo-1260968.jpeg");
+        Pizza meatM = new Pizza("Meat", PizzaSize.MEDIUM, new BigDecimal(37), meatIngredients, basicSauces, "https://images.pexels.com/photos/1260968/pexels-photo-1260968.jpeg");
+        Pizza meatL = new Pizza("Meat", PizzaSize.LARGE, new BigDecimal(45), meatIngredients, basicSauces, "https://images.pexels.com/photos/1260968/pexels-photo-1260968.jpeg");
 
         List<Ingredient> parmaIngredients = new ArrayList<>(basicIngredients);
         parmaIngredients.addAll(Arrays.asList(parmaHam, arugula, cherryTomatoes, parmesanCheese));
-        Pizza parmaS = new Pizza("Parma", smallPizzaSize, new BigDecimal(32), parmaIngredients, basicSauces, "https://images.pexels.com/photos/1260968/pexels-photo-1260968.jpeg");
-        Pizza parmaM = new Pizza("Parma", mediumPizzaSize, new BigDecimal(39), parmaIngredients, basicSauces, "https://images.pexels.com/photos/1260968/pexels-photo-1260968.jpeg");
-        Pizza parmaL = new Pizza("Parma", largePizzaSize, new BigDecimal(49), parmaIngredients, basicSauces, "https://images.pexels.com/photos/1260968/pexels-photo-1260968.jpeg");
+        Pizza parmaS = new Pizza("Parma", PizzaSize.SMALL, new BigDecimal(32), parmaIngredients, basicSauces, "https://images.pexels.com/photos/1260968/pexels-photo-1260968.jpeg");
+        Pizza parmaM = new Pizza("Parma", PizzaSize.MEDIUM, new BigDecimal(39), parmaIngredients, basicSauces, "https://images.pexels.com/photos/1260968/pexels-photo-1260968.jpeg");
+        Pizza parmaL = new Pizza("Parma", PizzaSize.LARGE, new BigDecimal(49), parmaIngredients, basicSauces, "https://images.pexels.com/photos/1260968/pexels-photo-1260968.jpeg");
 
         List<Pizza> allPizzas = new ArrayList<>(Arrays.asList(margheritaS, margheritaM, margheritaL, capricciosaS, capricciosaM, capricciosaL,
                 pepperoniPizzaS, pepperoniPizzaM, pepperoniPizzaL, hawaiianS, hawaiianM,  hawaiianL, farmerS, farmerM, farmerL,
@@ -151,15 +185,72 @@ public class Initializer {
         pizzaRepository.saveAll(allPizzas);
 
 
-        Customer customerJoe = new Customer("Joe", "Mama", 111111111, new HashSet<>(), new HashSet<>());
-        Address address1 = new Address(customerJoe ,"Kraków", "11-111", "Zielona", "1", "1A");
-        Address address2 = new Address(customerJoe ,"Kraków", "33-333", "Czerwona", "2", "2B");
 
-        Order order1 = new Order(customerJoe, address1, Arrays.asList(parmaS, meatS, pepsiL), new Payment(customerJoe, new BigDecimal(60), LocalDateTime.now()), LocalDateTime.now());
-        Order order2 = new Order(customerJoe, address2, Arrays.asList(hawaiianL, largeCheeseFries, fantaS), new Payment(customerJoe, new BigDecimal(40), LocalDateTime.now()), LocalDateTime.now());
 
-        customerJoe.setAddresses(Stream.of(address1, address2).collect(Collectors.toSet()));
-        customerJoe.setOrders(Stream.of(order1, order2).collect(Collectors.toSet()));
-        customerRepository.save(customerJoe);
+
+
+        UnregisteredCustomer unregisteredCustomer = new UnregisteredCustomer("unregistered", "unregistered", "unregistered","unregistered");
+        RegisteredCustomer registeredJoe = new RegisteredCustomer("Joe", "Mama", "joemama@gmail.com", "joemama", "111111111");
+        customerRepository.saveAll(Arrays.asList(unregisteredCustomer, registeredJoe));
+
+        Address joesAddress1 = new Address(registeredJoe ,"Kraków", "11-111", "Zielona", "1", "1A");
+        Address joesAddress2 = new Address(registeredJoe ,"Kraków", "22-222", "Czerwona", "2", "2B");
+        addressRepository.saveAll(Arrays.asList(joesAddress1, joesAddress2));
+
+
+
+        OrderCreateDTORegistered joesOrderRequest1 = new OrderCreateDTORegistered(2L, 1L, Arrays.asList(2L, 17L, 41L), new BigDecimal(61));
+        OrderCreateDTORegistered joesOrderRequest2 = new OrderCreateDTORegistered(2L, 1L, Arrays.asList(26L), new BigDecimal(39));
+        OrderCreateDTORegistered joesOrderRequest3 = new OrderCreateDTORegistered(2L, 2L, Arrays.asList(38L, 4L), new BigDecimal(53));
+        orderService.createOrderForRegisteredCustomer(joesOrderRequest1);
+        orderService.createOrderForRegisteredCustomer(joesOrderRequest2);
+        orderService.createOrderForRegisteredCustomer(joesOrderRequest3);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     }
+
+
+
+    //UMOŻLIWIĆ SKŁADANIE ZAMÓWIENIA PRZEZ NIEZAREJESTROWANYCH KLIENTÓW!!!!!!!!!
+
+
+    //        OrderCreateDTOUnregistered orderUnregistered1 = new OrderCreateDTOUnregistered("Unregistered", "User", 999999999, "unregistered@gmail.com",
+//                "Kraków", "99-999", "Czarna", "9", "9Z", Arrays.asList(34L), new BigDecimal(34));
+//        OrderCreateDTOUnregistered orderUnregistered2 = new OrderCreateDTOUnregistered("Unregistered", "User", 999999999, "unregistered@gmail.com",
+//                "Kraków", "99-999", "Czarna", "9", "9Z", Arrays.asList(34L, 11L), new BigDecimal(39));
+//        OrderCreateDTOUnregistered orderUnregistered3 = new OrderCreateDTOUnregistered("Unregistered", "User", 999999999, "unregistered@gmail.com",
+//                "Kraków", "99-999", "Czarna", "9", "9Z", Arrays.asList(34L, 13L), new BigDecimal(39));
+//        createOrderForUnregisteredUser(orderUnregistered1, menuItemRepository, orderRepository, unregisteredCustomerRepository);
+//        createOrderForUnregisteredUser(orderUnregistered2, menuItemRepository, orderRepository, unregisteredCustomerRepository);
+//        createOrderForUnregisteredUser(orderUnregistered3, menuItemRepository, orderRepository, unregisteredCustomerRepository);
+//
+
+//        //addressService.manageUnregisteredCustomerOrderBySettingNull(6L, 5L);
+//        //addressService.manageUnregisteredCustomerOrderBySettingNull(4L, 3L);
+//
+//        addressService.manageUnregisteredCustomerOrderBySettingDummyCustomer(6L, 5L, unregisteredCustomerRepository);
+//        //addressService.manageUnregisteredCustomerOrderBySettingDummyCustomer(4L, 3L);
+//
+
+//        OrderCreateDTOUnregistered orderUnregistered4 = new OrderCreateDTOUnregistered("Unregistered", "User", 999999999, "unregistered@gmail.com",
+//                "Kraków", "99-999", "Czarna", "9", "9Z", Arrays.asList(34L, 13L), new BigDecimal(39));
+//        OrderCreateDTOUnregistered orderUnregistered5 = new OrderCreateDTOUnregistered("Unregistered", "User", 999999999, "unregistered@gmail.com",
+//                "Kraków", "99-999", "Czarna", "9", "9Z", Arrays.asList(34L, 13L), new BigDecimal(39));
+//        createOrderForUnregisteredUser(orderUnregistered4, menuItemRepository, orderRepository, unregisteredCustomerRepository);
+//        createOrderForUnregisteredUser(orderUnregistered5, menuItemRepository, orderRepository, unregisteredCustomerRepository);
+
+
 }

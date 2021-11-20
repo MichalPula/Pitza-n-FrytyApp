@@ -1,13 +1,20 @@
 package PitzaNFryty.customer;
 
-import PitzaNFryty.address.Address;
-import PitzaNFryty.order.Order;
 import com.sun.istack.NotNull;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
-import java.util.Set;
 
+@Getter
+@Setter
+@NoArgsConstructor
+@ToString
 @Entity
+@Inheritance(strategy = InheritanceType.JOINED)
+@DiscriminatorColumn(name = "customer_type", discriminatorType = DiscriminatorType.STRING)
 @Table(name = "customers")
 public class Customer {
 
@@ -26,99 +33,17 @@ public class Customer {
 
     @NotNull
     @Column(name = "phone_number")
-    private int phoneNumber;
+    private String phoneNumber;
 
-    @OneToMany(targetEntity = Address.class, mappedBy = "customer", cascade = CascadeType.PERSIST)
-    private Set<Address> addresses;
+    @NotNull
+    @Column(name = "email", unique = true)
+    private String email;
 
-    @OneToMany(targetEntity = Order.class, mappedBy = "customer", cascade = CascadeType.PERSIST)
-    private Set<Order> orders;
 
-    public Customer(String firstName, String lastName, int phoneNumber, Set<Address> addresses, Set<Order> orders) {
+    public Customer(String firstName, String lastName, String email, String phoneNumber) {
         this.firstName = firstName;
         this.lastName = lastName;
+        this.email = email;
         this.phoneNumber = phoneNumber;
-        this.addresses = addresses;
-        this.orders = orders;
-    }
-
-    public Customer() {
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public int getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(int phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
-    public Set<Address> getAddresses() {
-        return addresses;
-    }
-
-    public void setAddresses(Set<Address> addresses) {
-        this.addresses = addresses;
-    }
-
-    public Set<Order> getOrders() {
-        return orders;
-    }
-
-    public void setOrders(Set<Order> orders) {
-        this.orders = orders;
-    }
-
-    public void addOrder(Order order) {
-        this.addOrder(order, true);
-    }
-
-    public void addOrder(Order order, boolean set) {
-        if(order != null) {
-            this.getOrders().add(order);
-            if(set) {
-                order.setCustomer(this, false);
-            }
-        }
-    }
-
-    public void deleteOrder(Order order) {
-        this.getOrders().remove(order);
-        order.setCustomer(null);
-    }
-
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(this.firstName).append(" ")
-                .append(this.lastName).append(", ")
-                .append(this.phoneNumber).append(", ");
-        this.addresses.forEach(address -> sb.append(address.toString()));
-        this.orders.forEach(order -> sb.append(order.toString()));
-        return sb.toString();
     }
 }
