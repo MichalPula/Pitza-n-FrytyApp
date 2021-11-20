@@ -1,7 +1,5 @@
 package PitzaNFryty.menu_item.sauce;
 
-import PitzaNFryty.menu_item.ingredient.Ingredient;
-import PitzaNFryty.menu_item.ingredient.IngredientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -12,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("sauces")
+@RequestMapping("/sauces")
 public class SauceController {
 
     private final SauceService sauceService;

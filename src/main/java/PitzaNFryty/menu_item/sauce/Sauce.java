@@ -1,13 +1,21 @@
 package PitzaNFryty.menu_item.sauce;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.*;
 
+@Getter
+@Setter
+@NoArgsConstructor
 @Entity
 @Table(name = "sauces")
 public class Sauce {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @SequenceGenerator(name = "sauce_id_generator", sequenceName = "sauce_id_sequence")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sauce_id_generator")
     @Column(name = "id", unique = true, updatable = false)
     private long id;
 
@@ -18,28 +26,4 @@ public class Sauce {
         this.name = name;
     }
 
-    public Sauce() {
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-
-    @Override
-    public String toString() {
-        return this.id + " {" + this.name + "}";
-    }
 }
