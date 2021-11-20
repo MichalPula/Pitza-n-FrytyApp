@@ -1,18 +1,15 @@
 package PitzaNFryty.menu_item.drink;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
+@Getter
+@AllArgsConstructor
 public enum DrinkSize {
     SMALL(0.3),
     LARGE(0.7);
 
     private final Double volume;
-
-    DrinkSize(Double volume) {
-        this.volume = volume;
-    }
-
-    public Double getVolume() {
-        return volume;
-    }
 
     @Override
     public String toString() {
