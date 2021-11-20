@@ -18,7 +18,7 @@ public class DrinkServiceImpl implements DrinkService{
     @Override
     public List<DrinkReadDTO> getAll() {
         List<Drink> drinks = drinkRepository.findAll();
-        Map<String, List<Drink>> drinkNameToDrinkSizes = new HashMap<>();
+        Map<String, List<Drink>> drinkNameToDrinkSizes = new LinkedHashMap<>();
 
         drinks.forEach(drink -> {
             String drinkName = drink.getName();
@@ -29,16 +29,15 @@ public class DrinkServiceImpl implements DrinkService{
             }
         });
 
-
         List<DrinkReadDTO> drinksReadDTOs = new ArrayList<>();
         drinkNameToDrinkSizes.forEach((drinkName, drinkInAllSizes) -> {
             DrinkReadDTO drinkReadDTO = new DrinkReadDTO();
             drinkReadDTO.setName(drinkName);
 
-            Map<Long, List<String>> drinkIdToSizeVolumePriceList = new HashMap<>();
+            Map<Long, List<String>> drinkIdToSizeVolumePriceList = new LinkedHashMap<>();
             drinkInAllSizes.forEach(drink -> {
                 String drinkSize = drink.getDrinkSize().toString();
-                String drinkVolume = drink.getDrinkSize().getVolume().toString();
+                String drinkVolume = drink.getDrinkSize().getVolume().toString() + "l";
                 String drinkPrice = drink.getPrice().toString();
                 drinkIdToSizeVolumePriceList.put(drink.getId(), new ArrayList<>(Arrays.asList(drinkSize, drinkVolume, drinkPrice)));
             });
