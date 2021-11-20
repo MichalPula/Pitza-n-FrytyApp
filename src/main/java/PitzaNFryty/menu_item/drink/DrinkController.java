@@ -21,7 +21,7 @@ public class DrinkController {
     }
 
     @GetMapping(value = "/all", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<DrinkReadDTO>> getAll() {
+    public ResponseEntity<List<DrinkReadDTO>> getAllDrinks() {
         return ResponseEntity.ok().body(drinkService.getAll());
     }
 }

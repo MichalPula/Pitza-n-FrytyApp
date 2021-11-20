@@ -3,53 +3,52 @@ package PitzaNFryty.menu_item.drink;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class DrinkServiceImpl implements DrinkService{
 
     private final DrinkRepository drinkRepository;
-    private final DrinkSizeRepository drinkSizeRepository;
 
     @Autowired
-    public DrinkServiceImpl(DrinkRepository drinkRepository, DrinkSizeRepository drinkSizeRepository) {
+    public DrinkServiceImpl(DrinkRepository drinkRepository) {
         this.drinkRepository = drinkRepository;
-        this.drinkSizeRepository = drinkSizeRepository;
     }
 
     @Override
     public List<DrinkReadDTO> getAll() {
         List<Drink> drinks = drinkRepository.findAll();
-        List<DrinkSize> drinkSizes = drinkSizeRepository.findAll();
-        int amountOfDrinks = drinks.size();
-        int amountOfSameDrinks = drinkSizes.size();
+        Map<String, List<Drink>> drinkNameToDrinkSizes = new HashMap<>();
 
-        List<DrinkReadDTO> drinkReadDTOList = new ArrayList<>();
-
-        for(int i = 0; i <= amountOfDrinks; i += amountOfSameDrinks) {
-            if(i > amountOfDrinks - amountOfSameDrinks) {
-                break;
+        drinks.forEach(drink -> {
+            String drinkName = drink.getName();
+            if(drinkNameToDrinkSizes.get(drinkName) == null){
+                drinkNameToDrinkSizes.put(drinkName, new ArrayList<>(List.of(drink)));
+            } else {
+                drinkNameToDrinkSizes.get(drinkName).add(drink);
             }
-            List<Drink> sameDrinks = drinks.subList(i, i + amountOfSameDrinks);
+        });
+
+
+        List<DrinkReadDTO> drinksReadDTOs = new ArrayList<>();
+        drinkNameToDrinkSizes.forEach((drinkName, drinkInAllSizes) -> {
             DrinkReadDTO drinkReadDTO = new DrinkReadDTO();
-            Map<Long, DrinkSize> drinkIdToSize = new LinkedHashMap<>();
-            Map<Long, BigDecimal> drinkIdToPrice = new LinkedHashMap<>();
+            drinkReadDTO.setName(drinkName);
 
-            sameDrinks.forEach(drink -> {
-                drinkIdToSize.put(drink.getId(), drink.getDrinkSize());
-                drinkIdToPrice.put(drink.getId(), drink.getPrice());
+            Map<Long, List<String>> drinkIdToSizeVolumePriceList = new HashMap<>();
+            drinkInAllSizes.forEach(drink -> {
+                String drinkSize = drink.getDrinkSize().toString();
+                String drinkVolume = drink.getDrinkSize().getVolume().toString();
+                String drinkPrice = drink.getPrice().toString();
+                drinkIdToSizeVolumePriceList.put(drink.getId(), new ArrayList<>(Arrays.asList(drinkSize, drinkVolume, drinkPrice)));
             });
-            drinkReadDTO.setName(sameDrinks.get(0).getName());
-            drinkReadDTO.setDrinkIdToSize(drinkIdToSize);
-            drinkReadDTO.setDrinkIdToPrice(drinkIdToPrice);
-            drinkReadDTO.setImageURL(sameDrinks.get(0).getImageURL());
+            drinkReadDTO.setDrinkIdToSizeVolumePriceList(drinkIdToSizeVolumePriceList);
 
-            drinkReadDTOList.add(drinkReadDTO);
-        }
-        return drinkReadDTOList;
+            drinkReadDTO.setImageURL(drinkInAllSizes.get(0).getImageURL());
+
+            drinksReadDTOs.add(drinkReadDTO);
+        });
+
+        return drinksReadDTOs;
     }
 }
