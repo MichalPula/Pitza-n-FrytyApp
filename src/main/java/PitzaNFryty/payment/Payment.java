@@ -1,81 +1,44 @@
 package PitzaNFryty.payment;
 
 import PitzaNFryty.customer.Customer;
+import PitzaNFryty.order.Order;
 import com.sun.istack.NotNull;
-import org.hibernate.annotations.LazyToOne;
-import org.hibernate.annotations.LazyToOneOption;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 
+@Getter
+@Setter
+@NoArgsConstructor
+@ToString
 @Entity
 @Table(name = "payments")
 public class Payment {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", unique = true, updatable = false)
     private Long id;
 
-    @ManyToOne(targetEntity = Customer.class, cascade = CascadeType.MERGE)
-    @LazyToOne(LazyToOneOption.NO_PROXY)
+    @ManyToOne(targetEntity = Customer.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "customer_id")
+    @ToString.Exclude
     private Customer customer;
 
+    @OneToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "order_id")
+    @MapsId
+    private Order order;
+
     @NotNull
-    @Column(name = "price")
+    @Column(name = "money_amount")
     private BigDecimal moneyAmount;
 
-    @NotNull
-    @Column(name = "time")
-    private LocalDateTime time;
-
-    public Payment(Customer customer, BigDecimal moneyAmount, LocalDateTime time) {
+    public Payment(Customer customer, Order order, BigDecimal moneyAmount) {
         this.customer = customer;
+        this.order = order;
         this.moneyAmount = moneyAmount;
-        this.time = time;
-    }
-
-    public Payment() {
-
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Customer getCustomer() {
-        return customer;
-    }
-
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
-    }
-
-    public BigDecimal getMoneyAmount() {
-        return moneyAmount;
-    }
-
-    public void setMoneyAmount(BigDecimal moneyAmount) {
-        this.moneyAmount = moneyAmount;
-    }
-
-    public LocalDateTime getTime() {
-        return time;
-    }
-
-    public void setTime(LocalDateTime time) {
-        this.time = time;
-    }
-
-    @Override
-    public String toString() {
-        return this.id + " {" +this.customer.getFirstName() + " " + this.customer.getLastName()
-                + this.moneyAmount + "}";
     }
 }
