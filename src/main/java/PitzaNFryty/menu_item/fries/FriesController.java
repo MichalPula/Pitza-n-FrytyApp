@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("fries")
+@RequestMapping("/fries")
 public class FriesController {
 
     private final FriesService friesService;
@@ -22,7 +22,6 @@ public class FriesController {
 
     @GetMapping(value = "/all", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<FriesReadDTO>> getAll(){
-        return ResponseEntity.ok().body(this.friesService.getAll());
+        return ResponseEntity.ok().body(friesService.getAll());
     }
-
 }
