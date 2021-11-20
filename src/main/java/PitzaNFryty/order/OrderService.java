@@ -9,4 +9,5 @@ public interface OrderService {
 
     List<OrderReadDTORegistered> getCustomerOrders(Long customerId);
     String createOrderForRegisteredCustomer(OrderCreateDTORegistered registeredCustomersOrderRequest);
+    String createOrderForUnregisteredCustomer(OrderCreateDTOUnregistered unregisteredCustomersOrderRequest);
 }
