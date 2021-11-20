@@ -1,16 +1,24 @@
 package PitzaNFryty.menu_item.ingredient;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.*;
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 
+@Getter
+@Setter
+@NoArgsConstructor
 @Entity
 @Table(name = "ingredients")
 public class Ingredient {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @SequenceGenerator(name = "ingredient_id_generator", sequenceName = "ingredient_id_sequence")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ingredient_id_generator")
     @Column(name = "id", unique = true, updatable = false)
     private Long id;
 
@@ -21,28 +29,4 @@ public class Ingredient {
         this.name = name;
     }
 
-    public Ingredient() {
-
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    @Override
-    public String toString() {
-        return this.id + " {" +this.name + "}";
-    }
 }
