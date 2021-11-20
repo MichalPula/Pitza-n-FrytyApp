@@ -14,7 +14,7 @@ public class OrderCreateDTOUnregistered {
 
     private String firstName;
     private String lastName;
-    private int phoneNumber;
+    private String phoneNumber;
     private String email;
 
     private String city;
