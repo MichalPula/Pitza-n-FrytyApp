@@ -3,50 +3,52 @@ package PitzaNFryty.menu_item.fries;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
 import java.util.*;
 
 @Service
 public class FriesServiceImpl implements FriesService{
 
     private final FriesRepository friesRepository;
-    private final FriesSizeRepository friesSizeRepository;
 
     @Autowired
-    public FriesServiceImpl(FriesRepository friesRepository, FriesSizeRepository friesSizeRepository) {
+    public FriesServiceImpl(FriesRepository friesRepository) {
         this.friesRepository = friesRepository;
-        this.friesSizeRepository = friesSizeRepository;
     }
 
     @Override
     public List<FriesReadDTO> getAll() {
-        List<Fries> allFries = friesRepository.findAll();
-        List<FriesSize> friesSizes = friesSizeRepository.findAll();
-        int amountOfFries = allFries.size();
-        int amountOfSameFries = friesSizes.size();
+        List<Fries> fries = friesRepository.findAll();
+        Map<String, List<Fries>> friesNameToFriesSizes = new LinkedHashMap<>();
 
-        List<FriesReadDTO> friesReadDTOList = new ArrayList<>();
-
-        for(int i = 0; i <= amountOfFries; i += amountOfSameFries) {
-            if(i > amountOfFries - amountOfSameFries) {
-                break;
+        fries.forEach(singleFries -> {
+            String friesName = singleFries.getName();
+            if(friesNameToFriesSizes.get(friesName) == null){
+                friesNameToFriesSizes.put(friesName, new ArrayList<>(List.of(singleFries)));
+            } else {
+                friesNameToFriesSizes.get(friesName).add(singleFries);
             }
-            List<Fries> sameFries = allFries.subList(i, i + amountOfSameFries);
+        });
+
+
+        List<FriesReadDTO> friesReadDTOs = new ArrayList<>();
+        friesNameToFriesSizes.forEach((friesName, friesInAllSizes) -> {
             FriesReadDTO friesReadDTO = new FriesReadDTO();
-            Map<Long, FriesSize> friesIdToSize = new LinkedHashMap<>();
-            Map<Long, BigDecimal> friesIdToPrice = new LinkedHashMap<>();
+            friesReadDTO.setName(friesName);
 
-            sameFries.forEach(fries -> {
-                friesIdToSize.put(fries.getId(), fries.getFriesSize());
-                friesIdToPrice.put(fries.getId(), fries.getPrice());
+            Map<Long, List<String>> friesIdToSizeWeightPriceList = new LinkedHashMap<>();
+            friesInAllSizes.forEach(singleFries -> {
+                String friesSize = singleFries.getFriesSize().toString();
+                String friesWeight = singleFries.getFriesSize().getWeight().toString() + "g";
+                String friesPrice = singleFries.getPrice().toString();
+                friesIdToSizeWeightPriceList.put(singleFries.getId(), new ArrayList<>(Arrays.asList(friesSize, friesWeight, friesPrice)));
             });
-            friesReadDTO.setName(sameFries.get(0).getName());
-            friesReadDTO.setFriesIdToSize(friesIdToSize);
-            friesReadDTO.setDrinkIdToPrice(friesIdToPrice);
-            friesReadDTO.setImageURL(sameFries.get(0).getImageURL());
+            friesReadDTO.setFriesIdToSizeWeightPriceList(friesIdToSizeWeightPriceList);
 
-            friesReadDTOList.add(friesReadDTO);
-        }
-        return friesReadDTOList;
+            friesReadDTO.setImageURL(friesInAllSizes.get(0).getImageURL());
+
+            friesReadDTOs.add(friesReadDTO);
+        });
+
+        return friesReadDTOs;
     }
 }
