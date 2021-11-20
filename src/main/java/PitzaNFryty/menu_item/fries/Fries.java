@@ -1,50 +1,39 @@
 package PitzaNFryty.menu_item.fries;
 
 import PitzaNFryty.menu_item.MenuItem;
-import com.sun.istack.NotNull;
-import javax.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import javax.persistence.Convert;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.math.BigDecimal;
 
+@Getter
+@Setter
+@NoArgsConstructor
 @Entity
 @Table(name = "fries")
 public class Fries extends MenuItem {
 
-    @NotNull
-    @ManyToOne(targetEntity = FriesSize.class, cascade = CascadeType.MERGE)
-    @JoinColumn(name = "fries_size_id")
+    @Convert(converter = FriesSizeConverter.class)
     private FriesSize friesSize;
 
-    @NotNull
-    @Column(name = "price")
-    private BigDecimal price;
-
     public Fries(String name, FriesSize friesSize, BigDecimal price, String imageURL) {
-        super(name, imageURL);
+        super(name, imageURL, price);
         this.friesSize = friesSize;
-        this.price = price;
-    }
-
-    public Fries() {
-    }
-
-    public FriesSize getFriesSize() {
-        return friesSize;
-    }
-
-    public void setFriesSize(FriesSize friesSize) {
-        this.friesSize = friesSize;
-    }
-
-    public BigDecimal getPrice() {
-        return price;
-    }
-
-    public void setPrice(BigDecimal price) {
-        this.price = price;
     }
 
     @Override
     public String toString() {
-        return this.getId() + " {" + this.getName() + ", " + this.friesSize.toString() +", " + this.price + ", " + this.getImageURL() + "}";
+        final StringBuilder sb = new StringBuilder("Fries{");
+        sb.append("name='").append(name).append('\'');
+        sb.append(", isAvailable=").append(isAvailable);
+        sb.append(", price=").append(price);
+        sb.append(", imageURL='").append(imageURL).append('\'');
+        sb.append(", friesSize=").append(friesSize);
+        sb.append('}');
+        return sb.toString();
     }
 }

@@ -1,43 +1,25 @@
 package PitzaNFryty.menu_item.fries;
 
-import javax.persistence.*;
+public enum FriesSize {
+    SMALL(50),
+    MEDIUM(100),
+    LARGE(200);
 
-@Entity
-@Table(name = "fries_sizes")
-public class FriesSize {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private final Integer weight;
 
-    @Column(name = "size")
-    private String size;
-
-    public FriesSize(String size) {
-        this.size = size;
+    FriesSize(Integer weight) {
+        this.weight = weight;
     }
 
-    public FriesSize(){
-
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getSize() {
-        return size;
-    }
-
-    public void setSize(String size) {
-        this.size = size;
+    public Integer getWeight() {
+        return weight;
     }
 
     @Override
     public String toString() {
-        return this.size;
+        final StringBuilder sb = new StringBuilder();
+        sb.append(super.toString().charAt(0));
+        sb.append(super.toString().substring(1).toLowerCase());
+        return sb.toString();
     }
 }
