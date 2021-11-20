@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/customers")
 public class OrderController {
 
     private final OrderService orderService;
@@ -18,7 +17,7 @@ public class OrderController {
         this.orderService = orderService;
     }
 
-    @GetMapping(value = "/{customerId}/orders", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "customers/{customerId}/orders", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<OrderReadDTORegistered>> getCustomerOrders(@PathVariable Long customerId) {
         return ResponseEntity.ok().body(orderService.getCustomerOrders(customerId));
     }
@@ -26,5 +25,10 @@ public class OrderController {
     @PostMapping(value = "/order", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> createOrderForRegisteredCustomer(@RequestBody OrderCreateDTORegistered registeredCustomersOrderRequest){
         return ResponseEntity.ok().body(orderService.createOrderForRegisteredCustomer(registeredCustomersOrderRequest));
+    }
+
+    @PostMapping(value = "/order/unregistered", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> createOrderForUnregisteredCustomer(@RequestBody OrderCreateDTOUnregistered unregisteredCustomersOrderRequest){
+        return ResponseEntity.ok().body(orderService.createOrderForUnregisteredCustomer(unregisteredCustomersOrderRequest));
     }
 }
