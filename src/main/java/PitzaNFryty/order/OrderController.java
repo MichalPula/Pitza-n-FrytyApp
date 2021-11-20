@@ -22,4 +22,9 @@ public class OrderController {
     public ResponseEntity<List<OrderReadDTORegistered>> getCustomerOrders(@PathVariable Long customerId) {
         return ResponseEntity.ok().body(orderService.getCustomerOrders(customerId));
     }
+
+    @PostMapping(value = "/order", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> createOrderForRegisteredCustomer(@RequestBody OrderCreateDTORegistered registeredCustomersOrderRequest){
+        return ResponseEntity.ok().body(orderService.createOrderForRegisteredCustomer(registeredCustomersOrderRequest));
+    }
 }
