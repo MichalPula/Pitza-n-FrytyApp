@@ -6,5 +6,6 @@ import java.util.List;
 
 @Service
 public interface PizzaService {
+
     List<PizzaReadDTO> getAll();
 }

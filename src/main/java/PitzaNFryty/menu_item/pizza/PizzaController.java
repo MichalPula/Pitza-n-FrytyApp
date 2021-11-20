@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("pizzas")
+@RequestMapping("/pizzas")
 public class PizzaController {
 
     private final PizzaService pizzaService;
@@ -21,7 +21,7 @@ public class PizzaController {
     }
 
     @GetMapping(value = "/all", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<PizzaReadDTO>> getAllCustom() {
+    public ResponseEntity<List<PizzaReadDTO>> getAll() {
         return ResponseEntity.ok().body(pizzaService.getAll());
     }
 }
