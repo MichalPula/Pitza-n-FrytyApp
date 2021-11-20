@@ -1,11 +1,16 @@
 package PitzaNFryty.order;
 
+import PitzaNFryty.address.Address;
 import PitzaNFryty.address.AddressRepository;
+import PitzaNFryty.customer.RegisteredCustomer.RegisteredCustomer;
 import PitzaNFryty.customer.RegisteredCustomer.RegisteredCustomerRepository;
+import PitzaNFryty.menu_item.MenuItem;
 import PitzaNFryty.menu_item.MenuItemRepository;
+import PitzaNFryty.payment.Payment;
 import PitzaNFryty.payment.PaymentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -72,4 +77,18 @@ public class OrderServiceImpl implements OrderService {
         return customersOrdersReadDTO;
     }
 
+    @Transactional
+    public String createOrderForRegisteredCustomer(OrderCreateDTORegistered registeredConsumersOrderDTO) {
+        RegisteredCustomer registeredCustomer = registeredCustomerRepository.findById(registeredConsumersOrderDTO.getCustomerId()).orElseThrow();
+        Address address = addressRepository.findById(registeredConsumersOrderDTO.getAddressId()).orElseThrow();
+        List<MenuItem> menuItems = menuItemRepository.findAllById(registeredConsumersOrderDTO.getMenuItemsIds());
+
+        Order order = new Order(registeredCustomer, address, menuItems, LocalDateTime.now());
+        orderRepository.save(order);
+
+        Payment payment = new Payment(registeredCustomer, order, registeredConsumersOrderDTO.getMoneyAmount(), LocalDateTime.now());
+        paymentRepository.save(payment);
+
+        return "Order placed!";
+    }
 }
