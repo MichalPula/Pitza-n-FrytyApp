@@ -11,7 +11,6 @@ public class FriesSizeConverter implements AttributeConverter<FriesSize, String>
             case SMALL -> "Small";
             case MEDIUM -> "Medium";
             case LARGE -> "Large";
-            default -> throw new IllegalArgumentException("Unknown " + friesSize);
         };
     }
 

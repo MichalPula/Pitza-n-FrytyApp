@@ -10,7 +10,6 @@ public class DrinkSizeConverter implements AttributeConverter<DrinkSize, String>
         return switch (drinkSize) {
             case SMALL -> "Small";
             case LARGE -> "Large";
-            default -> throw new IllegalArgumentException("Unknown " + drinkSize);
         };
     }
 
