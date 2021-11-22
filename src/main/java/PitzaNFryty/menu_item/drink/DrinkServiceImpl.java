@@ -1,38 +1,37 @@
 package PitzaNFryty.menu_item.drink;
 
+import PitzaNFryty.menu_item.MenuItem;
+import PitzaNFryty.menu_item.MenuItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class DrinkServiceImpl implements DrinkService{
 
     private final DrinkRepository drinkRepository;
+    private final MenuItemService menuItemService;
 
     @Autowired
-    public DrinkServiceImpl(DrinkRepository drinkRepository) {
+    public DrinkServiceImpl(DrinkRepository drinkRepository, MenuItemService menuItemService) {
         this.drinkRepository = drinkRepository;
+        this.menuItemService = menuItemService;
     }
 
     @Override
     public List<DrinkReadDTO> getAll() {
         List<Drink> drinks = drinkRepository.findAll();
-        Map<String, List<Drink>> drinkNameToDrinkSizes = new LinkedHashMap<>();
-
-        drinks.forEach(drink -> {
-            String drinkName = drink.getName();
-            if(drinkNameToDrinkSizes.get(drinkName) == null){
-                drinkNameToDrinkSizes.put(drinkName, new ArrayList<>(List.of(drink)));
-            } else {
-                drinkNameToDrinkSizes.get(drinkName).add(drink);
-            }
-        });
+        List<MenuItem> drinksMappedToMenuItems = drinks.stream().map(drink -> (MenuItem) drink).collect(Collectors.toList());
+        Map<String, List<MenuItem>> menuItemNameToAllItsSizes = menuItemService.mapToMenuItemNameToAllItsSizes(drinksMappedToMenuItems);
 
         List<DrinkReadDTO> drinksReadDTOs = new ArrayList<>();
-        drinkNameToDrinkSizes.forEach((drinkName, drinkInAllSizes) -> {
+        menuItemNameToAllItsSizes.forEach((menuItemName, menuItemInAllSizes) -> {
+            List<Drink> drinkInAllSizes = menuItemInAllSizes.stream().map(menuItem -> (Drink) menuItem).collect(Collectors.toList());
+
             DrinkReadDTO drinkReadDTO = new DrinkReadDTO();
-            drinkReadDTO.setName(drinkName);
+            drinkReadDTO.setName(menuItemName);
 
             Map<Long, List<String>> drinkIdToSizeVolumePriceList = new LinkedHashMap<>();
             drinkInAllSizes.forEach(drink -> {

@@ -1,5 +1,7 @@
 package PitzaNFryty.menu_item.pizza;
 
+import PitzaNFryty.menu_item.MenuItem;
+import PitzaNFryty.menu_item.MenuItemService;
 import PitzaNFryty.menu_item.ingredient.Ingredient;
 import PitzaNFryty.menu_item.ingredient.IngredientRepository;
 import PitzaNFryty.menu_item.sauce.Sauce;
@@ -8,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class PizzaServiceImpl implements PizzaService {
@@ -15,36 +18,33 @@ public class PizzaServiceImpl implements PizzaService {
     private final PizzaRepository pizzaRepository;
     private final IngredientRepository ingredientRepository;
     private final SauceRepository sauceRepository;
+    private final MenuItemService menuItemService;
 
     @Autowired
-    public PizzaServiceImpl(PizzaRepository pizzaRepository, IngredientRepository ingredientRepository, SauceRepository sauceRepository) {
+    public PizzaServiceImpl(PizzaRepository pizzaRepository, IngredientRepository ingredientRepository, SauceRepository sauceRepository,
+                            MenuItemService menuItemService) {
         this.pizzaRepository = pizzaRepository;
         this.ingredientRepository = ingredientRepository;
         this.sauceRepository = sauceRepository;
+        this.menuItemService = menuItemService;
     }
 
     @Override
     public List<PizzaReadDTO> getAll() {
         List<Pizza> pizzas = pizzaRepository.findAll();
-        Map<String, List<Pizza>> pizzaNameToPizzasSizes = new LinkedHashMap<>();
-
-        pizzas.forEach(pizza -> {
-            String friesName = pizza.getName();
-            if(pizzaNameToPizzasSizes.get(friesName) == null){
-                pizzaNameToPizzasSizes.put(friesName, new ArrayList<>(List.of(pizza)));
-            } else {
-                pizzaNameToPizzasSizes.get(friesName).add(pizza);
-            }
-        });
+        List<MenuItem> pizzasMappedToMenuItems = pizzas.stream().map(pizza -> (MenuItem) pizza).collect(Collectors.toList());
+        Map<String, List<MenuItem>> menuItemNameToAllItsSizes = menuItemService.mapToMenuItemNameToAllItsSizes(pizzasMappedToMenuItems);
 
 
         List<PizzaReadDTO> pizzaReadDTOList = new ArrayList<>();
-        pizzaNameToPizzasSizes.forEach((pizzaName, pizzaInAllSizes) -> {
+        menuItemNameToAllItsSizes.forEach((menuItemName, menuItemInAllSizes) -> {
+            List<Pizza> pizzasInAllSizes = menuItemInAllSizes.stream().map(menuItem -> (Pizza) menuItem).collect(Collectors.toList());
+
             PizzaReadDTO pizzaReadDTO = new PizzaReadDTO();
-            pizzaReadDTO.setName(pizzaName);
+            pizzaReadDTO.setName(menuItemName);
 
             Map<Long, List<String>> pizzaIdToSizeDiameterPriceList = new LinkedHashMap<>();
-            pizzaInAllSizes.forEach(pizza -> {
+            pizzasInAllSizes.forEach(pizza -> {
                 String pizzaSize = pizza.getPizzaSize().toString();
                 String pizzaDiameter = pizza.getPizzaSize().getDiameter().toString() + "cm";
                 String pizzaPrice = pizza.getPrice().toString();
@@ -53,14 +53,14 @@ public class PizzaServiceImpl implements PizzaService {
             pizzaReadDTO.setPizzaIdToSizeDiameterPriceList(pizzaIdToSizeDiameterPriceList);
 
             Map<Long, String> ingredientIdToName= new LinkedHashMap<>();
-            pizzaInAllSizes.get(0).getIngredients().forEach(ingredient -> ingredientIdToName.put(ingredient.getId(), ingredient.getName()));
+            pizzasInAllSizes.get(0).getIngredients().forEach(ingredient -> ingredientIdToName.put(ingredient.getId(), ingredient.getName()));
             pizzaReadDTO.setIngredients(ingredientIdToName);
 
             Map<Long, String> sauceIdToName = new LinkedHashMap<>();
-            pizzaInAllSizes.get(0).getSauces().forEach(sauce -> sauceIdToName.put(sauce.getId(), sauce.getName()));
+            pizzasInAllSizes.get(0).getSauces().forEach(sauce -> sauceIdToName.put(sauce.getId(), sauce.getName()));
             pizzaReadDTO.setSauces(sauceIdToName);
 
-            pizzaReadDTO.setImageURL(pizzaInAllSizes.get(0).getImageURL());
+            pizzaReadDTO.setImageURL(pizzasInAllSizes.get(0).getImageURL());
 
             pizzaReadDTOList.add(pizzaReadDTO);
         });
