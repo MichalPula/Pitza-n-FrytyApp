@@ -1,5 +1,9 @@
 package PitzaNFryty.menu_item.pizza;
 
+import PitzaNFryty.menu_item.ingredient.Ingredient;
+import PitzaNFryty.menu_item.ingredient.IngredientRepository;
+import PitzaNFryty.menu_item.sauce.Sauce;
+import PitzaNFryty.menu_item.sauce.SauceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,10 +13,14 @@ import java.util.*;
 public class PizzaServiceImpl implements PizzaService {
 
     private final PizzaRepository pizzaRepository;
+    private final IngredientRepository ingredientRepository;
+    private final SauceRepository sauceRepository;
 
     @Autowired
-    public PizzaServiceImpl(PizzaRepository pizzaRepository) {
+    public PizzaServiceImpl(PizzaRepository pizzaRepository, IngredientRepository ingredientRepository, SauceRepository sauceRepository) {
         this.pizzaRepository = pizzaRepository;
+        this.ingredientRepository = ingredientRepository;
+        this.sauceRepository = sauceRepository;
     }
 
     @Override
@@ -58,5 +66,24 @@ public class PizzaServiceImpl implements PizzaService {
         });
 
         return pizzaReadDTOList;
+    }
+
+    @Override
+    public String add(PizzaCreateDTO pizzaCreateDTO) {
+        List<Ingredient> ingredients = ingredientRepository.findAllByIdIn(pizzaCreateDTO.getIngredientsIds());
+        List<Sauce> sauces = sauceRepository.findAllByIdIn(pizzaCreateDTO.getSaucesIds());
+
+        pizzaCreateDTO.getSizeToPrice().forEach((size, price) -> {
+            Pizza newPizza = new Pizza();
+            newPizza.setName(pizzaCreateDTO.getName());
+            newPizza.setPizzaSize(PizzaSize.valueOf(size.toUpperCase()));
+            newPizza.setPrice(price);
+            newPizza.setIngredients(ingredients);
+            newPizza.setSauces(sauces);
+            newPizza.setImageURL(pizzaCreateDTO.getImageURL());
+            pizzaRepository.save(newPizza);
+        });
+
+        return "Pizza " + pizzaCreateDTO.getName() + " has been added!";
     }
 }

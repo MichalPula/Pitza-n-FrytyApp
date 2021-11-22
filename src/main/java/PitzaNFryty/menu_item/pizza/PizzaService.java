@@ -8,4 +8,5 @@ import java.util.List;
 public interface PizzaService {
 
     List<PizzaReadDTO> getAll();
+    String add(PizzaCreateDTO pizzaCreateDTO);
 }
