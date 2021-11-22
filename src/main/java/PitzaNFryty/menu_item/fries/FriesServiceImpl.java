@@ -51,4 +51,18 @@ public class FriesServiceImpl implements FriesService{
 
         return friesReadDTOs;
     }
+
+    @Override
+    public String add(FriesCreateDTO friesCreateDTO) {
+        friesCreateDTO.getSizeToPrice().forEach((size, price) -> {
+            Fries newFries = new Fries();
+            newFries.setName(friesCreateDTO.getName());
+            newFries.setPrice(price);
+            newFries.setFriesSize(FriesSize.valueOf(size.toUpperCase()));
+            newFries.setImageURL(friesCreateDTO.getImageURL());
+            friesRepository.save(newFries);
+        });
+
+        return friesCreateDTO.getName() + " have been added!";
+    }
 }

@@ -8,4 +8,5 @@ import java.util.List;
 public interface FriesService {
 
     List<FriesReadDTO> getAll();
+    String add(FriesCreateDTO friesCreateDTO);
 }
