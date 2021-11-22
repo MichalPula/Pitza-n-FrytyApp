@@ -7,6 +7,5 @@ import java.util.List;
 
 @Repository
 public interface MenuItemRepository extends JpaRepository<MenuItem, Long> {
-    MenuItem findByNameContainingIgnoreCase(String name);
-    List<MenuItem> findAllByNameInIgnoreCase(List<String> menuItems);
+    List<MenuItem> findAllByNameLikeIgnoreCase(String name);
 }
