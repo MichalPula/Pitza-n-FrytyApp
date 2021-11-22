@@ -50,4 +50,18 @@ public class DrinkServiceImpl implements DrinkService{
 
         return drinksReadDTOs;
     }
+
+    @Override
+    public String add(DrinkCreateDTO drinkCreateDTO) {
+        drinkCreateDTO.getSizeToPrice().forEach((size, price) -> {
+            Drink newDrink = new Drink();
+            newDrink.setName(drinkCreateDTO.getName());
+            newDrink.setPrice(price);
+            newDrink.setDrinkSize(DrinkSize.valueOf(size.toUpperCase()));
+            newDrink.setImageURL(drinkCreateDTO.getImageURL());
+            drinkRepository.save(newDrink);
+        });
+
+        return "Drink " + drinkCreateDTO.getName() + " has been added!";
+    }
 }
