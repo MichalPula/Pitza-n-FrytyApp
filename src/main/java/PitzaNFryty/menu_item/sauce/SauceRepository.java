@@ -9,4 +9,5 @@ import java.util.List;
 public interface SauceRepository extends JpaRepository<Sauce, Long> {
 
     List<Sauce> findSaucesByNameIn(List<String> saucesNames);
+    List<Sauce> findAllByIdIn(List<Long> saucesIds);
 }
