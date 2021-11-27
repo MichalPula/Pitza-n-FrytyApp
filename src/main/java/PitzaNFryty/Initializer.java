@@ -5,7 +5,7 @@ import PitzaNFryty.address.AddressRepository;
 import PitzaNFryty.address.AddressService;
 import PitzaNFryty.customer.UserRepository;
 import PitzaNFryty.customer.RegisteredCustomer.RegisteredUser;
-import PitzaNFryty.customer.RegisteredCustomer.RegisteredCustomerRepository;
+import PitzaNFryty.customer.RegisteredCustomer.RegisteredUserRepository;
 import PitzaNFryty.customer.UnregisteredCustomer.UnregisteredUser;
 import PitzaNFryty.customer.UnregisteredCustomer.UnregisteredCustomerRepository;
 import PitzaNFryty.jwt_authentication.role.Role;
@@ -49,7 +49,7 @@ public class Initializer {
     private final OrderRepository orderRepository;
     private final UserRepository userRepository;
     private final MenuItemRepository menuItemRepository;
-    private final RegisteredCustomerRepository registeredCustomerRepository;
+    private final RegisteredUserRepository registeredUserRepository;
     private final UnregisteredCustomerRepository unregisteredCustomerRepository;
     private final AddressService addressService;
     private final OrderService orderService;
@@ -59,7 +59,7 @@ public class Initializer {
     public Initializer(DrinkRepository drinkRepository, FriesRepository friesRepository, IngredientRepository ingredientRepository,
                        SauceRepository sauceRepository, PizzaRepository pizzaRepository, AddressRepository addressRepository,
                        PaymentRepository paymentRepository, OrderRepository orderRepository, UserRepository userRepository,
-                       MenuItemRepository menuItemRepository, RegisteredCustomerRepository registeredCustomerRepository,
+                       MenuItemRepository menuItemRepository, RegisteredUserRepository registeredUserRepository,
                        UnregisteredCustomerRepository unregisteredCustomerRepository,
                        AddressService addressService, OrderService orderService) {
         this.drinkRepository = drinkRepository;
@@ -72,7 +72,7 @@ public class Initializer {
         this.orderRepository = orderRepository;
         this.userRepository = userRepository;
         this.menuItemRepository = menuItemRepository;
-        this.registeredCustomerRepository = registeredCustomerRepository;
+        this.registeredUserRepository = registeredUserRepository;
         this.unregisteredCustomerRepository = unregisteredCustomerRepository;
         this.addressService = addressService;
         this.orderService = orderService;

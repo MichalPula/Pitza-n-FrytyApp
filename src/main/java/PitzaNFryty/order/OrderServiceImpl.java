@@ -5,7 +5,7 @@ import PitzaNFryty.address.AddressRepository;
 import PitzaNFryty.customer.User;
 import PitzaNFryty.customer.UserRepository;
 import PitzaNFryty.customer.RegisteredCustomer.RegisteredUser;
-import PitzaNFryty.customer.RegisteredCustomer.RegisteredCustomerRepository;
+import PitzaNFryty.customer.RegisteredCustomer.RegisteredUserRepository;
 import PitzaNFryty.customer.UnregisteredCustomer.UnregisteredUser;
 import PitzaNFryty.menu_item.MenuItem;
 import PitzaNFryty.menu_item.MenuItemRepository;
@@ -30,7 +30,7 @@ public class OrderServiceImpl implements OrderService {
     @PersistenceContext
     private EntityManager entityManager;
 
-    private final RegisteredCustomerRepository registeredCustomerRepository;
+    private final RegisteredUserRepository registeredUserRepository;
     private final AddressRepository addressRepository;
     private final MenuItemRepository menuItemRepository;
     private final OrderRepository orderRepository;
@@ -38,10 +38,10 @@ public class OrderServiceImpl implements OrderService {
     private final UserRepository userRepository;
 
     @Autowired
-    public OrderServiceImpl(RegisteredCustomerRepository registeredCustomerRepository, AddressRepository addressRepository,
+    public OrderServiceImpl(RegisteredUserRepository registeredUserRepository, AddressRepository addressRepository,
                             MenuItemRepository menuItemRepository, OrderRepository orderRepository, PaymentRepository paymentRepository,
                             UserRepository userRepository) {
-        this.registeredCustomerRepository = registeredCustomerRepository;
+        this.registeredUserRepository = registeredUserRepository;
         this.addressRepository = addressRepository;
         this.menuItemRepository = menuItemRepository;
         this.orderRepository = orderRepository;
@@ -86,7 +86,7 @@ public class OrderServiceImpl implements OrderService {
     @Transactional
     @Override
     public String createOrderForRegisteredCustomer(OrderCreateDTORegistered registeredConsumersOrderRequest) {
-        RegisteredUser registeredCustomer = registeredCustomerRepository.findById(registeredConsumersOrderRequest.getCustomerId()).orElseThrow();
+        RegisteredUser registeredCustomer = registeredUserRepository.findById(registeredConsumersOrderRequest.getCustomerId()).orElseThrow();
         Address address = addressRepository.findById(registeredConsumersOrderRequest.getAddressId()).orElseThrow();
         List<MenuItem> menuItems = menuItemRepository.findAllById(registeredConsumersOrderRequest.getMenuItemsIds());
 
