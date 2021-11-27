@@ -23,6 +23,7 @@ import PitzaNFryty.menu_item.pizza.PizzaSize;
 import PitzaNFryty.menu_item.sauce.Sauce;
 import PitzaNFryty.menu_item.sauce.SauceRepository;
 import PitzaNFryty.order.OrderCreateDTORegistered;
+import PitzaNFryty.order.OrderCreateDTOUnregistered;
 import PitzaNFryty.order.OrderRepository;
 import PitzaNFryty.order.OrderService;
 import PitzaNFryty.payment.PaymentRepository;
@@ -123,8 +124,9 @@ public class Initializer {
         Ingredient cherryTomatoes = new Ingredient("Cherry tomatoes");
         Ingredient arugula = new Ingredient("Arugula");
         Ingredient parmesanCheese = new Ingredient("Parmesan cheese");
+        Ingredient cheddarCheese = new Ingredient("Cheddar cheese");
         List<Ingredient> allIngredients = new ArrayList<>(Arrays.asList(mozzarella, tomatoSauce, oregano, ham, mushrooms, pineapple,
-                chicken, greenPepper, redOnion, bacon, beef, pepperoni, parmaHam, cherryTomatoes, arugula, parmesanCheese));
+                chicken, greenPepper, redOnion, bacon, beef, pepperoni, parmaHam, cherryTomatoes, arugula, parmesanCheese, cheddarCheese));
         ingredientRepository.saveAll(allIngredients);
         List<Ingredient> basicIngredients = Arrays.asList(mozzarella, tomatoSauce, oregano);
 
@@ -207,12 +209,11 @@ public class Initializer {
         orderService.createOrderForRegisteredCustomer(joesOrderRequest3);
 
 
-
-
-
-
-
-
+        for (int i = 1; i <= 5; i++) {
+            OrderCreateDTOUnregistered unregisteredCustomersOrderRequest = new OrderCreateDTOUnregistered("Unregistered", "User", "999999999", "unregistered@gmail.com" + i,
+                    "Kraków", "99-999", "Czarna", "9", "9Z", Arrays.asList(34L, 13L), new BigDecimal(34));
+            orderService.createOrderForUnregisteredCustomer(unregisteredCustomersOrderRequest);
+        }
 
 
 
@@ -221,36 +222,4 @@ public class Initializer {
 
 
     }
-
-
-
-    //UMOŻLIWIĆ SKŁADANIE ZAMÓWIENIA PRZEZ NIEZAREJESTROWANYCH KLIENTÓW!!!!!!!!!
-
-
-    //        OrderCreateDTOUnregistered orderUnregistered1 = new OrderCreateDTOUnregistered("Unregistered", "User", 999999999, "unregistered@gmail.com",
-//                "Kraków", "99-999", "Czarna", "9", "9Z", Arrays.asList(34L), new BigDecimal(34));
-//        OrderCreateDTOUnregistered orderUnregistered2 = new OrderCreateDTOUnregistered("Unregistered", "User", 999999999, "unregistered@gmail.com",
-//                "Kraków", "99-999", "Czarna", "9", "9Z", Arrays.asList(34L, 11L), new BigDecimal(39));
-//        OrderCreateDTOUnregistered orderUnregistered3 = new OrderCreateDTOUnregistered("Unregistered", "User", 999999999, "unregistered@gmail.com",
-//                "Kraków", "99-999", "Czarna", "9", "9Z", Arrays.asList(34L, 13L), new BigDecimal(39));
-//        createOrderForUnregisteredUser(orderUnregistered1, menuItemRepository, orderRepository, unregisteredCustomerRepository);
-//        createOrderForUnregisteredUser(orderUnregistered2, menuItemRepository, orderRepository, unregisteredCustomerRepository);
-//        createOrderForUnregisteredUser(orderUnregistered3, menuItemRepository, orderRepository, unregisteredCustomerRepository);
-//
-
-//        //addressService.manageUnregisteredCustomerOrderBySettingNull(6L, 5L);
-//        //addressService.manageUnregisteredCustomerOrderBySettingNull(4L, 3L);
-//
-//        addressService.manageUnregisteredCustomerOrderBySettingDummyCustomer(6L, 5L, unregisteredCustomerRepository);
-//        //addressService.manageUnregisteredCustomerOrderBySettingDummyCustomer(4L, 3L);
-//
-
-//        OrderCreateDTOUnregistered orderUnregistered4 = new OrderCreateDTOUnregistered("Unregistered", "User", 999999999, "unregistered@gmail.com",
-//                "Kraków", "99-999", "Czarna", "9", "9Z", Arrays.asList(34L, 13L), new BigDecimal(39));
-//        OrderCreateDTOUnregistered orderUnregistered5 = new OrderCreateDTOUnregistered("Unregistered", "User", 999999999, "unregistered@gmail.com",
-//                "Kraków", "99-999", "Czarna", "9", "9Z", Arrays.asList(34L, 13L), new BigDecimal(39));
-//        createOrderForUnregisteredUser(orderUnregistered4, menuItemRepository, orderRepository, unregisteredCustomerRepository);
-//        createOrderForUnregisteredUser(orderUnregistered5, menuItemRepository, orderRepository, unregisteredCustomerRepository);
-
-
 }
