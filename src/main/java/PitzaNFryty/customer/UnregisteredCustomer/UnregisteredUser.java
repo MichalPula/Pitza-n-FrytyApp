@@ -12,7 +12,7 @@ import javax.persistence.Table;
 @Setter
 @NoArgsConstructor
 @Entity
-@Table(name = "customers_unregistered")
+@Table(name = "users_unregistered")
 public class UnregisteredUser extends User {
 
     public UnregisteredUser(String firstName, String lastName, String email, String phoneNumber) {

@@ -14,8 +14,8 @@ import javax.persistence.*;
 @ToString
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-@DiscriminatorColumn(name = "customer_type", discriminatorType = DiscriminatorType.STRING)
-@Table(name = "customers")
+@DiscriminatorColumn(name = "user_type", discriminatorType = DiscriminatorType.STRING)
+@Table(name = "users")
 public class User {
 
     @Id
@@ -36,14 +36,14 @@ public class User {
     private String phoneNumber;
 
     @NotNull
-    @Column(name = "email", unique = true)
-    private String email;
+    @Column(name = "username", unique = true)
+    private String username;
 
 
-    public User(String firstName, String lastName, String email, String phoneNumber) {
+    public User(String firstName, String lastName, String username, String phoneNumber) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.email = email;
+        this.username = username;
         this.phoneNumber = phoneNumber;
     }
 }

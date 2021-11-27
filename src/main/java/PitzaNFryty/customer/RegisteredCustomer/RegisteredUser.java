@@ -14,7 +14,7 @@ import javax.persistence.Table;
 @Setter
 @NoArgsConstructor
 @Entity
-@Table(name = "customers_registered")
+@Table(name = "users_registered")
 public class RegisteredUser extends User {
 
     @NotNull
