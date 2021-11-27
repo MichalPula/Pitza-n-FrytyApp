@@ -8,6 +8,7 @@ import PitzaNFryty.customer.RegisteredCustomer.RegisteredUser;
 import PitzaNFryty.customer.RegisteredCustomer.RegisteredCustomerRepository;
 import PitzaNFryty.customer.UnregisteredCustomer.UnregisteredUser;
 import PitzaNFryty.customer.UnregisteredCustomer.UnregisteredCustomerRepository;
+import PitzaNFryty.jwt_authentication.role.Role;
 import PitzaNFryty.menu_item.MenuItemRepository;
 import PitzaNFryty.menu_item.drink.Drink;
 import PitzaNFryty.menu_item.drink.DrinkRepository;
@@ -192,7 +193,7 @@ public class Initializer {
 
 
         UnregisteredUser unregisteredCustomer = new UnregisteredUser("unregistered", "unregistered", "unregistered","unregistered");
-        RegisteredUser registeredJoe = new RegisteredUser("Joe", "Mama", "joemama@gmail.com", "joemama", "111111111");
+        RegisteredUser registeredJoe = new RegisteredUser("Joe", "Mama", "joemama@gmail.com", "joemama", Role.ROLE_USER, "111111111");
         userRepository.saveAll(Arrays.asList(unregisteredCustomer, registeredJoe));
 
         Address joesAddress1 = new Address(registeredJoe ,"Kraków", "11-111", "Zielona", "1", "1A");

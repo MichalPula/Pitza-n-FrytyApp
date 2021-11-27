@@ -15,7 +15,7 @@ import javax.persistence.Table;
 @Table(name = "users_unregistered")
 public class UnregisteredUser extends User {
 
-    public UnregisteredUser(String firstName, String lastName, String email, String phoneNumber) {
-        super(firstName, lastName, email, phoneNumber);
+    public UnregisteredUser(String firstName, String lastName, String username, String phoneNumber) {
+        super(firstName, lastName, username, phoneNumber);
     }
 }
