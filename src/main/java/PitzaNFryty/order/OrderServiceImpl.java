@@ -2,11 +2,11 @@ package PitzaNFryty.order;
 
 import PitzaNFryty.address.Address;
 import PitzaNFryty.address.AddressRepository;
-import PitzaNFryty.customer.Customer;
-import PitzaNFryty.customer.CustomerRepository;
-import PitzaNFryty.customer.RegisteredCustomer.RegisteredCustomer;
+import PitzaNFryty.customer.User;
+import PitzaNFryty.customer.UserRepository;
+import PitzaNFryty.customer.RegisteredCustomer.RegisteredUser;
 import PitzaNFryty.customer.RegisteredCustomer.RegisteredCustomerRepository;
-import PitzaNFryty.customer.UnregisteredCustomer.UnregisteredCustomer;
+import PitzaNFryty.customer.UnregisteredCustomer.UnregisteredUser;
 import PitzaNFryty.menu_item.MenuItem;
 import PitzaNFryty.menu_item.MenuItemRepository;
 import PitzaNFryty.payment.Payment;
@@ -35,18 +35,18 @@ public class OrderServiceImpl implements OrderService {
     private final MenuItemRepository menuItemRepository;
     private final OrderRepository orderRepository;
     private final PaymentRepository paymentRepository;
-    private final CustomerRepository customerRepository;
+    private final UserRepository userRepository;
 
     @Autowired
     public OrderServiceImpl(RegisteredCustomerRepository registeredCustomerRepository, AddressRepository addressRepository,
                             MenuItemRepository menuItemRepository, OrderRepository orderRepository, PaymentRepository paymentRepository,
-                            CustomerRepository customerRepository) {
+                            UserRepository userRepository) {
         this.registeredCustomerRepository = registeredCustomerRepository;
         this.addressRepository = addressRepository;
         this.menuItemRepository = menuItemRepository;
         this.orderRepository = orderRepository;
         this.paymentRepository = paymentRepository;
-        this.customerRepository = customerRepository;
+        this.userRepository = userRepository;
     }
 
     @Override
@@ -86,7 +86,7 @@ public class OrderServiceImpl implements OrderService {
     @Transactional
     @Override
     public String createOrderForRegisteredCustomer(OrderCreateDTORegistered registeredConsumersOrderRequest) {
-        RegisteredCustomer registeredCustomer = registeredCustomerRepository.findById(registeredConsumersOrderRequest.getCustomerId()).orElseThrow();
+        RegisteredUser registeredCustomer = registeredCustomerRepository.findById(registeredConsumersOrderRequest.getCustomerId()).orElseThrow();
         Address address = addressRepository.findById(registeredConsumersOrderRequest.getAddressId()).orElseThrow();
         List<MenuItem> menuItems = menuItemRepository.findAllById(registeredConsumersOrderRequest.getMenuItemsIds());
 
@@ -96,13 +96,13 @@ public class OrderServiceImpl implements OrderService {
     @Transactional
     @Override
     public String createOrderForUnregisteredCustomer(OrderCreateDTOUnregistered unregisteredCustomersOrderRequest) {
-        UnregisteredCustomer unregisteredCustomer = new UnregisteredCustomer(
+        UnregisteredUser unregisteredCustomer = new UnregisteredUser(
                 unregisteredCustomersOrderRequest.getFirstName(),
                 unregisteredCustomersOrderRequest.getLastName(),
                 unregisteredCustomersOrderRequest.getEmail(),
                 unregisteredCustomersOrderRequest.getPhoneNumber()
         );
-        customerRepository.save(unregisteredCustomer);
+        userRepository.save(unregisteredCustomer);
 
         Address address = new Address(unregisteredCustomer,
                 unregisteredCustomersOrderRequest.getCity(),
@@ -118,11 +118,11 @@ public class OrderServiceImpl implements OrderService {
         return saveOrderAndPayment(unregisteredCustomer, address, menuItems, unregisteredCustomersOrderRequest.getMoneyAmount());
     }
 
-    private String saveOrderAndPayment(Customer customer, Address address, List<MenuItem> menuItems, BigDecimal moneyAmount){
-        Order order = new Order(customer, address, menuItems, LocalDateTime.now());
+    private String saveOrderAndPayment(User user, Address address, List<MenuItem> menuItems, BigDecimal moneyAmount){
+        Order order = new Order(user, address, menuItems, LocalDateTime.now());
         orderRepository.save(order);
 
-        Payment payment = new Payment(customer, order, moneyAmount);
+        Payment payment = new Payment(user, order, moneyAmount);
         paymentRepository.save(payment);
 
         return "Order placed!";

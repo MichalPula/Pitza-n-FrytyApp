@@ -1,7 +1,7 @@
 package PitzaNFryty.order;
 
 import PitzaNFryty.address.Address;
-import PitzaNFryty.customer.Customer;
+import PitzaNFryty.customer.User;
 import PitzaNFryty.menu_item.MenuItem;
 import com.sun.istack.NotNull;
 import lombok.Getter;
@@ -24,9 +24,9 @@ public class Order {
     @Column(name = "id", unique = true, updatable = false)
     private Long id;
 
-    @ManyToOne(targetEntity = Customer.class)
+    @ManyToOne(targetEntity = User.class)
     @JoinColumn(name = "customer_id")
-    private Customer customer;
+    private User user;
 
     @ManyToOne(targetEntity = Address.class)
     @JoinColumn(name = "address_id")
@@ -42,8 +42,8 @@ public class Order {
     @Column(name = "creation_time")
     private LocalDateTime creationTime;
 
-    public Order(Customer customer, Address address, List<MenuItem> menuItems, LocalDateTime creationTime) {
-        this.customer = customer;
+    public Order(User user, Address address, List<MenuItem> menuItems, LocalDateTime creationTime) {
+        this.user = user;
         this.address = address;
         this.menuItems = menuItems;
         this.creationTime = creationTime;

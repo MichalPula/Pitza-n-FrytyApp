@@ -3,10 +3,10 @@ package PitzaNFryty;
 import PitzaNFryty.address.Address;
 import PitzaNFryty.address.AddressRepository;
 import PitzaNFryty.address.AddressService;
-import PitzaNFryty.customer.CustomerRepository;
-import PitzaNFryty.customer.RegisteredCustomer.RegisteredCustomer;
+import PitzaNFryty.customer.UserRepository;
+import PitzaNFryty.customer.RegisteredCustomer.RegisteredUser;
 import PitzaNFryty.customer.RegisteredCustomer.RegisteredCustomerRepository;
-import PitzaNFryty.customer.UnregisteredCustomer.UnregisteredCustomer;
+import PitzaNFryty.customer.UnregisteredCustomer.UnregisteredUser;
 import PitzaNFryty.customer.UnregisteredCustomer.UnregisteredCustomerRepository;
 import PitzaNFryty.menu_item.MenuItemRepository;
 import PitzaNFryty.menu_item.drink.Drink;
@@ -46,7 +46,7 @@ public class Initializer {
     private final AddressRepository addressRepository;
     private final PaymentRepository paymentRepository;
     private final OrderRepository orderRepository;
-    private final CustomerRepository customerRepository;
+    private final UserRepository userRepository;
     private final MenuItemRepository menuItemRepository;
     private final RegisteredCustomerRepository registeredCustomerRepository;
     private final UnregisteredCustomerRepository unregisteredCustomerRepository;
@@ -57,7 +57,7 @@ public class Initializer {
     @Autowired
     public Initializer(DrinkRepository drinkRepository, FriesRepository friesRepository, IngredientRepository ingredientRepository,
                        SauceRepository sauceRepository, PizzaRepository pizzaRepository, AddressRepository addressRepository,
-                       PaymentRepository paymentRepository, OrderRepository orderRepository, CustomerRepository customerRepository,
+                       PaymentRepository paymentRepository, OrderRepository orderRepository, UserRepository userRepository,
                        MenuItemRepository menuItemRepository, RegisteredCustomerRepository registeredCustomerRepository,
                        UnregisteredCustomerRepository unregisteredCustomerRepository,
                        AddressService addressService, OrderService orderService) {
@@ -69,7 +69,7 @@ public class Initializer {
         this.addressRepository = addressRepository;
         this.paymentRepository = paymentRepository;
         this.orderRepository = orderRepository;
-        this.customerRepository = customerRepository;
+        this.userRepository = userRepository;
         this.menuItemRepository = menuItemRepository;
         this.registeredCustomerRepository = registeredCustomerRepository;
         this.unregisteredCustomerRepository = unregisteredCustomerRepository;
@@ -191,9 +191,9 @@ public class Initializer {
 
 
 
-        UnregisteredCustomer unregisteredCustomer = new UnregisteredCustomer("unregistered", "unregistered", "unregistered","unregistered");
-        RegisteredCustomer registeredJoe = new RegisteredCustomer("Joe", "Mama", "joemama@gmail.com", "joemama", "111111111");
-        customerRepository.saveAll(Arrays.asList(unregisteredCustomer, registeredJoe));
+        UnregisteredUser unregisteredCustomer = new UnregisteredUser("unregistered", "unregistered", "unregistered","unregistered");
+        RegisteredUser registeredJoe = new RegisteredUser("Joe", "Mama", "joemama@gmail.com", "joemama", "111111111");
+        userRepository.saveAll(Arrays.asList(unregisteredCustomer, registeredJoe));
 
         Address joesAddress1 = new Address(registeredJoe ,"Kraków", "11-111", "Zielona", "1", "1A");
         Address joesAddress2 = new Address(registeredJoe ,"Kraków", "22-222", "Czerwona", "2", "2B");

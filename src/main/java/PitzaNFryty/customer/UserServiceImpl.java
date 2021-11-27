@@ -7,20 +7,20 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 @Service
-public class CustomerServiceImpl implements CustomerService {
+public class UserServiceImpl implements UserService {
 
     @PersistenceContext
     private EntityManager entityManager;
 
-    private final CustomerRepository customerRepository;
+    private final UserRepository userRepository;
 
     @Autowired
-    public CustomerServiceImpl(CustomerRepository customerRepository) {
-        this.customerRepository = customerRepository;
+    public UserServiceImpl(UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
 
     @Override
-    public Customer getById(Long userId) {
+    public User getById(Long userId) {
         return null;
     }
 }

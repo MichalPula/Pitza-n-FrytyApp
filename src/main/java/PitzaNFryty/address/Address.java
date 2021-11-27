@@ -1,6 +1,6 @@
 package PitzaNFryty.address;
 
-import PitzaNFryty.customer.Customer;
+import PitzaNFryty.customer.User;
 import com.sun.istack.NotNull;
 import lombok.*;
 
@@ -20,10 +20,10 @@ public class Address {
     @Column(name = "id", unique = true, updatable = false)
     private long id;
 
-    @ManyToOne(targetEntity = Customer.class, fetch = FetchType.LAZY)
+    @ManyToOne(targetEntity = User.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "customer_id", referencedColumnName = "id")
     @ToString.Exclude
-    private Customer customer;
+    private User user;
 
     @NotNull
     @Column(name = "city")
@@ -45,8 +45,8 @@ public class Address {
     @Column(name = "flat_number")
     private String flatNumber;
 
-    public Address(Customer customer, String city, String zipCode, String street, String buildingNumber, String flatNumber) {
-        this.customer = customer;
+    public Address(User user, String city, String zipCode, String street, String buildingNumber, String flatNumber) {
+        this.user = user;
         this.city = city;
         this.zipCode = zipCode;
         this.street = street;

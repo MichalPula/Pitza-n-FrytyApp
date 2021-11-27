@@ -1,6 +1,6 @@
 package PitzaNFryty.customer.RegisteredCustomer;
 
-import PitzaNFryty.customer.Customer;
+import PitzaNFryty.customer.User;
 import com.sun.istack.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,13 +15,13 @@ import javax.persistence.Table;
 @NoArgsConstructor
 @Entity
 @Table(name = "customers_registered")
-public class RegisteredCustomer extends Customer {
+public class RegisteredUser extends User {
 
     @NotNull
     @Column(name = "password")
     private String password;
 
-    public RegisteredCustomer(String firstName, String lastName, String email, String password, String phoneNumber) {
+    public RegisteredUser(String firstName, String lastName, String email, String password, String phoneNumber) {
         super(firstName, lastName, email, phoneNumber);
         this.password = password;
     }

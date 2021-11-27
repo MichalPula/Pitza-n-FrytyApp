@@ -1,6 +1,6 @@
 package PitzaNFryty.payment;
 
-import PitzaNFryty.customer.Customer;
+import PitzaNFryty.customer.User;
 import PitzaNFryty.order.Order;
 import com.sun.istack.NotNull;
 import lombok.Getter;
@@ -22,10 +22,10 @@ public class Payment {
     @Id
     private Long id;
 
-    @ManyToOne(targetEntity = Customer.class, fetch = FetchType.LAZY)
+    @ManyToOne(targetEntity = User.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "customer_id")
     @ToString.Exclude
-    private Customer customer;
+    private User user;
 
     @OneToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "order_id")
@@ -36,8 +36,8 @@ public class Payment {
     @Column(name = "money_amount")
     private BigDecimal moneyAmount;
 
-    public Payment(Customer customer, Order order, BigDecimal moneyAmount) {
-        this.customer = customer;
+    public Payment(User user, Order order, BigDecimal moneyAmount) {
+        this.user = user;
         this.order = order;
         this.moneyAmount = moneyAmount;
     }
