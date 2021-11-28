@@ -22,7 +22,7 @@ public class AddressServiceImpl implements AddressService {
 
     @Override
     public List<AddressReadDTO> getCustomerAddresses(Long customerId) {
-        return addressRepository.getCustomerAddresses(customerId);
+        return addressRepository.getUsersAddresses(customerId);
     }
 
 }

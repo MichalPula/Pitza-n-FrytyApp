@@ -1,4 +1,4 @@
-package PitzaNFryty.customer.RegisteredCustomer;
+package PitzaNFryty.customer.RegisteredUser;
 
 import PitzaNFryty.customer.User;
 import PitzaNFryty.jwt_authentication.role.Role;

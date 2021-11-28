@@ -1,7 +1,7 @@
 package PitzaNFryty.jwt_authentication;
 
-import PitzaNFryty.customer.RegisteredCustomer.RegisteredUser;
-import PitzaNFryty.customer.RegisteredCustomer.RegisteredUserRepository;;
+import PitzaNFryty.customer.RegisteredUser.RegisteredUser;
+import PitzaNFryty.customer.RegisteredUser.RegisteredUserRepository;;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

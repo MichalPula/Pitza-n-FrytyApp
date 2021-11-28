@@ -1,4 +1,4 @@
-package PitzaNFryty.customer.RegisteredCustomer;
+package PitzaNFryty.customer.RegisteredUser;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

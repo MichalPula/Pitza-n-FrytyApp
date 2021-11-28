@@ -1,6 +1,6 @@
 package PitzaNFryty.jwt_authentication.filters;
 
-import PitzaNFryty.customer.RegisteredCustomer.RegisteredUserRepository;
+import PitzaNFryty.customer.RegisteredUser.RegisteredUserRepository;
 import PitzaNFryty.jwt_authentication.UserDetailsImpl;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;

@@ -3,11 +3,11 @@ package PitzaNFryty;
 import PitzaNFryty.address.Address;
 import PitzaNFryty.address.AddressRepository;
 import PitzaNFryty.address.AddressService;
+import PitzaNFryty.customer.RegisteredUser.RegisteredUser;
+import PitzaNFryty.customer.RegisteredUser.RegisteredUserRepository;
+import PitzaNFryty.customer.UnregisteredUser.UnregisteredUser;
+import PitzaNFryty.customer.UnregisteredUser.UnregisteredUserRepository;
 import PitzaNFryty.customer.UserRepository;
-import PitzaNFryty.customer.RegisteredCustomer.RegisteredUser;
-import PitzaNFryty.customer.RegisteredCustomer.RegisteredUserRepository;
-import PitzaNFryty.customer.UnregisteredCustomer.UnregisteredUser;
-import PitzaNFryty.customer.UnregisteredCustomer.UnregisteredCustomerRepository;
 import PitzaNFryty.jwt_authentication.role.Role;
 import PitzaNFryty.menu_item.MenuItemRepository;
 import PitzaNFryty.menu_item.drink.Drink;
@@ -29,6 +29,7 @@ import PitzaNFryty.order.OrderRepository;
 import PitzaNFryty.order.OrderService;
 import PitzaNFryty.payment.PaymentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -50,9 +51,10 @@ public class Initializer {
     private final UserRepository userRepository;
     private final MenuItemRepository menuItemRepository;
     private final RegisteredUserRepository registeredUserRepository;
-    private final UnregisteredCustomerRepository unregisteredCustomerRepository;
+    private final UnregisteredUserRepository unregisteredUserRepository;
     private final AddressService addressService;
     private final OrderService orderService;
+    private final BCryptPasswordEncoder passwordEncoder;
 
 
     @Autowired
@@ -60,8 +62,8 @@ public class Initializer {
                        SauceRepository sauceRepository, PizzaRepository pizzaRepository, AddressRepository addressRepository,
                        PaymentRepository paymentRepository, OrderRepository orderRepository, UserRepository userRepository,
                        MenuItemRepository menuItemRepository, RegisteredUserRepository registeredUserRepository,
-                       UnregisteredCustomerRepository unregisteredCustomerRepository,
-                       AddressService addressService, OrderService orderService) {
+                       UnregisteredUserRepository unregisteredUserRepository,
+                       AddressService addressService, OrderService orderService, BCryptPasswordEncoder passwordEncoder) {
         this.drinkRepository = drinkRepository;
         this.friesRepository = friesRepository;
         this.ingredientRepository = ingredientRepository;
@@ -73,9 +75,10 @@ public class Initializer {
         this.userRepository = userRepository;
         this.menuItemRepository = menuItemRepository;
         this.registeredUserRepository = registeredUserRepository;
-        this.unregisteredCustomerRepository = unregisteredCustomerRepository;
+        this.unregisteredUserRepository = unregisteredUserRepository;
         this.addressService = addressService;
         this.orderService = orderService;
+        this.passwordEncoder = passwordEncoder;
 
         initializeData();
     }
@@ -193,7 +196,7 @@ public class Initializer {
 
 
         UnregisteredUser unregisteredCustomer = new UnregisteredUser("unregistered", "unregistered", "unregistered","unregistered");
-        RegisteredUser registeredJoe = new RegisteredUser("Joe", "Mama", "joemama@gmail.com", "joemama", Role.ROLE_USER, "111111111");
+        RegisteredUser registeredJoe = new RegisteredUser("Joe", "Mama", "joemama@gmail.com", passwordEncoder.encode("mama"), Role.ROLE_USER, "111111111");
         userRepository.saveAll(Arrays.asList(unregisteredCustomer, registeredJoe));
 
         Address joesAddress1 = new Address(registeredJoe ,"Kraków", "11-111", "Zielona", "1", "1A");
@@ -219,7 +222,11 @@ public class Initializer {
 
 
 
+        RegisteredUser admin = new RegisteredUser("pulson", "pulson", "pulson", passwordEncoder.encode("pulson"), Role.ROLE_ADMIN, "1111111111");
+        userRepository.save(admin);
 
+        Address adminAddress = new Address(admin ,"f", "f", "f", "f", "f");
+        addressRepository.save(adminAddress);
 
 
     }

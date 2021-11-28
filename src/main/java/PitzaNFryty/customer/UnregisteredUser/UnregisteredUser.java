@@ -1,4 +1,4 @@
-package PitzaNFryty.customer.UnregisteredCustomer;
+package PitzaNFryty.customer.UnregisteredUser;
 
 import PitzaNFryty.customer.User;
 import lombok.Getter;
