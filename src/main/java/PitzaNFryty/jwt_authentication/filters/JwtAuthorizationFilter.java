@@ -20,27 +20,26 @@ import java.io.IOException;
 public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 
     private final RegisteredUserRepository registeredUserRepository;
-
-    public static final String SECRET = "PulsonProductions";
-    public static final String TOKEN_PREFIX = "Bearer ";
-    public static final String REQUEST_HEADER_STRING = "Authorization";
+    private final JwtConstants jwtConstants;
 
     public JwtAuthorizationFilter(AuthenticationManager authenticationManager,
-                                  RegisteredUserRepository registeredUserRepository) {
+                                  RegisteredUserRepository registeredUserRepository,
+                                  JwtConstants jwtConstants) {
         super(authenticationManager);
         this.registeredUserRepository = registeredUserRepository;
+        this.jwtConstants = jwtConstants;
     }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
 
-        String token = request.getHeader(REQUEST_HEADER_STRING);
+        String token = request.getHeader(jwtConstants.getHttp_header_string());
 
-        if (token != null && token.startsWith(TOKEN_PREFIX)) {
+        if (token != null && token.startsWith(jwtConstants.getToken_prefix())) {
             try {
-                String username = JWT.require(Algorithm.HMAC512(SECRET))
+                String username = JWT.require(Algorithm.HMAC512(jwtConstants.getSecret()))
                         .build()
-                        .verify(token.replace(TOKEN_PREFIX, ""))
+                        .verify(token.replace(jwtConstants.getToken_prefix(), ""))
                         .getSubject();
 
                 UserDetailsImpl userDetails = new UserDetailsImpl(registeredUserRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("Username not found!")));

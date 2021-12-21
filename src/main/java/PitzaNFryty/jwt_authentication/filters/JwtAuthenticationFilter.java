@@ -22,18 +22,14 @@ import java.util.Date;
 
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
-    public static final String SECRET = "PulsonProductions";
-    public static final int EXPIRATION_TIME = 864000000;
-    public static final String TOKEN_PREFIX = "Bearer ";
-    public static final String RESPONSE_HEADER_STRING = "Authorization";
-
     private final AuthenticationManager authenticationManager;
+    private  final JwtConstants jwtConstants;
 
-
-    public JwtAuthenticationFilter(AuthenticationManager authenticationManager, String authenticationURL) {
+    public JwtAuthenticationFilter(AuthenticationManager authenticationManager, String authenticationURL, JwtConstants jwtConstants) {
         super.setAuthenticationManager(authenticationManager);
         this.authenticationManager = authenticationManager;
         setFilterProcessesUrl(authenticationURL);
+        this.jwtConstants = jwtConstants;
     }
 
     @SneakyThrows
@@ -51,7 +47,6 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                 loginRequest.getPassword(),
                 new ArrayList<>()
         );
-
         return authenticationManager.authenticate(authenticationToken);
     }
 
@@ -63,10 +58,10 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                 .withSubject(userDetails.getUsername())
                 .withClaim("user_id", userDetails.getId())
                 .withClaim("role", userDetails.getAuthorities().get(0).getAuthority())
-                .withExpiresAt(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
-                .sign(Algorithm.HMAC512(SECRET));
+                .withExpiresAt(new Date(System.currentTimeMillis() + jwtConstants.getExpiration_time()))
+                .sign(Algorithm.HMAC512(jwtConstants.getSecret()));
 
-        response.addHeader(RESPONSE_HEADER_STRING, TOKEN_PREFIX + jwtToken);
+        response.addHeader(jwtConstants.getHttp_header_string(), jwtConstants.getToken_prefix() + jwtToken);
     }
 
     @Override
